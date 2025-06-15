@@ -22,11 +22,11 @@ const Navigation = () => {
   useEffect(() => {
     // Animate desktop nav items on mount
     gsap.from(navRefs.current, {
-      y: -40,
-      opacity: 0,
-      stagger: 0.3,
-      duration: 0.8,
-
+  y: -30,
+  opacity: 0,
+  duration: 1,
+  delay: 0.5,
+  stagger: 0.2
     });
   }, []);
 
