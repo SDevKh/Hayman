@@ -46,7 +46,7 @@ const Navigation = () => {
         <div className="flex justify-between items-center py-4">
           <div className="text-2xl font-bold text-white">
             <span className="text-blue-400 ">
-              <img className="w-[5vw] ml-[2vw] md:w-[2vw] md:ml-[2vw]" src="pics/vxcv-1@2x.png" alt="Logo" />
+              <img className="w-[5vw] ml-[2vw] md:w-[2vw] md:ml-[2vw]" src="/pics/vxcv-1@2x.png" alt="Logo" />
             </span>
           </div>
           
