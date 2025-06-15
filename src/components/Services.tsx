@@ -2,11 +2,14 @@ import React, { useRef, useEffect } from "react";
 import { Globe, ShoppingCart, Smartphone, Database, Zap, Shield } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { ScrollSmoother } from "gsap/ScrollSmoother";
+
+gsap.registerPlugin(ScrollSmoother);
 
 gsap.registerPlugin(ScrollTrigger);
 
 const Services = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
+  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   const services = [
     {
@@ -48,26 +51,32 @@ const Services = () => {
   ];
 
   useEffect(() => {
-    if (containerRef.current) {
-      const cards = gsap.utils.toArray<HTMLElement>(".service-card");
-      cards.forEach((card) => {
-        gsap.from(card, {
-          x: -10,
-          y: 50,
-          duration: 1,
-          ease: "none",
-          smooth: true,
-          scrollTrigger: {
-            trigger: "#services",
-            start: "top 100%",
-            scrub: true,
-            toggleActions: "play none none reverse",
-          },
-        });
+    cardRefs.current.forEach((card, i) => {
+      if (!card) return;
+      gsap.from(card, {
+        x: i % 2 === 0 ? -50 : 50, // alternate direction
+        y: 80,
+        opacity: 0,
+        scale: 0.8,
+        duration: 1,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: card,
+          start: "top 85%",
+          toggleActions: "play none none reverse",
+        },
+        delay: i * 0.15 // stagger manually
       });
-    }
+    });
+
+    return () => {
+      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+    };
   }, []);
-  
+
+  // Reset refs on each render
+  cardRefs.current = [];
+
   return (
     <section id="services" className="py-20 min-h-screen overflow-visible relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -80,10 +89,11 @@ const Services = () => {
           </p>
         </div>
 
-        <div ref={containerRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {services.map((service, index) => (
             <div
               key={index}
+              ref={el => cardRefs.current[index] = el}
               className="service-card group bg-slate-800/50 backdrop-blur-sm rounded-2xl p-8 border border-slate-700/50 hover:border-blue-500/50 transition-all duration-300 hover:transform hover:-translate-y-2 hover:shadow-2xl"
             >
               <div className="text-blue-400 mb-6 group-hover:scale-110 transition-transform duration-300">
