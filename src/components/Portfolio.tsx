@@ -13,7 +13,7 @@ const Portfolio = () => {
     {
       title: 'E-commerce Platform',
       description: 'A modern e-commerce solution with advanced filtering, payment integration, and real-time inventory management.',
-      image: 'pics/hayman.png',
+      image: '/pics/hayman.png',
       tags: ['React', 'Node.js', 'MongoDB', 'HTML/CSS'],
       category: 'E-commerce',
       demoUrl: 'https://haymandk.netlify.app', // Add this line
@@ -22,7 +22,7 @@ const Portfolio = () => {
     {
       title: 'Bockchain Website',
       description: 'Professional corporate website with CMS integration, blog functionality, and advanced SEO optimization.',
-      image: 'pics/blochain.png',
+      image: '/pics/blochain.png',
       tags: ['Gsap', 'TypeScript', 'Tailwind', 'Headless CMS'],
       category: 'Project',
       demoUrl: 'https://blockchaindk.netlify.app', // Add this line
@@ -31,7 +31,7 @@ const Portfolio = () => {
     {
       title: 'Purfume Store',
       description: 'A online perfume store with user-friendly interface, product recommendations, and secure checkout.',
-      image: 'pics/perfume.png',
+      image: '/pics/perfume.png',
       tags: ['Javascript', 'HTML/CSS', 'PostgreSQL', 'Coludfare'],
       category: 'Website',
       demoUrl: 'https://purefragnance.in', // Add this line
@@ -40,7 +40,7 @@ const Portfolio = () => {
     {
       title: 'All In AI',
       description: 'A website showcasing AI tools and resources with interactive features, user authentication, and analytics.',
-      image: 'pics/allinai.png',
+      image: '/pics/allinai.png',
       tags: ['js', 'GSAP', 'HTML/CSS', 'Analytics'],
       category: 'Tool',
       demoUrl: 'https://allinai.netlify.app', // Add this line
@@ -58,7 +58,7 @@ const Portfolio = () => {
     {
       title: 'Portfolio Website',
       description: 'Creative portfolio website with smooth animations, gallery functionality, and contact forms.',
-      image: 'pics/portfolio.png',
+      image: '/pics/portfolio.png',
       tags: ['Gatsby', 'Tailwind', 'Netlify', 'React'],
       category: 'Portfolio',
       demoUrl: 'https://portfolio-sdevkhs-projects.vercel.app/', // Add this line
