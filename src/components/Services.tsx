@@ -2,12 +2,6 @@ import React, { useRef, useEffect } from "react";
 import { Globe, ShoppingCart, Smartphone, Database, Zap, Shield } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-<<<<<<< HEAD
-=======
-import { ScrollSmoother } from "gsap/ScrollSmoother";
-
-gsap.registerPlugin(ScrollSmoother);
->>>>>>> 056bcee41e8c838b94d5ac99e83459ad13f12cfd
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -54,7 +48,6 @@ const Services = () => {
   ];
 
   useEffect(() => {
-<<<<<<< HEAD
   gsap.registerPlugin(ScrollTrigger);
 
   const ctx = gsap.context(() => {
@@ -74,31 +67,6 @@ const Services = () => {
 
   return () => ctx.revert();
 }, []);
-=======
-    cardRefs.current.forEach((card, i) => {
-      if (!card) return;
-      gsap.from(card, {
-        x: i % 2 === 0 ? -50 : 50, // alternate direction
-        y: 80,
-        opacity: 0,
-        scale: 0.8,
-        duration: 1,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: card,
-          start: "top 85%",
-          toggleActions: "play none none reverse",
-        },
-        delay: i * 0.15 // stagger manually
-      });
-    });
-
-    return () => {
-      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
-    };
-  }, []);
-
->>>>>>> 056bcee41e8c838b94d5ac99e83459ad13f12cfd
   // Reset refs on each render
   cardRefs.current = [];
 
@@ -114,11 +82,7 @@ const Services = () => {
           </p>
         </div>
 
-<<<<<<< HEAD
         <div className="service-card card group grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-=======
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
->>>>>>> 056bcee41e8c838b94d5ac99e83459ad13f12cfd
           {services.map((service, index) => (
             <div
               key={index}

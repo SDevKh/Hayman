@@ -1,9 +1,4 @@
 import React from "react";
-<<<<<<< HEAD
-=======
-import gsap from 'gsap';
-import { useGSAP } from '@gsap/react'
->>>>>>> 056bcee41e8c838b94d5ac99e83459ad13f12cfd
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
