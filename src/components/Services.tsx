@@ -2,11 +2,13 @@ import React, { useRef, useEffect } from "react";
 import { Globe, ShoppingCart, Smartphone, Database, Zap, Shield } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { ScrollSmoother } from "gsap/ScrollSmoother";
+
+gsap.registerPlugin(ScrollSmoother);
 
 gsap.registerPlugin(ScrollTrigger);
 
 const Services = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   const services = [
@@ -49,75 +51,34 @@ const Services = () => {
   ];
 
   useEffect(() => {
-    // Clear previous refs
-    cardRefs.current = cardRefs.current.slice(0, services.length);
-
-    // Wait for next tick to ensure DOM is ready
-    const timer = setTimeout(() => {
-      // Filter out null refs
-      const validCards = cardRefs.current.filter(card => card !== null);
-      
-      if (validCards.length === 0) return;
-
-      // Create timeline for better control
-      const tl = gsap.timeline({
+    cardRefs.current.forEach((card, i) => {
+      if (!card) return;
+      gsap.from(card, {
+        x: i % 2 === 0 ? -50 : 50, // alternate direction
+        y: 80,
+        opacity: 0,
+        scale: 0.8,
+        duration: 1,
+        ease: "power3.out",
         scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top 80%",
-          end: "bottom 20%",
+          trigger: card,
+          start: "top 85%",
           toggleActions: "play none none reverse",
-          onRefresh: () => {
-            // Refresh when scroll trigger updates
-            ScrollTrigger.refresh();
-          }
-        }
+        },
+        delay: i * 0.15 // stagger manually
       });
-
-      // Animate each card with stagger
-      validCards.forEach((card, index) => {
-        if (card) {
-          // Set initial state
-          gsap.set(card, {
-            y: 80,
-            opacity: 0,
-            scale: 0.8,
-            rotationY: index % 2 === 0 ? -15 : 15
-          });
-
-          // Add to timeline with stagger
-          tl.to(card, {
-            y: 0,
-            opacity: 1,
-            scale: 1,
-            rotationY: 0,
-            duration: 0.8,
-            ease: "power3.out",
-          }, index * 0.15);
-        }
-      });
-
-      // Refresh ScrollTrigger after setup
-      ScrollTrigger.refresh();
-    }, 100);
+    });
 
     return () => {
-      clearTimeout(timer);
-      // Kill all ScrollTriggers for this component
-      ScrollTrigger.getAll().forEach(trigger => {
-        if (trigger.trigger === containerRef.current) {
-          trigger.kill();
-        }
-      });
+      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
     };
-  }, [services.length]);
+  }, []);
 
-  // Function to set card ref
-  const setCardRef = (el: HTMLDivElement | null, index: number) => {
-    cardRefs.current[index] = el;
-  };
+  // Reset refs on each render
+  cardRefs.current = [];
 
   return (
-    <section id="services" className="py-20 min-h-screen overflow-visible relative" ref={containerRef}>
+    <section id="services" className="py-20 min-h-screen overflow-visible relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
@@ -132,7 +93,7 @@ const Services = () => {
           {services.map((service, index) => (
             <div
               key={index}
-              ref={(el) => setCardRef(el, index)}
+              ref={el => cardRefs.current[index] = el}
               className="service-card group bg-slate-800/50 backdrop-blur-sm rounded-2xl p-8 border border-slate-700/50 hover:border-blue-500/50 transition-all duration-300 hover:transform hover:-translate-y-2 hover:shadow-2xl"
             >
               <div className="text-blue-400 mb-6 group-hover:scale-110 transition-transform duration-300">
