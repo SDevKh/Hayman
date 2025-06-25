@@ -78,6 +78,10 @@ const Portfolio = () => {
       scrollTrigger: {
         trigger: ".portfolio",
         start: "top bottom",
+<<<<<<< HEAD
+=======
+        scrub: true,
+>>>>>>> 056bcee41e8c838b94d5ac99e83459ad13f12cfd
       }
     });
     ScrollTrigger.refresh();
@@ -169,4 +173,8 @@ const Portfolio = () => {
   );
 };
 
+<<<<<<< HEAD
 export default Portfolio;
+=======
+export default Portfolio;
+>>>>>>> 056bcee41e8c838b94d5ac99e83459ad13f12cfd
