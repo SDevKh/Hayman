@@ -17,7 +17,7 @@ const Portfolio = () => {
       tags: ['React', 'Node.js', 'MongoDB', 'HTML/CSS'],
       category: 'E-commerce',
       demoUrl: 'https://haymandk.netlify.app', // Add this line
-      codeUrl: 'https://github.com/your-repo/ecommerce' // Optional: for code button
+      codeUrl: 'https://github.com/SDevKh/E-commerce' // Optional: for code button
     },
     {
       title: 'Bockchain Website',
@@ -26,7 +26,7 @@ const Portfolio = () => {
       tags: ['Gsap', 'TypeScript', 'Tailwind', 'Headless CMS'],
       category: 'Project',
       demoUrl: 'https://blockchaindk.netlify.app', // Add this line
-      codeUrl: 'https://github.com/your-repo/ecommerce' // Optional: for code button
+      codeUrl: 'https://github.com/SDevKh/BlockChain' // Optional: for code button
     },
     {
       title: 'Purfume Store',
@@ -35,7 +35,7 @@ const Portfolio = () => {
       tags: ['Javascript', 'HTML/CSS', 'PostgreSQL', 'Coludfare'],
       category: 'Website',
       demoUrl: 'https://purefragnance.in', // Add this line
-      codeUrl: 'https://github.com/your-repo/ecommerce' // Optional: for code button
+      codeUrl: 'https://github.com/SdevKh/perfume' // Optional: for code button
     },
     {
       title: 'All In AI',
@@ -44,16 +44,16 @@ const Portfolio = () => {
       tags: ['js', 'GSAP', 'HTML/CSS', 'Analytics'],
       category: 'Tool',
       demoUrl: 'https://allinai.netlify.app', // Add this line
-      codeUrl: 'https://github.com/your-repo/ecommerce' // Optional: for code button
+      codeUrl: 'https://github.com/SdevKh/allinai' // Optional: for code button
     },
     {
-      title: 'Auto Trading Platform',
-      description: 'Automated trading platform with real-time data visualization, user authentication, and secure transactions.',
-      image: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=600&h=400&fit=crop',
+      title: 'OTB(online assement test for users',
+      description: 'An ai powered online platoform with some simple questions about yourself and get the best plan to achive your goals.',
+      image: '/pics/image.png',
       tags: ['Python', 'Stremlits', 'MySQL', 'MongoDB'],
-      category: 'Finance',
-      demoUrl: '#', // Add this line
-      codeUrl: 'https://github.com/your-repo/ecommerce' // Optional: for code button
+      category: 'AI Tool',
+      demoUrl: 'https://otb-wh9e.vercel.app/', // Add this line
+      codeUrl: 'https://github.com/SdevKh/otb' // Optional: for code button
     },
     {
       title: 'Portfolio Website',
@@ -62,7 +62,7 @@ const Portfolio = () => {
       tags: ['Gatsby', 'Tailwind', 'Netlify', 'React'],
       category: 'Portfolio',
       demoUrl: 'https://portfolio-sdevkhs-projects.vercel.app/', // Add this line
-      codeUrl: 'https://github.com/your-repo/ecommerce' // Optional: for code button
+      codeUrl: 'https://github.com/SdevKh/portfolio'
     }
   ];
 
