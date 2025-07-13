@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from "react";
-import { Globe, ShoppingCart, Smartphone, Database, Zap, Shield } from 'lucide-react';
+import { Globe, ShoppingCart, Smartphone, Database, Zap, Shield, Handshake, Palette } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -28,14 +28,14 @@ const Services = () => {
       features: ['Responsive Design', 'Touch Optimized', 'Fast Loading']
     },
     {
-      icon: Database,
-      title: 'Backend Development',
+      icon: Handshake,
+      title: 'Social Media Marketing',
       description: 'Robust server-side solutions with databases, APIs, and cloud integration.',
       features: ['API Development', 'Database Design', 'Cloud Integration']
     },
     {
-      icon: Zap,
-      title: 'Performance Optimization',
+      icon: Palette,
+      title: 'UI/UX Design',
       description: 'Lightning-fast websites optimized for speed, SEO, and user experience.',
       features: ['Speed Optimization', 'SEO Enhancement', 'Core Web Vitals']
     },
