@@ -13,7 +13,7 @@ const Services = () => {
       icon: Globe,
       title: 'Web Development',
       description: 'Custom websites and web applications built with modern technologies and best practices.',
-      features: ['React & Next.js', 'Performance Optimized', 'SEO Friendly']
+      features: ['Performance', 'Engaging User Experience', 'SEO Friendly']
     },
     {
       icon: ShoppingCart,
@@ -30,14 +30,14 @@ const Services = () => {
     {
       icon: Handshake,
       title: 'Social Media Marketing',
-      description: 'Robust server-side solutions with databases, APIs, and cloud integration.',
-      features: ['API Development', 'Database Design', 'Cloud Integration']
+      description: 'Engaging social media strategies to boost your online presence and connect with your audience.',
+      features: ['Instagram Handleling', 'Followers Ingagement', 'Running Ads']
     },
     {
       icon: Palette,
       title: 'UI/UX Design',
-      description: 'Lightning-fast websites optimized for speed, SEO, and user experience.',
-      features: ['Speed Optimization', 'SEO Enhancement', 'Core Web Vitals']
+      description: 'Stunning designs that enhance user experience and drive conversions.',
+      features: ['Wireframing', 'Prototyping', 'User Testing']
     },
     {
       icon: Shield,
