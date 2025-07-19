@@ -18,7 +18,9 @@ const Hero = () => {
   return (
     <section id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden">
       {/* Animated Background Elements */}
-      <img src="/pics/3d.png" alt="Background" className="absolute md:mt-[20vh] md:mr-[74vw] mr-[70vw] w-32 md:w-64 mt-[50vh] " />
+      <div className="absolute mt-[-100vh] left-1/2 -translate-x-1/2 w-[80vw] h-[41rem] bg-gradient-to-b from-purple-600/60 via-pink-500/40 to-transparent rounded-[50%] blur-lg pointer-events-none"></div>
+      <img src="/pics/3d.png" alt="Background" className="absolute md:mt-[20vh] md:mr-[74vw] mr-[76vw] w-24 md:w-64 mt-[50vh] " />
+      
       <div className="absolute inset-0">
         <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl animate-pulse"></div>
         <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
