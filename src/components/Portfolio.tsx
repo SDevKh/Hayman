@@ -20,7 +20,7 @@ const Portfolio = () => {
       codeUrl: 'https://github.com/SDevKh/E-commerce' // Optional: for code button
     },
     {
-      title: 'Bockchain Website',
+      title: 'Blockchain Website',
       description: 'Professional corporate website with CMS integration, blog functionality, and advanced SEO optimization.',
       image: '/pics/blochain.png',
       tags: ['Gsap', 'TypeScript', 'Tailwind', 'Headless CMS'],
@@ -29,7 +29,7 @@ const Portfolio = () => {
       codeUrl: 'https://github.com/SDevKh/BlockChain' // Optional: for code button
     },
     {
-      title: 'Purfume Store',
+      title: 'Perfume Store',
       description: 'A online perfume store with user-friendly interface, product recommendations, and secure checkout.',
       image: '/pics/perfume.png',
       tags: ['Javascript', 'HTML/CSS', 'PostgreSQL', 'Coludfare'],
