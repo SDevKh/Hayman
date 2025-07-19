@@ -32,7 +32,7 @@ const Portfolio = () => {
       title: 'Perfume Store',
       description: 'A online perfume store with user-friendly interface, product recommendations, and secure checkout.',
       image: '/pics/perfume.png',
-      tags: ['Javascript', 'HTML/CSS', 'PostgreSQL', 'Coludfare'],
+      tags: ['Javascript', 'HTML/CSS', 'PostgreSQL', 'Coludflare'],
       category: 'Website',
       demoUrl: 'https://purefragnance.in', // Add this line
       codeUrl: 'https://github.com/SdevKh/perfume' // Optional: for code button
