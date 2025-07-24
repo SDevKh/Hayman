@@ -4,6 +4,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Users, Award, Clock, Target } from 'lucide-react';
 import { ExternalLink, Github } from 'lucide-react';
+import Marquee from 'react-fast-marquee';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -20,7 +21,7 @@ const Portfolio = () => {
       codeUrl: 'https://github.com/SDevKh/E-commerce' // Optional: for code button
     },
     {
-      title: 'Blockchain Website',
+      title: 'Bockchain Website',
       description: 'Professional corporate website with CMS integration, blog functionality, and advanced SEO optimization.',
       image: '/pics/blochain.png',
       tags: ['Gsap', 'TypeScript', 'Tailwind', 'Headless CMS'],
@@ -29,10 +30,10 @@ const Portfolio = () => {
       codeUrl: 'https://github.com/SDevKh/BlockChain' // Optional: for code button
     },
     {
-      title: 'Perfume Store',
+      title: 'Purfume Store',
       description: 'A online perfume store with user-friendly interface, product recommendations, and secure checkout.',
       image: '/pics/perfume.png',
-      tags: ['Javascript', 'HTML/CSS', 'PostgreSQL', 'Coludflare'],
+      tags: ['Javascript', 'HTML/CSS', 'PostgreSQL', 'Coludfare'],
       category: 'Website',
       demoUrl: 'https://purefragnance.in', // Add this line
       codeUrl: 'https://github.com/SdevKh/perfume' // Optional: for code button
@@ -61,7 +62,7 @@ const Portfolio = () => {
       image: '/pics/portfolio.png',
       tags: ['Gatsby', 'Tailwind', 'Netlify', 'React'],
       category: 'Portfolio',
-      demoUrl: 'https://portfolio-sdevkhs-projects.vercel.app/', // Add this line
+      demoUrl: 'https://devkhandelwal0.netfliy.app/', // Add this line
       codeUrl: 'https://github.com/SdevKh/portfolio'
     }
   ];
@@ -163,6 +164,22 @@ const Portfolio = () => {
               </div>
             </div>
           ))}
+        </div>
+      </div>
+      
+    <div className='roatating-brands mt-10 text-center overflow-hidden'>
+        <p className='text-[7vw] m-[7vh] text-[white]'>Brands We Worked</p>
+        <div className="relative w-full h-20 overflow-hidden">
+          <Marquee autoFill={true} loop={0} speed={100}  className="flex items-center justify-center space-x-8">
+            <div className="flex items-center space-x-8">
+              <img src="/pics/hymn.png" alt="Brand 1" className="h-12" />
+              <img src="/pics/ai.png" alt="Brand 2" className="h-12" />
+              <img src="/pics/otb.png" alt="Brand 3" className="h-12" />
+              <img src="/pics/pure.png" alt="Brand 4" className="h-12" />
+              <img src="/pics/block.png" alt="Brand 5" className="h-12" />
+            </div>
+          </Marquee>
+          
         </div>
       </div>
     </section>
