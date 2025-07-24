@@ -18,9 +18,7 @@ const Hero = () => {
   return (
     <section id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden">
       {/* Animated Background Elements */}
-      <div className="absolute mt-[-100vh] left-1/2 -translate-x-1/2 w-[80vw] h-[41rem] bg-gradient-to-b from-purple-600/60 via-pink-500/40 to-transparent rounded-[50%] blur-lg pointer-events-none"></div>
-      <img src="/pics/3d.png" alt="Background" className="absolute md:mt-[20vh] md:mr-[74vw] mr-[76vw] w-24 md:w-64 mt-[50vh] " />
-      
+      <div className="absolute mt-[-100vh] left-1/2 -translate-x-1/2 w-[103vw] h-[36rem] bg-gradient-to-b from-purple-600/60 via-pink-500/40 rounded-[50%] p-8 pointer-events-none" style={{ boxShadow: 'inset 0 8px 32px 0 white' }}></div>
       <div className="absolute inset-0">
         <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl animate-pulse"></div>
         <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
@@ -33,21 +31,18 @@ const Hero = () => {
             <span className="text-blue-400 font-medium">Premium Web Development</span>
           </div>
           
-          <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">
-            We Build
+          <h1 className="text-52vw] md:text-[2vw] font-bold text-white mb-6 leading-tight">
+            We Build brands not just websites,
             <span
               ref={gradientTextRef}
-              className="block text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-600"
+              className="block text-[10vw] font-michroma text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-600"
             >
-              Digital Experiences
+              HAYMAN
             </span>
-            That Convert
+            </h1>
+          <h1 className="text-[3vw] md:text-[2vw] font-semibold text-white mb-8 w-[98%]">
+            Build your online presence for not only your customers but also for your company
           </h1>
-          
-          <p className="text-xl text-gray-300 mb-8 max-w-3xl mx-auto leading-relaxed">
-            HAYMAN crafts exceptional web applications, e-commerce solutions, and digital platforms 
-            that drive business growth and deliver outstanding user experiences.
-          </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <button 
