@@ -208,20 +208,7 @@ const Portfolio = () => {
         </div>
       </div>
       
-    <div className='roatating-brands mt-10 text-center overflow-hidden'>
-        <p className='text-[7vw] m-[7vh] text-[white]'>Brands We Worked</p>
-        <div className="relative w-full h-20 overflow-hidden">
-          <Marquee autoFill={true} loop={0} speed={100}  className="flex items-center justify-center space-x-8">
-            <div className="flex items-center space-x-8">
-              <img src="/pics/hymn.png" alt="Brand 1" className="h-12" />
-              <img src="/pics/ai.png" alt="Brand 2" className="h-12" />
-              <img src="/pics/otb.png" alt="Brand 3" className="h-12" />
-              <img src="/pics/pure.png" alt="Brand 4" className="h-12" />
-              <img src="/pics/block.png" alt="Brand 5" className="h-12" />
-            </div>
-          </Marquee>
-          
-        </div>
+
       </div>
     </section>
   );
