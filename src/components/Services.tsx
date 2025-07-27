@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from "react";
-import { Globe, ShoppingCart, Smartphone, Database, Zap, Shield } from 'lucide-react';
+import { Globe, ShoppingCart, Smartphone, Database, Zap, Shield, Handshake, Palette } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -13,7 +13,7 @@ const Services = () => {
       icon: Globe,
       title: 'Web Development',
       description: 'Custom websites and web applications built with modern technologies and best practices.',
-      features: ['React & Next.js', 'Performance Optimized', 'SEO Friendly']
+      features: ['Performance', 'Engaging User Experience', 'SEO Friendly']
     },
     {
       icon: ShoppingCart,
@@ -28,16 +28,16 @@ const Services = () => {
       features: ['Responsive Design', 'Touch Optimized', 'Fast Loading']
     },
     {
-      icon: Database,
-      title: 'Backend Development',
-      description: 'Robust server-side solutions with databases, APIs, and cloud integration.',
-      features: ['API Development', 'Database Design', 'Cloud Integration']
+      icon: Handshake,
+      title: 'Social Media Marketing',
+      description: 'Engaging social media strategies to boost your online presence and connect with your audience.',
+      features: ['Instagram Handleling', 'Followers Ingagement', 'Running Ads']
     },
     {
-      icon: Zap,
-      title: 'Performance Optimization',
-      description: 'Lightning-fast websites optimized for speed, SEO, and user experience.',
-      features: ['Speed Optimization', 'SEO Enhancement', 'Core Web Vitals']
+      icon: Palette,
+      title: 'UI/UX Design',
+      description: 'Stunning designs that enhance user experience and drive conversions.',
+      features: ['Wireframing', 'Prototyping', 'User Testing']
     },
     {
       icon: Shield,
@@ -71,7 +71,7 @@ const Services = () => {
   cardRefs.current = [];
 
   return (
-    <section id="services" className="py-20 min-h-screen overflow-visible relative">
+    <section id="services" className="py-20 pt-0 min-h-screen overflow-visible relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
