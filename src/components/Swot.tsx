@@ -115,7 +115,7 @@ export default function App() {
 
     } catch (err) {
       // Handle network errors or errors from the backend
-      setError('Failed to get analysis. Please make sure the Python server is running and try again.');
+      setError('Description is too short or invalid. Please give a fair information.');
       console.error("Fetch error:", err);
     } finally {
       setIsLoading(false); // Stop loading, regardless of outcome
