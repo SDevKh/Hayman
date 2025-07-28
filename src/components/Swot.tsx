@@ -97,7 +97,7 @@ export default function App() {
 
     try {
       // Send the form data to the Python backend
-      const response = await fetch('/api/analyze', {
+      const response = await fetch('http://127.0.0.1:5000/analyze', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -115,7 +115,7 @@ export default function App() {
 
     } catch (err) {
       // Handle network errors or errors from the backend
-      setError('Your description is not informative enough. Please provide more details about your business.');
+      setError('Failed to get analysis. Please make sure the Python server is running and try again.');
       console.error("Fetch error:", err);
     } finally {
       setIsLoading(false); // Stop loading, regardless of outcome
@@ -157,12 +157,6 @@ export default function App() {
             <div>
               <label htmlFor="businessDescription" className="block text-sm font-medium text-gray-700 mb-1">What does your business do?</label>
               <textarea name="businessDescription" id="businessDescription" value={formData.businessDescription} onChange={handleChange} required rows="3" className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"></textarea>
-            </div>
-
-            <div>
-              <label htmlFor='checkingwebiste' className='flex items-center space-x-2'>Does your business have a website?</label>
-              <input type="radio" id="checkingwebiste" name="checkingwebiste" className="m-[1vw] ml-2 h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" />Yes
-              <input type="radio" id="checkingwebiste" name="checkingwebiste" className="m-[1vw] ml-8 h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" />No
             </div>
 
             {/* Industry */}
