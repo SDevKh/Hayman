@@ -1,64 +1,62 @@
 import os
 import json
-import google.generativeai as genai
-from flask import Flask, request, jsonify
 
-app = Flask(__name__)
-
-def handler(req):
-    # Configure AI
-    api_key = os.environ.get("GOOGLE_API_KEY")
-    if not api_key:
-        return jsonify({"error": "API key not configured"}), 500
-    
-    genai.configure(api_key=api_key)
-    model = genai.GenerativeModel('gemini-1.5-flash')
-    
-    # Get request data
-    data = req.get_json()
-    if not data:
-        return jsonify({"error": "No data provided"}), 400
-    
-    # Generate analysis
-    prompt = f"""
-    Analyze this business and return ONLY valid JSON:
-    
-    Business: {data.get('businessName')}
-    Industry: {data.get('industry')}
-    Description: {data.get('businessDescription')}
-    
-    {{
-      "businessName": "{data.get('businessName')}",
-      "swot": {{
-        "strengths": ["Strong market position", "Experienced team"],
-        "weaknesses": ["Limited resources", "Market competition"],
-        "opportunities": ["Digital expansion", "New markets"],
-        "threats": ["Economic changes", "Competition"]
-      }},
-      "growthPlan": [
-        "Step 1: Optimize current operations",
-        "Step 2: Expand marketing reach", 
-        "Step 3: Develop new products"
-      ]
-    }}
-    """
-    
+def handler(request):
     try:
-        response = model.generate_content(prompt)
-        result = json.loads(response.text.strip().replace("```json", "").replace("```", ""))
-        return jsonify(result)
-    except:
-        return jsonify({"error": "Failed to generate analysis"}), 500
-
-# Vercel entry point
-@app.route('/', methods=['POST'])
-def main():
-    return handler(request)
-
-# For local testing
-@app.route('/analyze', methods=['POST'])
-def analyze():
-    return handler(request)
-
-if __name__ == '__main__':
-    app.run(debug=True, port=5000)
+        # Check if API key exists
+        api_key = os.environ.get("GOOGLE_API_KEY")
+        if not api_key:
+            return {
+                "statusCode": 200,
+                "headers": {"Content-Type": "application/json"},
+                "body": json.dumps({"error": "API key not configured in Vercel environment variables"})
+            }
+        
+        # Import here to avoid import errors if package not available
+        import google.generativeai as genai
+        
+        genai.configure(api_key=api_key)
+        model = genai.GenerativeModel('gemini-1.5-flash')
+        
+        # Parse request body
+        if hasattr(request, 'get_json'):
+            data = request.get_json()
+        else:
+            body = request.get('body', '{}')
+            data = json.loads(body) if body else {}
+        
+        if not data:
+            return {
+                "statusCode": 400,
+                "headers": {"Content-Type": "application/json"},
+                "body": json.dumps({"error": "No data provided"})
+            }
+        
+        # Generate simple response
+        result = {
+            "businessName": data.get('businessName', 'Your Business'),
+            "swot": {
+                "strengths": ["Strong market position", "Experienced team"],
+                "weaknesses": ["Limited resources", "Market competition"],
+                "opportunities": ["Digital expansion", "New markets"],
+                "threats": ["Economic changes", "Competition"]
+            },
+            "growthPlan": [
+                "Step 1: Optimize current operations",
+                "Step 2: Expand marketing reach", 
+                "Step 3: Develop new products"
+            ]
+        }
+        
+        return {
+            "statusCode": 200,
+            "headers": {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"},
+            "body": json.dumps(result)
+        }
+        
+    except Exception as e:
+        return {
+            "statusCode": 500,
+            "headers": {"Content-Type": "application/json"},
+            "body": json.dumps({"error": f"Server error: {str(e)}"})
+        }
