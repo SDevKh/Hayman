@@ -8,7 +8,7 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import Blog from "./components/blog";
 import BlogPost from "./components/BlogPost";
-import Swot from "./components/swot";
+import Swot from "./components/Swot";
 
 const queryClient = new QueryClient();
 
