@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { Menu, X } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
-const navItems = ['Home', 'Services', 'About', 'Portfolio', 'Contact'];
+const navItems = ['Home', 'Services', 'About', 'Portfolio', 'Contact', 'Swot'];
 
 const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -10,6 +11,7 @@ const Navigation = () => {
 
   // Refs for desktop nav items
   const navRefs = useRef<(HTMLButtonElement | null)[]>([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -22,11 +24,11 @@ const Navigation = () => {
   useEffect(() => {
     // Animate desktop nav items on mount
     gsap.from(navRefs.current, {
-  y: -30,
-  opacity: 0,
-  duration: 1,
-  delay: 0.5,
-  stagger: 0.2
+      y: -30,
+      opacity: 0,
+      duration: 1,
+      delay: 0.5,
+      stagger: 0.2
     });
   }, []);
 
@@ -36,6 +38,15 @@ const Navigation = () => {
       element.scrollIntoView({ behavior: 'smooth' });
     }
     setIsMobileMenuOpen(false);
+  };
+
+  const handleNavClick = (item: string) => {
+    if (item.toLowerCase() === 'swot') {
+      navigate('/swot');
+      setIsMobileMenuOpen(false);
+    } else {
+      scrollToSection(item.toLowerCase());
+    }
   };
 
   return (
@@ -56,7 +67,7 @@ const Navigation = () => {
               <button
                 key={item}
                 ref={el => (navRefs.current[idx] = el)}
-                onClick={() => scrollToSection(item.toLowerCase())}
+                onClick={() => handleNavClick(item)}
                 className="text-gray-300 hover:text-blue-400 transition-colors duration-200 font-medium"
               >
                 {item}
@@ -79,7 +90,7 @@ const Navigation = () => {
             {navItems.map((item) => (
               <button
                 key={item}
-                onClick={() => scrollToSection(item.toLowerCase())}
+                onClick={() => handleNavClick(item)}
                 className="block w-full text-left py-2 text-gray-300 hover:text-blue-400 transition-colors duration-200"
               >
                 {item}

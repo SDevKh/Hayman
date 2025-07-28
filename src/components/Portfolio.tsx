@@ -136,13 +136,13 @@ const Portfolio = () => {
     {projects.map((project, index) => (
       <div
         key={index}
-        className=" min-w-[340px] max-w-xs portfolio-card group bg-slate-800/50 backdrop-blur-sm rounded-2xl overflow-hidden border border-slate-700/50 hover:border-blue-500/50 transition-transform duration-300 hover:scale-105"
+        className=" min-w-[340px] max-w-xs portfolio-card group bg-slate-800/50 backdrop-blur-sm rounded-2xl overflow-hidden border border-slate-700/50 hover:border-blue-500/50 transition-transform duration-300  hover:scale-125"
       >
         <div className="relative overflow-hidden">
           <img
             src={project.image}
             alt={project.title}
-            className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-300"
+            className=" w-full h-48 object-cover group-hover:scale-110 transition-transform duration-300"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent"></div>
           <div className="absolute top-4 right-4">
