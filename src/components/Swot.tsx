@@ -159,6 +159,12 @@ export default function App() {
               <textarea name="businessDescription" id="businessDescription" value={formData.businessDescription} onChange={handleChange} required rows="3" className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"></textarea>
             </div>
 
+            <div>
+              <label htmlFor='websiteInfo' className='text-sm flex'>Do you have a website ?</label>
+              <input type="radio" name="businessName" id="businessName" value={formData.businessName} onChange={handleChange} required className="m-[1.2vw] border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" />Yes
+              <input type="radio" name="businessName" id="businessName" value={formData.businessName} onChange={handleChange} required className="m-[1.2vw] border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" />No
+            </div>
+
             {/* Industry */}
             <div>
               <label htmlFor="industry" className="block text-sm font-medium text-gray-700 mb-1">Industry</label>
