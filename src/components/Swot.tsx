@@ -97,7 +97,8 @@ export default function App() {
 
     try {
       // Send the form data to the Python backend
-      const response = await fetch('http://127.0.0.1:5000/analyze', {
+      const response = await fetch('/api/analyze', {
+
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
