@@ -97,7 +97,7 @@ export default function App() {
 
     try {
       // Send the form data to the Python backend
-      const response = await fetch('/api/analyze', {
+      const response = await fetch('https://ai-analyzer-fdi3.onrender.com', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -115,7 +115,7 @@ export default function App() {
 
     } catch (err) {
       // Handle network errors or errors from the backend
-      setError('Description is too short or invalid. Please give a fair information.');
+      setError('Failed to get analysis. Please make sure the Python server is running and try again.');
       console.error("Fetch error:", err);
     } finally {
       setIsLoading(false); // Stop loading, regardless of outcome
@@ -157,12 +157,6 @@ export default function App() {
             <div>
               <label htmlFor="businessDescription" className="block text-sm font-medium text-gray-700 mb-1">What does your business do?</label>
               <textarea name="businessDescription" id="businessDescription" value={formData.businessDescription} onChange={handleChange} required rows="3" className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"></textarea>
-            </div>
-
-            <div>
-              <label htmlFor='websiteInfo' className='text-sm flex'>Do you have a website ?</label>
-              <input type="radio" name="businessName" id="businessName" value={formData.businessName} onChange={handleChange} required className="m-[1.2vw] border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" />Yes
-              <input type="radio" name="businessName" id="businessName" value={formData.businessName} onChange={handleChange} required className="m-[1.2vw] border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" />No
             </div>
 
             {/* Industry */}
