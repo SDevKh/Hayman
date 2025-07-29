@@ -97,7 +97,7 @@ export default function App() {
 
     try {
       // Send the form data to the Python backend
-      const response = await fetch('https://ai-analyzer-fdi3.onrender.com', {
+      const response = await fetch('https://flask-hello-world-muxu.onrender.com', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
