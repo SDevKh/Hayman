@@ -72,7 +72,7 @@ const Portfolio = () => {
       image: '/pics/portfolio.png',
       tags: ['Gatsby', 'Tailwind', 'Netlify', 'React'],
       category: 'Portfolio',
-      demoUrl: 'https://devkhandelwal0.netfliy.app/', // Add this line
+      demoUrl: 'https://devkhandelwal0.netlify.app/', // Add this line
       codeUrl: 'https://github.com/SdevKh/portfolio'
     }
   ];
