@@ -96,8 +96,8 @@ export default function App() {
     setAnalysis(null);
 
     try {
-      // Correct URL
-        const response = await fetch('https://flask-hello-world-muxu.onrender.com/analyze', {
+      // The backend URL where the Flask app is running
+      const response = await fetch('http://127.0.0.1:5000/analyze', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -105,17 +105,18 @@ export default function App() {
         body: JSON.stringify(formData),
       });
 
-      if (!response.ok) {
-        // If the server response is not OK, throw an error
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
       const result = await response.json();
+
+      if (!response.ok) {
+        // If the server response is not OK, use the error message from the backend if available
+        throw new Error(result.error || `HTTP error! status: ${response.status}`);
+      }
+      
       setAnalysis(result); // Store the analysis from the backend
 
     } catch (err) {
       // Handle network errors or errors from the backend
-      setError('Failed to get analysis. Please make sure the Python server is running and try again.');
+      setError(err.message || 'Failed to get analysis. Please make sure the Python server is running and try again.');
       console.error("Fetch error:", err);
     } finally {
       setIsLoading(false); // Stop loading, regardless of outcome
