@@ -20,7 +20,7 @@ load_dotenv()
 
 # Initialize the Flask application
 app = Flask(__name__)
-CORS(app)
+CORS(app, origins=["https://www.haymangroup.tech", "http://localhost:8080", "http://127.0.0.1:8080"])
 
 # --- AI Model Configuration ---
 api_key = os.getenv("GOOGLE_API_KEY")

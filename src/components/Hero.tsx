@@ -1,9 +1,36 @@
 import React, { useRef, useEffect } from "react";
 import gsap from "gsap";
+import Swiper from 'swiper';
+import 'swiper/css';
 import { ArrowRight, Code, Scale, Sparkles } from 'lucide-react';
 
 const Hero = () => {
   const gradientTextRef = useRef<HTMLSpanElement | null>(null);
+  
+  function cursoreffect() {
+    var page1content = document.querySelector('#home');
+    var cursor = document.querySelector('.cursor');
+
+    page1content?.addEventListener('mousemove', function(dets) {
+      gsap.to(cursor, {
+        x: dets.x,
+        y: dets.y
+      })
+    })
+      page1content?.addEventListener('mouseenter', function () {
+      gsap.to(cursor, {
+        scale: 1,
+        opacity: 1
+      })
+    })
+      page1content?.addEventListener('mouseleave', function () {
+      gsap.to(cursor, {
+        scale: 0,
+        opacity: 0
+      })
+  })
+}
+  cursoreffect();
 
   useEffect(() => {
     if (gradientTextRef.current) {
