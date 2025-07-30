@@ -1,216 +1,159 @@
-import React, { useState } from 'react';
+import os
+import json
+from flask import Flask, request, jsonify
+from flask_cors import CORS
+from dotenv import load_dotenv
+from cerebras.cloud.sdk import Cerebras
 
-// --- Helper Components for UI ---
+# Load environment variables from a .env file
+load_dotenv()
 
-// A simple loading spinner component
-const LoadingSpinner = () => (
-  <div className="flex flex-col items-center justify-center p-10">
-    <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
-    <p className="mt-4 text-gray-600">Analyzing your business...</p>
-  </div>
-);
+app = Flask(__name__)
+# Configure Cross-Origin Resource Sharing (CORS)
+CORS(app, origins=["https://www.haymangroup.tech", "http://localhost:8080", "*"])
 
-// Component to display the final analysis report
-const AnalysisReport = ({ analysis }) => (
-  <div className="bg-white p-8 rounded-xl shadow-lg animate-fade-in w-full">
-    <h2 className="text-3xl font-bold text-gray-800 mb-2">
-      Analysis for <span className="text-blue-600">{analysis.businessName}</span>
-    </h2>
-    <p className="text-gray-500 mb-8">Here is your generated growth potential report.</p>
+# --- Cerebras AI Client Configuration ---
+cerebras_api_key = os.getenv("CEREBRAS_API_KEY")
+client = None
 
-    {/* SWOT Analysis Section */}
-    <div className="mb-8">
-      <h3 className="text-2xl font-semibold text-gray-700 mb-4 border-b-2 border-blue-100 pb-2">SWOT Analysis</h3>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="bg-green-50 p-4 rounded-lg border border-green-200">
-          <h4 className="font-bold text-green-800 mb-2">Strengths</h4>
-          <ul className="list-disc list-inside text-green-700 space-y-1">
-            {analysis.swot.strengths.map((item, i) => <li key={i}>{item}</li>)}
-          </ul>
-        </div>
-        <div className="bg-red-50 p-4 rounded-lg border border-red-200">
-          <h4 className="font-bold text-red-800 mb-2">Weaknesses</h4>
-          <ul className="list-disc list-inside text-red-700 space-y-1">
-             {analysis.swot.weaknesses.map((item, i) => <li key={i}>{item}</li>)}
-          </ul>
-        </div>
-        <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
-          <h4 className="font-bold text-blue-800 mb-2">Opportunities</h4>
-          <ul className="list-disc list-inside text-blue-700 space-y-1">
-            {analysis.swot.opportunities.map((item, i) => <li key={i}>{item}</li>)}
-          </ul>
-        </div>
-        <div className="bg-yellow-50 p-4 rounded-lg border border-yellow-200">
-          <h4 className="font-bold text-yellow-800 mb-2">Threats</h4>
-          <ul className="list-disc list-inside text-yellow-700 space-y-1">
-            {analysis.swot.threats.map((item, i) => <li key={i}>{item}</li>)}
-          </ul>
-        </div>
-      </div>
-    </div>
-
-    {/* Growth Plan Section */}
-    <div>
-      <h3 className="text-2xl font-semibold text-gray-700 mb-4 border-b-2 border-blue-100 pb-2">Your Growth Plan</h3>
-      <ol className="list-decimal list-inside space-y-3 text-gray-600">
-        {analysis.growthPlan.map((step, i) => (
-          <li key={i} className="p-3 bg-gray-50 rounded-md border">{step}</li>
-        ))}
-      </ol>
-    </div>
-  </div>
-);
+if cerebras_api_key:
+    try:
+        # Initialize the Cerebras client with the API key
+        client = Cerebras(api_key=cerebras_api_key)
+        print("--- Cerebras AI Client configured successfully. ---")
+    except Exception as e:
+        print(f"!!! CEREBRAS CONFIGURATION ERROR !!!\n{e}")
+else:
+    print("!!! CRITICAL ERROR: CEREBRAS_API_KEY not found. Please check your .env file. !!!")
 
 
-// --- Main App Component ---
+def generate_analysis_with_ai(business_data):
+    """
+    Generates a business analysis using the Cerebras AI model.
+    """
+    if not client:
+        # Return an error if the Cerebras client is not initialized
+        return {
+            "error": "AI client not configured.",
+            "message": "The CEREBRAS_API_KEY might be missing or invalid. Please check the backend server logs."
+        }
 
-export default function App() {
-  // State to hold the form data
-  const [formData, setFormData] = useState({
-    businessName: '',
-    businessDescription: '',
-    industry: 'E-commerce',
-    businessAge: '1-3 years',
-    teamSize: '2-5 people',
-  });
+    # System prompt to instruct the AI on its role and the desired output format
+    system_prompt = f"""
+    You are an expert business consultant. Your task is to analyze the provided business data and generate a SWOT analysis and a 3-step initial growth plan.
 
-  // State for the analysis result, loading status, and errors
-  const [analysis, setAnalysis] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
+    IMPORTANT: Respond with ONLY a valid JSON object in the following format. Do not include any text, explanations, or markdown formatting before or after the JSON object.
 
-  // Handles changes in form inputs
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prevData => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
+    {{
+      "businessName": "{business_data.get('businessName', 'N/A')}",
+      "swot": {{
+        "strengths": ["Strength 1", "Strength 2"],
+        "weaknesses": ["Weakness 1", "Weakness 2"],
+        "opportunities": ["Opportunity 1", "Opportunity 2"],
+        "threats": ["Threat 1", "Threat 2"]
+      }},
+      "growthPlan": [
+        "Step 1: Detailed first action.",
+        "Step 2: Detailed second action.",
+        "Step 3: Detailed third action."
+      ]
+    }}
+    """
 
-  // Handles the form submission
-  const handleSubmit = async (e) => {
-    e.preventDefault(); // Prevent default form submission
-    setIsLoading(true);
-    setError(null);
-    setAnalysis(null);
+    # User prompt containing the specific business details for analysis
+    user_prompt = f"""
+    Please analyze the following business based on the data provided:
 
-    try {
-      // The backend URL where the Flask app is running
-      const response = await fetch('http://127.0.0.1:5000/analyze', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
+    - Name: {business_data.get('businessName')}
+    - Industry: {business_data.get('industry')}
+    - Description: {business_data.get('businessDescription')}
+    - Age: {business_data.get('businessAge')}
+    - Team Size: {business_data.get('teamSize')}
+    """
 
-      const result = await response.json();
+    try:
+        print("--- Sending prompt to Cerebras AI model for analysis ---")
+        # Create a non-streaming chat completion request
+        completion = client.chat.completions.create(
+            messages=[
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": user_prompt}
+            ],
+            model="qwen-3-235b-a22b-instruct-2507", # Model specified in your original code
+            stream=False, # We need the full JSON response at once
+            max_completion_tokens=2000,
+            temperature=0.7,
+            top_p=0.8
+        )
 
-      if (!response.ok) {
-        // If the server response is not OK, use the error message from the backend if available
-        throw new Error(result.error || `HTTP error! status: ${response.status}`);
-      }
-      
-      setAnalysis(result); // Store the analysis from the backend
+        # Extract the response text
+        response_text = completion.choices[0].message.content
+        
+        print("--- Received response from Cerebras AI ---")
+        print(response_text)
 
-    } catch (err) {
-      // Handle network errors or errors from the backend
-      setError(err.message || 'Failed to get analysis. Please make sure the Python server is running and try again.');
-      console.error("Fetch error:", err);
-    } finally {
-      setIsLoading(false); // Stop loading, regardless of outcome
-    }
-  };
+        # Clean up the response to ensure it's a valid JSON string
+        cleaned_response_text = response_text.strip().replace("```json", "").replace("```", "")
+        
+        # Parse the JSON string into a Python dictionary
+        analysis_json = json.loads(cleaned_response_text)
+        return analysis_json
 
-  // If there's an analysis, show the report and a button to start over
-  if (analysis) {
-    return (
-      <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center p-4">
-        <AnalysisReport analysis={analysis} />
-        <button
-          onClick={() => setAnalysis(null)}
-          className="mt-8 bg-blue-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-blue-700 transition-colors shadow-md"
-        >
-          Start New Analysis
-        </button>
-      </div>
-    );
-  }
+    except json.JSONDecodeError as e:
+        print(f"!!! JSON DECODE ERROR: Failed to parse AI response. Error: {e}")
+        print(f"Raw Response Text: {response_text}")
+        return {"error": "Failed to parse the AI's response. The format was invalid."}
+    except Exception as e:
+        print(f"!!! An error occurred during Cerebras AI generation: {e}")
+        return {"error": "An unexpected error occurred while generating the AI analysis."}
 
-  // Main view with the form
-  return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4 font-sans">
-      <div className="w-full max-w-2xl">
-        <div className="bg-white rounded-xl shadow-2xl p-8">
-          <h1 className="text-3xl font-bold text-gray-800 text-center">Business Growth Analyzer</h1>
-          <p className="text-center text-gray-500 mb-8">Enter your business details to get a free growth plan.</p>
 
-          {/* The Form */}
-          <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Business Name */}
-            <div>
-              <label htmlFor="businessName" className="block text-sm font-medium text-gray-700 mb-1">Business Name</label>
-              <input type="text" name="businessName" id="businessName" value={formData.businessName} onChange={handleChange} required className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" />
-            </div>
+@app.route('/analyze', methods=['POST', 'OPTIONS'])
+def analyze_business():
+    """
+    API endpoint to receive business data, send it to the Cerebras AI for analysis,
+    and return the result.
+    """
+    # Handle CORS preflight request
+    if request.method == 'OPTIONS':
+        headers = {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Headers': 'Content-Type',
+            'Access-Control-Allow-Methods': 'POST, OPTIONS'
+        }
+        return jsonify({}), 204, headers
 
-            {/* Business Description */}
-            <div>
-              <label htmlFor="businessDescription" className="block text-sm font-medium text-gray-700 mb-1">What does your business do?</label>
-              <textarea name="businessDescription" id="businessDescription" value={formData.businessDescription} onChange={handleChange} required rows="3" className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"></textarea>
-            </div>
+    # Standard response headers
+    response_headers = {'Access-Control-Allow-Origin': '*'}
 
-            {/* Industry */}
-            <div>
-              <label htmlFor="industry" className="block text-sm font-medium text-gray-700 mb-1">Industry</label>
-              <select name="industry" id="industry" value={formData.industry} onChange={handleChange} className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
-                <option>E-commerce</option>
-                <option>Local Service</option>
-                <option>Restaurant</option>
-                <option>Software/SaaS</option>
-                <option>Consulting</option>
-                <option>Other</option>
-              </select>
-            </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {/* Business Age */}
-                <div>
-                  <label htmlFor="businessAge" className="block text-sm font-medium text-gray-700 mb-1">Business Age</label>
-                  <select name="businessAge" id="businessAge" value={formData.businessAge} onChange={handleChange} className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
-                    <option>Less than 1 year</option>
-                    <option>1-3 years</option>
-                    <option>3-5 years</option>
-                    <option>5+ years</option>
-                  </select>
-                </div>
+    # Get data from the POST request
+    business_data = request.get_json()
+    if not business_data:
+        return jsonify({"error": "No data provided"}), 400, response_headers
 
-                {/* Team Size */}
-                <div>
-                  <label htmlFor="teamSize" className="block text-sm font-medium text-gray-700 mb-1">Team Size</label>
-                  <select name="teamSize" id="teamSize" value={formData.teamSize} onChange={handleChange} className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
-                    <option>Just me</option>
-                    <option>2-5 people</option>
-                    <option>6-10 people</option>
-                    <option>11+ people</option>
-                  </select>
-                </div>
-            </div>
+    print("\n--- Received Business Data for Analysis ---")
+    print(json.dumps(business_data, indent=2))
 
-            {/* Submit Button & Status */}
-            <div className="pt-2">
-              {isLoading ? (
-                <LoadingSpinner />
-              ) : (
-                <button type="submit" className="w-full bg-blue-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-blue-700 transition-colors duration-300 shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                  Generate My Growth Plan
-                </button>
-              )}
-              {error && <p className="text-red-500 text-center mt-4">{error}</p>}
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  );
-}
+    # Basic input validation
+    description = business_data.get("businessDescription", "")
+    if len(description) < 15:
+        return jsonify({
+            "error": "Please provide a more detailed business description (at least 15 characters)."
+        }), 400, response_headers
+
+    # --- Generate Analysis using Cerebras AI ---
+    ai_analysis = generate_analysis_with_ai(business_data)
+
+    if ai_analysis and "error" not in ai_analysis:
+        return jsonify(ai_analysis), 200, response_headers
+    elif ai_analysis and "error" in ai_analysis:
+        # Pass the specific error from the generation function to the client
+        return jsonify(ai_analysis), 500, response_headers
+    else:
+        # Fallback for unexpected null response
+        return jsonify({"error": "Failed to generate AI analysis. Please try again later."}), 500, response_headers
+
+
+if __name__ == '__main__':
+    # Run the Flask app in debug mode on port 5000
+    app.run(debug=True, port=5000)
