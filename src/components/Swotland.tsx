@@ -42,10 +42,11 @@ const Swotland = () => {
         </div>
       </div>
       <div className="w-full flex justify-center items-center">
+                <a href='/swot'>
         <WrapButton className="mt-10" href="swot">
           <Globe className="animate-spin" />
           Get started
-        </WrapButton>
+        </
       </div>
     </section>
   );
