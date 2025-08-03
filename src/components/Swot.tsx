@@ -1,8 +1,4 @@
 import React, { useState } from 'react';
-
-// --- Helper Components for UI ---
-
-// A simple loading spinner component
 const LoadingSpinner = () => (
   <div className="flex flex-col items-center justify-center p-10">
     <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
@@ -10,7 +6,6 @@ const LoadingSpinner = () => (
   </div>
 );
 
-// Component to display the final analysis report
 const AnalysisReport = ({ analysis }) => (
   <div className="bg-white p-8 rounded-xl shadow-lg animate-fade-in w-full">
     <h2 className="text-3xl font-bold text-gray-800 mb-2">
@@ -18,7 +13,6 @@ const AnalysisReport = ({ analysis }) => (
     </h2>
     <p className="text-gray-500 mb-8">Here is your generated growth potential report.</p>
 
-    {/* SWOT Analysis Section */}
     <div className="mb-8">
       <h3 className="text-2xl font-semibold text-gray-700 mb-4 border-b-2 border-blue-100 pb-2">SWOT Analysis</h3>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -96,8 +90,8 @@ export default function App() {
     setAnalysis(null);
 
     try {
-      // Correct URL
-        const response = await fetch('https://flask-hello-world-muxu.onrender.com/analyze', {
+      // The backend URL where the Flask app is running
+      const response = await fetch('https://flask-hello-world-muxu.onrender.com/analyze', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -105,17 +99,18 @@ export default function App() {
         body: JSON.stringify(formData),
       });
 
-      if (!response.ok) {
-        // If the server response is not OK, throw an error
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
       const result = await response.json();
+
+      if (!response.ok) {
+        // If the server response is not OK, use the error message from the backend if available
+        throw new Error(result.error || `HTTP error! status: ${response.status}`);
+      }
+      
       setAnalysis(result); // Store the analysis from the backend
 
     } catch (err) {
       // Handle network errors or errors from the backend
-      setError('Failed to get analysis. Please make sure the Python server is running and try again.');
+      setError(err.message || 'Failed to get analysis. Please make sure the Python server is running and try again.');
       console.error("Fetch error:", err);
     } finally {
       setIsLoading(false); // Stop loading, regardless of outcome

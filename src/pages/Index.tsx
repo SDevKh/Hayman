@@ -7,6 +7,7 @@ import About from '../components/About';
 import Portfolio from '../components/Portfolio';
 import Contact from '../components/Contact';
 import Footer from '../components/Footer';
+import Swotland from "../components/Swotland.tsx";
 
 const Index = () => {
   return (
@@ -14,6 +15,7 @@ const Index = () => {
       <Navigation />
       <Hero />
       <Services />
+      <Swotland />
       <About />
       <Portfolio />
       <Contact />

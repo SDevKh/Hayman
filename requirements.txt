@@ -4,3 +4,4 @@ gunicorn
 google-generativeai
 python-dotenv
 requests
+cerebras-cloud-sdk

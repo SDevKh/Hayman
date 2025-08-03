@@ -1,25 +1,56 @@
-
 import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Users, Award, Clock, Target } from 'lucide-react';
 import { ExternalLink, Github } from 'lucide-react';
 import Marquee from 'react-fast-marquee';
+import CardCarousel from "./ui/card-carousel"
+import { describe } from 'node:test';
 
 gsap.registerPlugin(ScrollTrigger);
 
 const Portfolio = () => {
+  const images = [
+    { 
+      src: "/pics/hayman.png", 
+      alt: "E-commerce Platform", 
+      description: "Modern e-commerce solution with advanced filtering and payment integration",
+      demoUrl: "https://haymandk.netlify.app"
+    },
+    { 
+      src: "/pics/blochain.png", 
+      alt: "Blockchain Website", 
+      description: "Professional corporate website with CMS integration and SEO optimization",
+      demoUrl: "https://blockchaindk.netlify.app"
+    },
+    { 
+      src: "/pics/perfume.png", 
+      alt: "Perfume Store", 
+      description: "Online perfume store with user-friendly interface and secure checkout",
+      demoUrl: "https://purefragnance.in"
+    },
+    { 
+      src: "/pics/allinai.png", 
+      alt: "All In AI", 
+      description: "AI tools showcase with interactive features and user authentication",
+      demoUrl: "https://allinai.netlify.app"
+    },
+    { 
+      src: "/pics/portfolio.png", 
+      alt: "Portfolio Website", 
+      description: "Creative portfolio with smooth animations and gallery functionality",
+      demoUrl: "https://devkhandelwal0.netlify.app/"
+    },
+    { 
+      src: "/pics/image.png", 
+      alt: "OTB Assessment", 
+      description: "AI-powered online assessment platform for goal achievement planning",
+      demoUrl: "https://otb-gix1.vercel.app/"
+    },
+  ];
+
+
   const containerRef = useRef<HTMLDivElement>(null);
-   const scrollRef = useRef<HTMLDivElement>(null);
-  const scroll = (direction: 'left' | 'right') => {
-    if (scrollRef.current) {
-      const amount = 350; // pixels to scroll, adjust as needed
-      scrollRef.current.scrollBy({
-        left: direction === 'left' ? -amount : amount,
-        behavior: 'smooth',
-      });
-    }
-  };
   const projects = [
     {
       title: 'E-commerce Platform',
@@ -116,80 +147,19 @@ const Portfolio = () => {
           </p>
         </div>
 
-  <div className='relative'>
-    <button
-      onClick={() => scroll('left')}
-      className="absolute left-0 top-1/2 -translate-y-1/2 z-20 bg-slate-800/80 text-white rounded-full p-2 shadow hover:bg-blue-600 transition"
-      aria-label="Scroll Left">
-        &#8592;
-      </button>
-      <button
-      onClick={() => scroll('right')}
-      className="absolute right-0 top-1/2 -translate-y-1/2 z-20 bg-slate-800/80 text-white rounded-full p-2 shadow hover:bg-blue-600 transition"
-      aria-label="Scroll Right">
-        &#8594;
-      </button>
+
 <div 
-  ref={scrollRef}
   className="overflow-hidden whitespace-nowrap pb-4 scroll-smooth">
   <div className="flex gap-8">
-    {projects.map((project, index) => (
-      <div
-        key={index}
-        className=" min-w-[340px] max-w-xs portfolio-card group bg-slate-800/50 backdrop-blur-sm rounded-2xl overflow-hidden border border-slate-700/50 hover:border-blue-500/50 transition-transform duration-300  hover:scale-125"
-      >
-        <div className="relative overflow-hidden">
-          <img
-            src={project.image}
-            alt={project.title}
-            className=" w-full h-48 object-cover group-hover:scale-110 transition-transform duration-300"
+    <CardCarousel
+            images={images}
+            autoplayDelay={2000}
+            showPagination={true}
+            showNavigation={true}
+
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent"></div>
-          <div className="absolute top-4 right-4">
-            <span className="bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-medium">
-              {project.category}
-            </span>
-          </div>
-        </div>
-        <div className="p-6">
-          <h3 className="text-xl font-bold text-white mb-3">{project.title}</h3>
-          <p className="text-gray-300 mb-4 leading-relaxed">{project.description}</p>
-          <div className="flex flex-wrap gap-2 mb-4">
-            {project.tags.map((tag, tagIndex) => (
-              <span
-                key={tagIndex}
-                className="bg-slate-700 text-gray-300 px-2 py-1 rounded-lg text-sm"
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
-          <div className="flex space-x-4">
-            <a
-              href={project.demoUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center text-blue-400 hover:text-blue-300 transition-colors"
-            >
-              <ExternalLink size={16} className="mr-1" />
-              <span className="text-sm">Live Demo</span>
-            </a>
-            <a
-              href={project.codeUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center text-gray-400 hover:text-gray-300 transition-colors"
-            >
-              <Github size={16} className="mr-1" />
-              <span className="text-sm">Code</span>
-               </a>
-             </div>
-            </div>
-          </div>
-        ))}
       </div>
     </div>
-  </div>
 </div>
       
     <div className='roatating-brands mt-10 text-center overflow-hidden'>

@@ -1,110 +1,51 @@
-# app.py
-# To run this:
-# 1. Make sure you have Python installed.
-# 2. In your terminal, install the required libraries: 
-#    pip install Flask Flask-Cors requests google-generativeai python-dotenv
-# 3. Create a new file named .env in the same directory as this app.py file.
-# 4. In the .env file, add your API key like this:
-#    GOOGLE_API_KEY="YOUR_API_KEY_HERE"
-# 5. Run the server: python app.py
-
 import os
 import json
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-import google.generativeai as genai
 from dotenv import load_dotenv
+from cerebras.cloud.sdk import Cerebras
 
 # Load environment variables from a .env file
 load_dotenv()
 
-# Initialize the Flask application
 app = Flask(__name__)
-CORS(app, origins=["https://www.haymangroup.tech", "http://localhost:8080", "http://127.0.0.1:8080"])
+# Configure Cross-Origin Resource Sharing (CORS)
+CORS(app, origins=["https://www.haymangroup.tech", "http://localhost:8080", "*"])
 
-# --- AI Model Configuration ---
-api_key = os.getenv("GOOGLE_API_KEY")
-model = None
+# --- Cerebras AI Client Configuration ---
+cerebras_api_key = os.getenv("CEREBRAS_API_KEY")
+client = None
 
-if api_key:
+if cerebras_api_key:
     try:
-        genai.configure(api_key=api_key)
-        model = genai.GenerativeModel('gemini-1.5-flash')
-        print("--- Google AI Model configured successfully with 'gemini-1.5-flash'. ---")
+        # Initialize the Cerebras client with the API key
+        client = Cerebras(api_key=cerebras_api_key)
+        print("--- Cerebras AI Client configured successfully. ---")
     except Exception as e:
-        print(f"!!! CONFIGURATION ERROR !!!\n{e}")
+        print(f"!!! CEREBRAS CONFIGURATION ERROR !!!\n{e}")
 else:
-    print("!!! CRITICAL ERROR: GOOGLE_API_KEY not found. Please check your .env file. !!!")
-
-# --- NEW: Function to Validate User Input ---
-def is_input_meaningful(business_description):
-    """
-    Uses the AI to perform a quick check on the quality of the user's input.
-    """
-    if not model:
-        # If the model isn't configured, we can't validate.
-        # It's safer to assume the input is okay than to block a valid user.
-        return True
-        
-    # First, a simple length check to filter out obvious gibberish.
-    if len(business_description) < 15:
-        return False
-
-    # Second, ask the AI to classify the input with more forgiving instructions.
-    try:
-        validation_prompt = f"""
-        Your task is to determine if the following text is a real attempt to describe a business, or if it is complete nonsense. Ignore minor spelling or grammar errors. The description might be simple or vague, but as long as it's not random gibberish (like "asdf ghjkl"), you should approve it.
-        Answer with a single word: YES or NO.
-
-        Description: "{business_description}"
-        """
-        response = model.generate_content(validation_prompt)
-        decision = response.text.strip().upper()
-        print(f"--- Input Validation Check ---")
-        print(f"Description: '{business_description}'")
-        print(f"AI Decision: {decision}")
-        print(f"----------------------------")
-        return "YES" in decision
-    except Exception as e:
-        print(f"An error occurred during input validation: {e}")
-        # If validation fails, allow the request to proceed to avoid blocking users.
-        return True
+    print("!!! CRITICAL ERROR: CEREBRAS_API_KEY not found. Please check your .env file. !!!")
 
 
 def generate_analysis_with_ai(business_data):
     """
-    Generates a business analysis using a generative AI model.
+    Generates a business analysis using the Cerebras AI model.
     """
-    if not model:
+    if not client:
+        # Return an error if the Cerebras client is not initialized
         return {
-            "businessName": business_data.get("businessName", "Your Business"),
-            "swot": {
-                "strengths": ["Error: AI model not configured."],
-                "weaknesses": ["Please check the backend server logs."],
-                "opportunities": ["The GOOGLE_API_KEY might be missing or invalid."],
-                "threats": ["Analysis could not be generated."]
-            },
-            "growthPlan": ["Step 1: Resolve the AI configuration issue on the server."]
+            "error": "AI client not configured.",
+            "message": "The CEREBRAS_API_KEY might be missing or invalid. Please check the backend server logs."
         }
 
-    prompt = f"""
-    Analyze the following business and generate a SWOT analysis and a 3-step initial growth plan.
+    # System prompt to instruct the AI on its role and the desired output format
+    system_prompt = f"""
+    You are an expert business consultant. Your task is to analyze the provided business data and generate a SWOT analysis and a 3-step initial growth plan.
 
-    Business Data:
-    - Name: {business_data.get('businessName')}
-    - Industry: {business_data.get('industry')}
-    - Description: {business_data.get('businessDescription')}
-    - Age: {business_data.get('businessAge')}
-    - Team Size: {business_data.get('teamSize')}
-
-    Your task is to act as an expert business consultant. Based on the data provided, generate:
-    1. A SWOT analysis with 2-3 points for each category (Strengths, Weaknesses, Opportunities, Threats).
-    2. A simple, actionable 3-step growth plan suitable for a business of this type and age.
-
-    IMPORTANT: Respond with ONLY a valid JSON object in the following format. Do not include any text or markdown formatting before or after the JSON object.
+    IMPORTANT: Respond with ONLY a valid JSON object in the following format. Do not include any text, explanations, or markdown formatting before or after the JSON object.
 
     {{
-      "businessName": "{business_data.get('businessName')}",
+      "businessName": "{business_data.get('businessName', 'N/A')}",
       "swot": {{
         "strengths": ["Strength 1", "Strength 2"],
         "weaknesses": ["Weakness 1", "Weakness 2"],
@@ -119,49 +60,100 @@ def generate_analysis_with_ai(business_data):
     }}
     """
 
+    # User prompt containing the specific business details for analysis
+    user_prompt = f"""
+    Please analyze the following business based on the data provided:
+
+    - Name: {business_data.get('businessName')}
+    - Industry: {business_data.get('industry')}
+    - Description: {business_data.get('businessDescription')}
+    - Age: {business_data.get('businessAge')}
+    - Team Size: {business_data.get('teamSize')}
+    """
+
     try:
-        print("--- Sending prompt to AI model for full analysis ---")
-        response = model.generate_content(prompt)
-        response_text = response.text.strip().replace("```json", "").replace("```", "")
-        print("--- Received response from AI ---")
+        print("--- Sending prompt to Cerebras AI model for analysis ---")
+        # Create a non-streaming chat completion request
+        completion = client.chat.completions.create(
+            messages=[
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": user_prompt}
+            ],
+            model="qwen-3-235b-a22b-instruct-2507", # Model specified in your original code
+            stream=False, # We need the full JSON response at once
+            max_completion_tokens=2000,
+            temperature=0.7,
+            top_p=0.8
+        )
+
+        # Extract the response text
+        response_text = completion.choices[0].message.content
+        
+        print("--- Received response from Cerebras AI ---")
         print(response_text)
-        analysis_json = json.loads(response_text)
+
+        # Clean up the response to ensure it's a valid JSON string
+        cleaned_response_text = response_text.strip().replace("```json", "").replace("```", "")
+        
+        # Parse the JSON string into a Python dictionary
+        analysis_json = json.loads(cleaned_response_text)
         return analysis_json
+
+    except json.JSONDecodeError as e:
+        print(f"!!! JSON DECODE ERROR: Failed to parse AI response. Error: {e}")
+        print(f"Raw Response Text: {response_text}")
+        return {"error": "Failed to parse the AI's response. The format was invalid."}
     except Exception as e:
-        print(f"An error occurred during AI generation: {e}")
-        return None
+        print(f"!!! An error occurred during Cerebras AI generation: {e}")
+        return {"error": "An unexpected error occurred while generating the AI analysis."}
 
 
-@app.route('/analyze', methods=['POST'])
+@app.route('/analyze', methods=['POST', 'OPTIONS'])
 def analyze_business():
     """
-    Receives business data, validates it, sends it to the AI for analysis,
-    and returns the result.
+    API endpoint to receive business data, send it to the Cerebras AI for analysis,
+    and return the result.
     """
+    # Handle CORS preflight request
+    if request.method == 'OPTIONS':
+        headers = {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Headers': 'Content-Type',
+            'Access-Control-Allow-Methods': 'POST, OPTIONS'
+        }
+        return jsonify({}), 204, headers
+
+    # Standard response headers
+    response_headers = {'Access-Control-Allow-Origin': '*'}
+
+    # Get data from the POST request
     business_data = request.get_json()
     if not business_data:
-        return jsonify({"error": "No data provided"}), 400
+        return jsonify({"error": "No data provided"}), 400, response_headers
 
-    print("--- Received Business Data ---")
-    print(business_data)
+    print("\n--- Received Business Data for Analysis ---")
+    print(json.dumps(business_data, indent=2))
 
-    # --- NEW: Validate the business description before proceeding ---
+    # Basic input validation
     description = business_data.get("businessDescription", "")
-    if not is_input_meaningful(description):
-        # Return a specific error message that the frontend can handle.
+    if len(description) < 15:
         return jsonify({
-            "error": "Please provide a more detailed and meaningful business description."
-        }), 400 # 400 indicates a "Bad Request" from the client.
+            "error": "Please provide a more detailed business description (at least 15 characters)."
+        }), 400, response_headers
 
-    
-    # --- Generate Analysis using AI ---
+    # --- Generate Analysis using Cerebras AI ---
     ai_analysis = generate_analysis_with_ai(business_data)
 
-    if ai_analysis:
-        return jsonify(ai_analysis)
+    if ai_analysis and "error" not in ai_analysis:
+        return jsonify(ai_analysis), 200, response_headers
+    elif ai_analysis and "error" in ai_analysis:
+        # Pass the specific error from the generation function to the client
+        return jsonify(ai_analysis), 500, response_headers
     else:
-        return jsonify({"error": "Failed to generate AI analysis. Please try again later."}), 500
+        # Fallback for unexpected null response
+        return jsonify({"error": "Failed to generate AI analysis. Please try again later."}), 500, response_headers
 
 
 if __name__ == '__main__':
+    # Run the Flask app in debug mode on port 5000
     app.run(debug=True, port=5000)
