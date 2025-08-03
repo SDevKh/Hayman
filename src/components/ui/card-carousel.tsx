@@ -31,31 +31,6 @@ export const CardCarousel: React.FC<CarouselProps> = ({
 
   return (
     <section className="w-full space-y-4">
-      <style>{`
-        .carousel-swiper .swiper {
-          width: 100% !important;
-          padding-bottom: 50px !important;
-        }
-        .carousel-swiper .swiper-slide {
-          width: 600px !important;
-          height: 400px !important;
-        }
-        .carousel-overlay {
-          position: absolute !important;
-          inset: 0 !important;
-          background: rgba(0, 0, 0, 0.6) !important;
-          opacity: 0 !important;
-          transition: opacity 0.3s ease !important;
-          border-radius: 0.75rem !important;
-          display: flex !important;
-          flex-direction: column !important;
-          justify-content: flex-end !important;
-          padding: 1rem !important;
-        }
-        .carousel-group:hover .carousel-overlay {
-          opacity: 1 !important;
-        }
-      `}</style>
       <div className="mx-auto w-full max-w-4xl rounded-[24px] border border-black/5 p-2 shadow-sm md:rounded-t-[44px]">
         <div className="relative mx-  auto flex w-full flex-col rounded-[24px] border border-black/5 bg-neutral-800/5 p-2 shadow-sm md:items-start md:gap-8 md:rounded-b-[20px] md:rounded-t-[40px] md:p-2">
 
