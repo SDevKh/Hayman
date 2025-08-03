@@ -37,8 +37,10 @@ export const CardCarousel: React.FC<CarouselProps> = ({
           <div className="flex w-full items-center justify-center gap-4">
             <div className="w-full">
               <Swiper
-                className="carousel-swiper"
                 spaceBetween={50}
+                style={{
+                  '--swiper-theme-color': '#007aff',
+                }}
                 autoplay={{
                   delay: autoplayDelay,
                   disableOnInteraction: false,
@@ -67,13 +69,13 @@ export const CardCarousel: React.FC<CarouselProps> = ({
               >
                 {images.map((image, index) => (
                   <SwiperSlide key={index}>
-                    <div className="relative size-full rounded-3xl carousel-group">
+                    <div className="relative w-full h-full rounded-3xl group overflow-hidden">
                       <img
                         src={image.src}
-                        className="size-full rounded-xl"
+                        className="w-full h-full object-cover rounded-xl"
                         alt={image.alt}
                       />
-                      <div className="carousel-overlay">
+                      <div className="absolute inset-0 bg-black bg-opacity-60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl flex flex-col justify-end p-4">
                         <p className="text-white text-sm mb-3">{image.description}</p>
                         <a 
                           href={image.demoUrl} 
