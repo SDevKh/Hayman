@@ -34,10 +34,10 @@ const Contact = () => {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+          <h2 className="text-4xl md:text-5xl font-bold text-[#374151] font-keania mb-6">
             Get In <span className="text-blue-400">Touch</span>
           </h2>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+          <p className="text-xl text-[#374151] font-keania max-w-3xl mx-auto">
             Ready to start your project? Let's discuss how we can help bring your vision to life
           </p>
         </div>
@@ -46,8 +46,8 @@ const Contact = () => {
           {/* Contact Information */}
           <div className="space-y-8">
             <div>
-              <h3 className="text-2xl font-bold text-white mb-6">Let's Talk</h3>
-              <p className="text-gray-300 text-lg leading-relaxed mb-8">
+              <h3 className="text-2xl font-bold text-[#374151] font-keania mb-6">Let's Talk</h3>
+              <p className="text-[#374151] font-keania text-lg leading-relaxed mb-8">
                 We're always excited to work on new projects and help businesses grow. 
                 Reach out to us and let's discuss how we can help you achieve your goals.
               </p>

@@ -71,13 +71,15 @@ const Services = () => {
   cardRefs.current = [];
 
   return (
-    <section id="services" className="py-20 pt-0 min-h-screen overflow-visible relative">
+    <section id="services" className="py-20 pt-0 min-h-screen overflow-hidden relative">
+      <div className="absolute ml-[-80vh] mt-[-10vh] left-1/2 -translate-x-1/2 w-[50vw] h-[50rem] bg-[#1E3A8A] rounded-[50%] p-8 pointer-events-none hidden md:block" style={{ boxShadow: 'inset 0 8px 12px 0 white' }}></div>
+      <div className="absolute ml-[70vh] mt-[50vh] left-1/2 -translate-x-1/2 w-[50vw] h-[50rem] overflow-hidden bg-[#1E3A8A] rounded-[50%] p-8 pointer-events-none hidden md:block" style={{ boxShadow: 'inset 0 8px 12px 0 white' }}></div>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-            Our <span className="text-blue-400">Services</span>
+          <h2 className="text-4xl md:text-5xl font-bold text-[#374151] font-keania mb-6">
+            Our <span className="text-blue-400 font-keania">Services</span>
           </h2>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+          <p className="text-xl text-[#374151] max-w-3xl mx-auto">
             We offer comprehensive web development services to help your business thrive in the digital landscape
           </p>
         </div>
@@ -87,17 +89,17 @@ const Services = () => {
             <div
               key={index}
               ref={el => cardRefs.current[index] = el}
-              className="service-card group bg-slate-800/50 backdrop-blur-sm rounded-2xl p-8 border border-slate-700/50 hover:border-blue-500/50 transition-all duration-300 hover:transform hover:-translate-y-2 hover:shadow-2xl"
+              className="service-card group bg-[#F97316] rounded-2xl p-8  hover:border-blue-500/50 transition-all duration-300 hover:transform hover:-translate-y-2 hover:shadow-2xl"
             >
-              <div className="text-blue-400 mb-6 group-hover:scale-110 transition-transform duration-300">
+              <div className="text-[#ffd700] mb-6 group-hover:scale-110 transition-transform duration-300">
                 <service.icon size={48} />
               </div>
-              <h3 className="text-2xl font-bold text-white mb-4">{service.title}</h3>
-              <p className="text-gray-300 mb-6 leading-relaxed">{service.description}</p>
+              <h3 className="text-2xl font-bold text-black mb-4">{service.title}</h3>
+              <p className="text-black mb-6 leading-relaxed">{service.description}</p>
               <ul className="space-y-2">
                 {service.features.map((feature, featureIndex) => (
-                  <li key={featureIndex} className="text-gray-400 flex items-center">
-                    <div className="w-2 h-2 bg-blue-400 rounded-full mr-3"></div>
+                  <li key={featureIndex} className="text-white flex items-center">
+                    <div className="w-2 h-2 bg-[#ffd700] rounded-full mr-3"></div>
                     {feature}
                   </li>
                 ))}

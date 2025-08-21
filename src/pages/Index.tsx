@@ -11,7 +11,7 @@ import Swotland from "../components/Swotland.tsx";
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-[#0c0512] to-slate-900">
+    <div className="min-h-screen bg-[#FAF0E6]">
       <Navigation />
       <Hero />
       <Services />

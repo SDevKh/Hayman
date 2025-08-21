@@ -137,12 +137,14 @@ const Portfolio = () => {
 
    return (
     <section id="portfolio" className="py-20 ">
+      <div className="border-none absolute ml-[-50vh] mt-[50vh] left-1/2 -translate-x-1/2 w-[30vw] h-[30rem] bg-[#1E3A8A] rounded-[50%] p-8 pointer-events-none hidden md:block" style={{ boxShadow: 'white 0 0 17px -2px inset' }}></div>
+      <div className="border-none absolute ml-[50vh] mt-[0] left-1/2 -translate-x-1/2 w-[30vw] h-[30rem] overflow-hidden bg-[#1E3A8A] rounded-[50%] p-8 pointer-events-none hidden md:block" style={{ boxShadow: 'white 0 0 17px -2px inset' }}></div>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+          <h2 className="text-4xl md:text-5xl font-bold text-[#374151] font-keania mb-6">
             Our <span className=" text-blue-400">Portfolio</span>
           </h2>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+          <p className="text-xl text-[#374151] font-keania max-w-3xl mx-auto">
             Discover some of our recent projects and see how we've helped businesses achieve their digital goals
           </p>
         </div>
@@ -162,8 +164,8 @@ const Portfolio = () => {
     </div>
 </div>
       
-    <div className='roatating-brands mt-10 text-center overflow-hidden'>
-        <p className='text-[7vw] m-[7vh] text-[white]'>Brands We Worked</p>
+    <div className='roatating-brands mt-[10vh] text-center overflow-hidden'>
+        <p className='text-[7vw] m-[7vh] text-[#374151] font-keania'>Brands We Worked</p>
         <div className="relative w-full h-20 overflow-hidden">
           <Marquee autoFill={true} loop={0} speed={100}  className="flex items-center justify-center space-x-8">
             <div className="flex items-center space-x-8">

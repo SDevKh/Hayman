@@ -93,6 +93,7 @@ export default {
 			},
 			fontFamily: {
 				michroma: ['Michroma', 'sans-serif'],
+				keania: ['Keania One', 'cursive'],
 			}
 		}
 	},
