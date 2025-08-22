@@ -51,7 +51,7 @@ const About = () => {
       <h2 className="text-4xl md:text-5xl font-bold justify-self-center text-[#374151] mb-6">
           About <span className="text-blue-400 font-keania">HAYMAN</span>
       </h2>
-      <div className="p-[5vw] rounded-[5vw] w-[80%] justify-self-center max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 bg-[#C5FF34]" style={{ boxShadow: 'black 11px 7px 20px -4px inset' }}>
+      <div className="p-[5vw] h-[127vh] md:h-[auto] rounded-[5vw] w-[80%] justify-self-center max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 bg-[#C5FF34]" style={{ boxShadow: 'black 11px 7px 20px -4px inset' }}>
         <div className="gap-16 items-center">
           <div className="space-y-6 font-keania font-black text-[#374151] text-[2.2vw] leading-relaxed text-center mb-12">
           <p>
@@ -61,13 +61,13 @@ const About = () => {
       </div>
           <div>
           </div>
-          <div className="flex gap-6 justify-center">
+          <div className="grid md:flex gap-6 justify-center">
             {stats.map((stat, index) => (
               <div
                 key={index}
-                className="bg-white w-[15vw]  rounded-2xl p-8 text-center hover:border-blue-500/50 transition-all duration-300 hover:-translate-y-1" style={{ boxShadow: 'black 7px 10px 19px 1px inset' }}
+                className="bg-white w-[56vw] md:w-[20vw] h-[25vh] rounded-2xl p-8 text-center hover:border-blue-500/50 transition-all duration-300 hover:-translate-y-1" style={{ boxShadow: 'black 7px 10px 19px 1px inset' }}
               >
-                <div className="text-blue-400 mb-4 flex ">
+                <div className="text-blue-400 mb-4 flex">
                   <stat.icon size={48} />
                 </div>
                 <div
@@ -78,7 +78,6 @@ const About = () => {
                 </div>
                 <div className="text-[#374151]">{stat.label}</div>
               </div>
-              
             ))}
             
           </div>

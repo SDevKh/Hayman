@@ -42,7 +42,7 @@ useEffect(() => {
               </div>
               <div
               ref={circleRefs[1]}
-              className="absolute ml-[-40vh] text-[3vw] mt-[5vh] left-1/2 -translate-x-1/2 w-[20vw] h-[20rem] bg-[#1E3A8A] rounded-[50%] p-8 pointer-events-none flex items-center justify-center"
+              className="absolute ml-[-40vh] text-[3vw] mt-[5vh] left-1/2 -translate-x-1/2 w-[20vw] h-[20rem] bg-[#1E3A8A] rounded-[50%] p-8 pointer-events-none md:flex items-center justify-center hidden"
               style={{ boxShadow: 'inset 0 8px 22px 0 white' }}
               >            
               BUILD
@@ -55,7 +55,7 @@ useEffect(() => {
               GROW
             </div>
         <div className="float-right space-y-8">
-          <div className="w-[30vw] p-8 rounded-[30px] shadow-lg flex flex-col items-center text-center gap-y-4"
+          <div className="w-[93vw] md:w-[30vw] p-8 rounded-[30px] shadow-lg flex flex-col items-center text-center gap-y-4"
             style={{
                 background: 'linear-gradient(to right, #513F32 50%, #E2D487 50%)'
               }}
@@ -66,7 +66,7 @@ useEffect(() => {
               Leverage AI to gain deep insights into your business performance and market trends.
             </p>
           </div>
-          <div className="w-[30vw] p-8 rounded-[30px] shadow-lg flex flex-col items-center text-center gap-y-4"
+          <div className="w-[93vw] md:w-[30vw] p-8 rounded-[30px] shadow-lg flex flex-col items-center text-center gap-y-4"
             style={{
                 background: 'linear-gradient(to right, #513F32 50%, #E2D487 50%)'
               }}
@@ -77,7 +77,7 @@ useEffect(() => {
               Make informed decisions with data analytics and AI-driven recommendations.
             </p>
           </div>
-          <div className="w-[30vw] p-8 rounded-[30px] shadow-lg flex flex-col items-center text-center gap-y-4"
+          <div className="w-[93vw] md:w-[30vw] p-8 rounded-[30px] shadow-lg flex flex-col items-center text-center gap-y-4"
             style={{
                 background: 'linear-gradient(to right, #513F32 50%, #E2D487 50%)'
               }}
