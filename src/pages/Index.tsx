@@ -8,12 +8,14 @@ import Portfolio from '../components/Portfolio';
 import Contact from '../components/Contact';
 import Footer from '../components/Footer';
 import Swotland from "../components/Swotland.tsx";
+import Lays from "../components/Lays.tsx";
 
 const Index = () => {
   return (
     <div className="min-h-screen bg-[#FAF0E6]">
       <Navigation />
       <Hero />
+      <Lays />
       <Services />
       <Swotland />
       <About />
