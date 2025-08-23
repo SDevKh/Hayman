@@ -29,25 +29,25 @@ useEffect(() => {
             <h1 className="text-7xl mb-8 text-center font-keania font-black text-[#374151]">LAY's</h1>
         </div>
     <div className="flex md:space-x-20 space-x-4 justify-center items-center py-10">
-    <div className="w-[340px] h-[600px] rounded-[30px] shadow-lg flex items-center justify-center overflow-hidden bg-white">
+    <div className="w-[340px] h-[237px] md:h-[600px] rounded-[30px] shadow-lg flex items-center justify-center overflow-hidden bg-white">
     <img src="/pics/lay1.webp" alt="Description 1" className="w-full h-full object-cover rounded-[30px]" />
     </div>
-    <div className="w-[340px] h-[600px] rounded-[30px] shadow-lg flex items-center justify-center overflow-hidden bg-white">
+    <div className="w-[340px] h-[237px] md:h-[600px] rounded-[30px] shadow-lg flex items-center justify-center overflow-hidden bg-white">
     <img src="/pics/lay2.jpg" alt="Description 2" className="w-full h-full object-cover rounded-[30px]" />
     </div>
-    <div className="w-[340px] h-[600px] rounded-[30px] shadow-lg flex items-center justify-center overflow-hidden bg-white">
+    <div className="w-[340px] h-[237px] md:h-[600px] rounded-[30px] shadow-lg flex items-center justify-center overflow-hidden bg-white">
     <img src="/pics/lay3.jpg" alt="Description 3" className="w-full h-full object-cover rounded-[30px]" />
     </div>
     </div>
 
     <div className="flex md:space-x-20 space-x-4 justify-center items-center py-10">
-    <div className="w-[340px] h-[600px] rounded-[30px] shadow-lg flex items-center justify-center overflow-hidden bg-white">
+    <div className="w-[340px] h-[237px] md:h-[600px] rounded-[30px] shadow-lg flex items-center justify-center overflow-hidden bg-white">
     <img src="/pics/lay4.jpg" alt="Description 1" className="w-full h-full object-cover rounded-[30px]" />
     </div>
-    <div className="w-[340px] h-[600px] rounded-[30px] shadow-lg flex items-center justify-center overflow-hidden bg-white">
+    <div className="w-[340px] h-[237px] md:h-[600px] rounded-[30px] shadow-lg flex items-center justify-center overflow-hidden bg-white">
     <img src="/pics/lay5.jpg" alt="Description 2" className="w-full h-full object-cover rounded-[30px]" />
     </div>
-    <div className="w-[340px] h-[600px] rounded-[30px] shadow-lg flex items-center justify-center overflow-hidden bg-white">
+    <div className="w-[340px] h-[237px] md:h-[600px] rounded-[30px] shadow-lg flex items-center justify-center overflow-hidden bg-white">
     <img src="/pics/lay6.jpg" alt="Description 3" className="w-full h-full object-cover rounded-[30px]" />
     </div>
     </div>
