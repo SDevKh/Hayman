@@ -11,41 +11,53 @@ gsap.registerPlugin(ScrollTrigger);
 
 const Portfolio = () => {
   const images = [
-    { 
-      src: "/pics/hayman.png", 
-      alt: "E-commerce Platform", 
+    {
+      src: "/pics/hayman.png",
+      alt: "E-commerce Platform",
       description: "Modern e-commerce solution with advanced filtering and payment integration",
       demoUrl: "https://haymandk.netlify.app"
     },
-    { 
-      src: "/pics/blochain.png", 
-      alt: "Blockchain Website", 
+    {
+      src: "/pics/blochain.png",
+      alt: "Blockchain Website",
       description: "Professional corporate website with CMS integration and SEO optimization",
       demoUrl: "https://blockchaindk.netlify.app"
     },
-    { 
-      src: "/pics/perfume.png", 
-      alt: "Perfume Store", 
+    {
+      src: "/pics/perfume.png",
+      alt: "Perfume Store",
       description: "Online perfume store with user-friendly interface and secure checkout",
       demoUrl: "https://purefragnance.in"
     },
-    { 
-      src: "/pics/allinai.png", 
-      alt: "All In AI", 
+    {
+      src: "/pics/allinai.png",
+      alt: "All In AI",
       description: "AI tools showcase with interactive features and user authentication",
       demoUrl: "https://allinai.netlify.app"
     },
-    { 
-      src: "/pics/portfolio.png", 
-      alt: "Portfolio Website", 
+    {
+      src: "/pics/portfolio.png",
+      alt: "Portfolio Website",
       description: "Creative portfolio with smooth animations and gallery functionality",
       demoUrl: "https://devkhandelwal0.netlify.app/"
     },
-    { 
-      src: "/pics/image.png", 
-      alt: "OTB Assessment", 
+    {
+      src: "/pics/image.png",
+      alt: "OTB Assessment",
       description: "AI-powered online assessment platform for goal achievement planning",
       demoUrl: "https://otb-gix1.vercel.app/"
+    },
+    {
+      src: "/pics/event-zone.png",
+      alt: "Event Zone",
+      description: "A Event website that showcase events in India and allows you to book event management teams.",
+      demoUrl: "https://eventzone.co.in/"
+    },
+    {
+      src: "/pics/web-forge.png",
+      alt: "Pardesinaari",
+      description: "A women clothing e-commerce website where you can buy clothes",
+      demoUrl: "https://pardesinaari.store/"
     },
   ];
 
@@ -135,7 +147,7 @@ const Portfolio = () => {
     };
   }, []);
 
-   return (
+  return (
     <section id="portfolio" className="py-20 ">
       <div className="border-none absolute ml-[-50vh] mt-[50vh] left-1/2 -translate-x-1/2 w-[30vw] h-[30rem] bg-[#1E3A8A] rounded-[50%] p-8 pointer-events-none hidden md:block" style={{ boxShadow: 'white 0 0 17px -2px inset' }}></div>
       <div className="border-none absolute ml-[50vh] mt-[0] left-1/2 -translate-x-1/2 w-[30vw] h-[30rem] overflow-hidden bg-[#1E3A8A] rounded-[50%] p-8 pointer-events-none hidden md:block" style={{ boxShadow: 'white 0 0 17px -2px inset' }}></div>
@@ -150,24 +162,24 @@ const Portfolio = () => {
         </div>
 
 
-<div 
-  className="overflow-hidden whitespace-nowrap pb-4 scroll-smooth">
-  <div className="flex gap-8">
-    <CardCarousel
-            images={images}
-            autoplayDelay={2000}
-            showPagination={true}
-            showNavigation={true}
+        <div
+          className="overflow-hidden whitespace-nowrap pb-4 scroll-smooth">
+          <div className="flex gap-8">
+            <CardCarousel
+              images={images}
+              autoplayDelay={2000}
+              showPagination={true}
+              showNavigation={true}
 
-          />
+            />
+          </div>
+        </div>
       </div>
-    </div>
-</div>
-      
-    <div className='roatating-brands mt-[10vh] text-center overflow-hidden'>
+
+      <div className='roatating-brands mt-[10vh] text-center overflow-hidden'>
         <p className='text-[7vw] m-[7vh] text-[#374151] font-keania'>Brands We Worked</p>
         <div className="relative w-full h-20 overflow-hidden">
-          <Marquee autoFill={true} loop={0} speed={100}  className="flex items-center justify-center space-x-8">
+          <Marquee autoFill={true} loop={0} speed={100} className="flex items-center justify-center space-x-8">
             <div className="flex items-center space-x-8">
               <img src="/pics/hymn.png" alt="Brand 1" className="h-12" />
               <img src="/pics/ai.png" alt="Brand 2" className="h-12" />
@@ -176,7 +188,7 @@ const Portfolio = () => {
               <img src="/pics/block.png" alt="Brand 5" className="h-12" />
             </div>
           </Marquee>
-          
+
         </div>
       </div>
     </section>
