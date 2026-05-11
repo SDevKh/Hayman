@@ -54,7 +54,7 @@ const Portfolio = () => {
       demoUrl: "https://eventzone.co.in/"
     },
     {
-      src: "/pics/web-forge.png",
+      src: "/pics/pardesinaari.png",
       alt: "Pardesinaari",
       description: "A women clothing e-commerce website where you can buy clothes",
       demoUrl: "https://pardesinaari.store/"
