@@ -48,7 +48,7 @@ const Portfolio = () => {
       demoUrl: "https://otb-gix1.vercel.app/"
     },
     {
-      src: "/pics/event-zone.png",
+      src: "/pics/event.png",
       alt: "Event Zone",
       description: "A Event website that showcase events in India and allows you to book event management teams.",
       demoUrl: "https://eventzone.co.in/"
@@ -58,6 +58,12 @@ const Portfolio = () => {
       alt: "Pardesinaari",
       description: "A women clothing e-commerce website where you can buy clothes",
       demoUrl: "https://pardesinaari.store/"
+    },
+    {
+      src: "/pics/styldora.png",
+      alt: "StyleDora",
+      description: "A Clothing Website for the anime lovers focused on the anime themes.",
+      demoUrl: "https://styldora.in/"
     },
   ];
 
