@@ -63,7 +63,7 @@ const Portfolio = () => {
       src: "/pics/styledora.png",
       alt: "StyleDora",
       description: "A Clothing Website for the anime lovers focused on the anime themes.",
-      demoUrl: "https://www.styledora.in/"
+      demoUrl: "https://www.styledora.store/"
     },
   ];
 
