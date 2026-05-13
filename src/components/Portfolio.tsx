@@ -39,7 +39,7 @@ const Portfolio = () => {
       src: "/pics/portfolio.png",
       alt: "Portfolio Website",
       description: "Creative portfolio with smooth animations and gallery functionality",
-      demoUrl: "https://devkhandelwal0.netlify.app/"
+      demoUrl: "https://devkhandelwal.me/"
     },
     {
       src: "/pics/image.png",
@@ -51,19 +51,19 @@ const Portfolio = () => {
       src: "/pics/event.png",
       alt: "Event Zone",
       description: "A Event website that showcase events in India and allows you to book event management teams.",
-      demoUrl: "https://eventzone.co.in/"
+      demoUrl: "https://www.eventzone.co.in/"
     },
     {
       src: "/pics/pardesinaari.png",
       alt: "Pardesinaari",
       description: "A women clothing e-commerce website where you can buy clothes",
-      demoUrl: "https://pardesinaari.store/"
+      demoUrl: "https://www.pardesinaari.store/"
     },
     {
       src: "/pics/styledora.png",
       alt: "StyleDora",
       description: "A Clothing Website for the anime lovers focused on the anime themes.",
-      demoUrl: "https://styldora.in/"
+      demoUrl: "https://www.styledora.in/"
     },
   ];
 
@@ -94,8 +94,8 @@ const Portfolio = () => {
       image: '/pics/perfume.png',
       tags: ['Javascript', 'HTML/CSS', 'PostgreSQL', 'Coludfare'],
       category: 'Website',
-      demoUrl: 'https://purefragnance.in', // Add this line
-      codeUrl: 'https://github.com/SdevKh/perfume' // Optional: for code button
+      demoUrl: 'https://purefragnance.in',
+      codeUrl: 'https://github.com/SdevKh/perfume'
     },
     {
       title: 'All In AI',
@@ -103,8 +103,8 @@ const Portfolio = () => {
       image: '/pics/allinai.png',
       tags: ['js', 'GSAP', 'HTML/CSS', 'Analytics'],
       category: 'Tool',
-      demoUrl: 'https://allinai.netlify.app', // Add this line
-      codeUrl: 'https://github.com/SdevKh/allinai' // Optional: for code button
+      demoUrl: 'https://allinai.netlify.app',
+      codeUrl: 'https://github.com/SdevKh/allinai'
     },
     {
       title: 'OTB(online assement test for users',
@@ -112,8 +112,8 @@ const Portfolio = () => {
       image: '/pics/image.png',
       tags: ['Python', 'Stremlits', 'MySQL', 'MongoDB'],
       category: 'AI Tool',
-      demoUrl: 'https://otb-wh9e.vercel.app/', // Add this line
-      codeUrl: 'https://github.com/SdevKh/otb' // Optional: for code button
+      demoUrl: 'https://otb-wh9e.vercel.app/',
+      codeUrl: 'https://github.com/SdevKh/otb'
     },
     {
       title: 'Portfolio Website',
@@ -121,7 +121,7 @@ const Portfolio = () => {
       image: '/pics/portfolio.png',
       tags: ['Gatsby', 'Tailwind', 'Netlify', 'React'],
       category: 'Portfolio',
-      demoUrl: 'https://devkhandelwal0.netlify.app/', // Add this line
+      demoUrl: 'https://devkhandelwal.me/',
       codeUrl: 'https://github.com/SdevKh/portfolio'
     }
   ];
