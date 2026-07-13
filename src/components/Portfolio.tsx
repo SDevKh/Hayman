@@ -65,6 +65,30 @@ const Portfolio = () => {
       description: "A Clothing Website for the anime lovers focused on the anime themes.",
       demoUrl: "https://www.styledora.store/"
     },
+    {
+      src: "/pics/socialfuse.png",
+      alt: "Social Fuse",
+      description: "A Saas App that helps creators and brands to automate their content.",
+      demoUrl: "https://www.Social-fuse.app/"
+    },
+    {
+      src: "/pics/ofm.png",
+      alt: "Apsara OFM",
+      description: "A OFM agency that helps creators and brands to automate their content.",
+      demoUrl: "https://apsaraofm.vercel.app/"
+    },
+    {
+      src: "/pics/respro.png",
+      alt: "Restaurant",
+      description: "Restaurant website that helps you to find the best restaurants in your area.",
+      demoUrl: "https://resptro.vercel.app/"
+    },
+    {
+      src: "/pics/resume.png",
+      alt: "Resume Builder",
+      description: "A Saas App that helps users to build their resumes with AI.",
+      demoUrl: "https://resume-mu-rouge-61.vercel.app/"
+    },
   ];
 
 
@@ -123,7 +147,43 @@ const Portfolio = () => {
       category: 'Portfolio',
       demoUrl: 'https://devkhandelwal.me/',
       codeUrl: 'https://github.com/SdevKh/portfolio'
-    }
+    },
+    {
+      title: 'Social Fuse saas',
+      description: 'An end to end complete saas app for instagram automation and filter app.',
+      image: '/pics/socialfuse.png',
+      tags: ['Gatsby', 'Tailwind', 'Python', 'React'],
+      category: 'Saas',
+      demoUrl: 'https://social-fuse.app/',
+      codeUrl: 'https://github.com/SdevKh/social-help'
+    },
+    {
+      title: 'OFM Agency',
+      description: 'An end to end complete OFM AGENCY for instagram.',
+      image: '/pics/socialfuse.png',
+      tags: ['Gatsby', 'Tailwind', 'Python', 'React'],
+      category: 'Saas',
+      demoUrl: 'https://apsaraofm.vercel.app/',
+      codeUrl: 'https://github.com/SdevKh/ofm'
+    },
+    {
+      title: 'Respro',
+      description: 'A restaurant website that helps you to find the best restaurants in your area.',
+      image: '/pics/respro.png',
+      tags: ['Gatsby', 'Tailwind', 'Python', 'React'],
+      category: 'Saas',
+      demoUrl: 'https://resptro.vercel.app/',
+      codeUrl: 'https://github.com/SdevKh/resptro'
+    },
+    {
+      title: 'Ai resume builder',
+      description: 'An end to end complete resume builder for users.',
+      image: '/pics/respro.png',
+      tags: ['Gatsby', 'Tailwind', 'Python', 'React'],
+      category: 'Saas',
+      demoUrl: 'https://resume-mu-rouge-61.vercel.app/',
+      codeUrl: 'https://github.com/SdevKh/resume'
+    },
   ];
 
   useEffect(() => {
@@ -192,6 +252,10 @@ const Portfolio = () => {
               <img src="/pics/otb.png" alt="Brand 3" className="h-12" />
               <img src="/pics/pure.png" alt="Brand 4" className="h-12" />
               <img src="/pics/block.png" alt="Brand 5" className="h-12" />
+              <img src="/pics/Component 2 (1).png" alt="Brand 6" className="h-12" />
+              <img src="/pics/logo.png" alt="Brand 7" className="h-12" />
+              <img src="/pics/respro.png" alt="Brand 8" className="h-12" />
+              <img src="/pics/resume.png" alt="Brand 9" className="h-12" />
             </div>
           </Marquee>
 
