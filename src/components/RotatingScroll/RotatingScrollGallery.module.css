@@ -114,7 +114,7 @@
 .marqueeInner span {
   white-space: nowrap;
   text-transform: uppercase;
-  font-size: clamp(18rem, 16vw, 10rem);
+  font-size: clamp(8rem, 16vw, 18rem);
   font-weight: 900;
   letter-spacing: -0.02em;
   color: #F97316;
