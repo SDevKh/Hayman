@@ -101,4 +101,235 @@
   body {
     @apply bg-background text-foreground;
   }
+
+  :where(#cuberto-design) h1,
+  :where(#cuberto-design) h2,
+  :where(#cuberto-design) h3,
+  :where(#cuberto-design) h4,
+  :where(#cuberto-design) h5,
+  :where(#cuberto-design) h6 {
+    font-size: revert;
+    font-weight: revert;
+  }
+
+  /* Page 9 Flip Cards typography fixes */
+  #cuberto-design #page9 .card {
+    font-size: 16px;
+  }
+
+  #cuberto-design #page9 #card-head,
+  #cuberto-design #page9 .card #card-head {
+    font-family: matterlight, sans-serif;
+    font-size: 32px !important;
+    line-height: 1.15 !important;
+    text-transform: uppercase;
+    font-weight: 450;
+    letter-spacing: -0.01em;
+    margin: 0;
+  }
+
+  #cuberto-design #page9 .cardb-body {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+  }
+
+  #cuberto-design #page9 .cardb-body h2,
+  #cuberto-design #page9 .card .cardb-body h2 {
+    font-size: 13px !important;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    padding: 7px 18px !important;
+    border-radius: 30px;
+    text-transform: uppercase;
+    line-height: 1 !important;
+    margin: 0;
+    white-space: nowrap;
+  }
+
+  #cuberto-design #page9 #cardb > p,
+  #cuberto-design #page9 .card#cardb > p {
+    font-size: 16px !important;
+    line-height: 1.6 !important;
+    color: rgba(255, 255, 255, 0.82);
+    text-transform: capitalize;
+    font-weight: 300;
+    margin: 0;
+  }
+
+  /* Locomotive Scroll custom scrollbar styling */
+  .c-scrollbar {
+    z-index: 999999 !important;
+  }
+
+  .c-scrollbar_thumb {
+    background-color: rgba(255, 255, 255, 0.5) !important;
+    border-radius: 999px !important;
+  }
+
+  /* Page 10 video containers & video fitting */
+  #cuberto-design #page10 .p10-videocontainer {
+    overflow: hidden !important;
+    border-radius: 300px !important;
+    justify-content: center !important;
+    padding: 80px 140px !important;
+  }
+
+  #cuberto-design #page10 #p10-videocontainer-2 {
+    color: #111111 !important;
+  }
+
+  #cuberto-design #page10 .p10-videocontainer video,
+  #cuberto-design #page10 #p10-videocontainer-3 video {
+    position: absolute !important;
+    top: 50% !important;
+    right: 40px !important;
+    transform: translateY(-50%) !important;
+    width: 44% !important;
+    height: calc(100% - 60px) !important;
+    max-height: 520px !important;
+    object-fit: cover !important;
+    border-radius: 260px !important;
+    scale: 1 !important;
+  }
+
+  @media (pointer: coarse), (max-width: 1024px) {
+    #cuberto-design #mousemove {
+      display: none !important;
+    }
+  }
+
+  @media (max-width: 768px) {
+    #cuberto-design #page9 {
+      height: auto !important;
+      min-height: 100vh !important;
+      padding: 60px 16px !important;
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: center !important;
+      gap: 30px !important;
+    }
+
+    #cuberto-design #page9 .flip-cards {
+      position: relative !important;
+      top: auto !important;
+      left: auto !important;
+      transform: none !important;
+      width: 100% !important;
+      max-width: 360px !important;
+      height: 480px !important;
+      margin: 0 auto !important;
+    }
+
+    #cuberto-design #page9 .card {
+      width: 100% !important;
+      height: 100% !important;
+      padding: 32px 24px !important;
+      border-radius: 24px !important;
+    }
+
+    #cuberto-design #page9 #card-head {
+      font-size: 26px !important;
+    }
+
+    #cuberto-design #page10 {
+      height: auto !important;
+      min-height: 100vh !important;
+      padding: 50px 16px !important;
+    }
+
+    #cuberto-design #page10 .p10-videocontainer {
+      position: relative !important;
+      top: auto !important;
+      left: auto !important;
+      transform: none !important;
+      width: 100% !important;
+      max-width: 400px !important;
+      height: auto !important;
+      min-height: auto !important;
+      padding: 30px 20px !important;
+      margin: 0 auto 24px auto !important;
+      border-radius: 28px !important;
+      flex-direction: column !important;
+      align-items: flex-start !important;
+      gap: 16px !important;
+    }
+
+    #cuberto-design #page10 .p10-videocontainer video,
+    #cuberto-design #page10 #p10-videocontainer-3 video {
+      position: relative !important;
+      top: auto !important;
+      right: auto !important;
+      transform: none !important;
+      width: 100% !important;
+      height: 200px !important;
+      border-radius: 18px !important;
+      object-fit: cover !important;
+    }
+  }
+
+  #cuberto-design #mousemove {
+    pointer-events: none !important;
+  }
+
+  #cuberto-design #menui,
+  #cuberto-design #nav2 {
+    cursor: pointer !important;
+    pointer-events: auto !important;
+    user-select: none !important;
+  }
 }
+
+/* Menu overlay styles inside cuberto-design */
+.cuberto-menu-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 99998;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.35s;
+}
+
+.cuberto-menu-overlay.is-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.cuberto-menu-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(5, 5, 8, 0.95);
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
+}
+
+.cuberto-menu-container {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 1280px;
+  height: 100%;
+  max-height: 100vh;
+  padding: 32px 48px;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  color: #ffffff;
+  transform: translateY(-16px);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cuberto-menu-overlay.is-open .cuberto-menu-container {
+  transform: translateY(0);
+}
+
+

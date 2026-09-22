@@ -9,6 +9,7 @@ import NotFound from "./pages/NotFound";
 import Blog from "./components/blog";
 import BlogPost from "./components/BlogPost";
 import Swot from "./components/Swot";
+import PortfolioPage from "./pages/PortfolioPage";
 
 const queryClient = new QueryClient();
 
@@ -22,6 +23,7 @@ const App = () => {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Index />} />
+            <Route path="/portfolio" element={<PortfolioPage />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/blog/:id" element={<BlogPost />} />
             <Route path="/swot" element={<Swot />} />
