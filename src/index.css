@@ -112,19 +112,52 @@
     font-weight: revert;
   }
 
-  /* Page 9 Flip Cards typography fixes */
+  /* Page 9 Flip Cards typography & contrast fixes */
+  #cuberto-design #page9 .flipcard-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
   #cuberto-design #page9 .card {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    margin: 0 !important;
     font-size: 16px;
+    backface-visibility: hidden !important;
+    -webkit-backface-visibility: hidden !important;
+    transform-style: preserve-3d;
+    border-radius: 30px !important;
+  }
+
+  #cuberto-design #page9 #cardf,
+  #cuberto-design #page9 .card#cardf {
+    transform: rotateY(0deg) !important;
+  }
+
+  #cuberto-design #page9 #cardb,
+  #cuberto-design #page9 .card#cardb {
+    transform: rotateY(180deg) !important;
+  }
+
+  #cuberto-design #page9 .card > * {
+    position: relative;
+    z-index: 2;
   }
 
   #cuberto-design #page9 #card-head,
   #cuberto-design #page9 .card #card-head {
     font-family: matterlight, sans-serif;
-    font-size: 32px !important;
-    line-height: 1.15 !important;
+    font-size: 44px !important;
+    line-height: 1.12 !important;
     text-transform: uppercase;
-    font-weight: 450;
-    letter-spacing: -0.01em;
+    font-weight: 600;
+    letter-spacing: -0.015em;
     margin: 0;
   }
 
@@ -137,25 +170,104 @@
 
   #cuberto-design #page9 .cardb-body h2,
   #cuberto-design #page9 .card .cardb-body h2 {
-    font-size: 13px !important;
-    font-weight: 500;
+    font-size: 15px !important;
+    font-weight: 600;
     letter-spacing: 0.05em;
-    padding: 7px 18px !important;
-    border-radius: 30px;
+    padding: 9px 22px !important;
+    border-radius: 9999px;
     text-transform: uppercase;
     line-height: 1 !important;
     margin: 0;
     white-space: nowrap;
+    transition: all 0.25s ease;
   }
 
   #cuberto-design #page9 #cardb > p,
   #cuberto-design #page9 .card#cardb > p {
-    font-size: 16px !important;
+    font-size: 21px !important;
     line-height: 1.6 !important;
-    color: rgba(255, 255, 255, 0.82);
-    text-transform: capitalize;
-    font-weight: 300;
-    margin: 0;
+    color: rgba(255, 255, 255, 0.95);
+    text-transform: none !important;
+    font-weight: 400;
+    margin: 8px 0 0 0;
+  }
+
+  /* Card 1 (Mobile Development): dark scrim overlay to protect text contrast from top-left white flare */
+  #cuberto-design #page9 #flipcard-1 #cardf::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(135deg, rgba(6, 10, 30, 0.6) 0%, rgba(6, 10, 30, 0.25) 35%, transparent 65%);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  #cuberto-design #page9 #flipcard-1 #cardf #card-head {
+    color: #ffffff !important;
+    text-shadow: 0 2px 14px rgba(0, 0, 0, 0.8), 0 1px 3px rgba(0, 0, 0, 0.9);
+  }
+
+  #cuberto-design #page9 #flipcard-1 #cardf .cardb-body h2 {
+    color: #ffffff !important;
+    border: 1.5px solid rgba(255, 255, 255, 0.85) !important;
+    background: rgba(0, 0, 0, 0.35) !important;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  }
+
+  /* Card 2 (Frontend Development): bright silver-white background, so text must be dark */
+  #cuberto-design #page9 #flipcard-2 #cardf #card-head {
+    color: #0a0a0a !important;
+    font-weight: 700 !important;
+    text-shadow: none !important;
+  }
+
+  #cuberto-design #page9 #flipcard-2 #cardf .cardb-body h2 {
+    color: #0a0a0a !important;
+    border: 1.5px solid rgba(10, 10, 10, 0.8) !important;
+    background: rgba(0, 0, 0, 0.05) !important;
+    font-weight: 600 !important;
+  }
+
+  /* Card 3 (Quality Assurance): bright neon lime-yellow background, so text must be dark */
+  #cuberto-design #page9 #flipcard-3 #cardf #card-head {
+    color: #0a0a0a !important;
+    font-weight: 700 !important;
+    text-shadow: none !important;
+  }
+
+  #cuberto-design #page9 #flipcard-3 #cardf .cardb-body h2 {
+    color: #0a0a0a !important;
+    border: 1.5px solid rgba(10, 10, 10, 0.8) !important;
+    background: rgba(0, 0, 0, 0.06) !important;
+    font-weight: 600 !important;
+  }
+
+  /* Card 4 (Backend Development): dark background, bright crisp white text */
+  #cuberto-design #page9 #flipcard-4 #cardf #card-head {
+    color: #ffffff !important;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.7);
+  }
+
+  #cuberto-design #page9 #flipcard-4 #cardf .cardb-body h2 {
+    color: #ffffff !important;
+    border: 1.5px solid rgba(255, 255, 255, 0.8) !important;
+    background: rgba(255, 255, 255, 0.1) !important;
+    backdrop-filter: blur(8px);
+  }
+
+  /* Back faces of all cards (dark background #232325) */
+  #cuberto-design #page9 #cardb #card-head,
+  #cuberto-design #page9 .card#cardb #card-head {
+    color: #ffffff !important;
+  }
+
+  #cuberto-design #page9 #cardb .cardb-body h2,
+  #cuberto-design #page9 .card#cardb .cardb-body h2 {
+    color: #ffffff !important;
+    border: 1.5px solid rgba(255, 255, 255, 0.7) !important;
+    background: rgba(255, 255, 255, 0.08) !important;
   }
 
   /* Locomotive Scroll custom scrollbar styling */
@@ -201,14 +313,674 @@
   }
 
   @media (max-width: 768px) {
+    /* Touch / Cursor */
+    #cuberto-design #mousemove {
+      display: none !important;
+    }
+
+    /* Page 1 (Hero) - eliminate huge blank void and give hero video proper responsive proportions */
+    #cuberto-design #page1 {
+      height: auto !important;
+      min-height: auto !important;
+      padding-bottom: 40px !important;
+      overflow: hidden !important;
+    }
+
+    #cuberto-design #page1 .textp1 {
+      position: relative !important;
+      top: auto !important;
+      left: auto !important;
+      margin-left: 20px !important;
+      font-size: clamp(38px, 11.5vw, 54px) !important;
+      line-height: 1.05 !important;
+    }
+
+    #cuberto-design #page1 .textp1 h1 {
+      font-size: clamp(38px, 11.5vw, 54px) !important;
+      line-height: 1.05 !important;
+    }
+
+    #cuberto-design #page1 #T1 {
+      top: auto !important;
+      left: auto !important;
+      margin-top: 16px !important;
+    }
+
+    #cuberto-design #page1 #T2 {
+      top: auto !important;
+      left: auto !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      padding: 0 24px !important;
+      margin: 4px 0 !important;
+      border-radius: 999px !important;
+    }
+
+    #cuberto-design #page1 #T2 > h1,
+    #cuberto-design #page1 #T2 > h1::before,
+    #cuberto-design #page1 #T2 > h1::after {
+      font-size: clamp(34px, 10vw, 48px) !important;
+      line-height: 1 !important;
+    }
+
+    #cuberto-design #page1 #T3,
+    #cuberto-design #page1 #T4 {
+      top: auto !important;
+      left: auto !important;
+    }
+
+    #cuberto-design #page1 #p1h3 {
+      position: relative !important;
+      top: auto !important;
+      left: auto !important;
+      width: calc(100% - 40px) !important;
+      margin: 18px 20px 14px 20px !important;
+      display: flex !important;
+      justify-content: space-between !important;
+    }
+
+    #cuberto-design #page1 #p1h3 h3 {
+      font-size: 13px !important;
+      letter-spacing: 0.04em !important;
+      opacity: 0.8 !important;
+    }
+
+    /* Video on Page 1: Proper responsive height & aspect ratio, no small squished box */
+    #cuberto-design #page1 #video {
+      position: relative !important;
+      top: auto !important;
+      left: auto !important;
+      width: calc(100% - 40px) !important;
+      max-width: 520px !important;
+      height: clamp(280px, 62vw, 420px) !important;
+      margin: 0 auto 18px auto !important;
+      border-radius: 24px !important;
+      overflow: hidden !important;
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.45) !important;
+    }
+
+    #cuberto-design #page1 #video video {
+      display: block !important;
+      width: 100% !important;
+      height: 100% !important;
+      object-fit: cover !important;
+      scale: 1 !important;
+      border-radius: inherit !important;
+    }
+
+    #cuberto-design #page1 > p {
+      position: relative !important;
+      top: auto !important;
+      left: auto !important;
+      width: calc(100% - 40px) !important;
+      margin: 0 auto !important;
+      font-size: 16px !important;
+      line-height: 1.55 !important;
+      color: rgba(255, 255, 255, 0.88) !important;
+    }
+
+    #cuberto-design #rotate-p1 {
+      position: fixed !important;
+      top: auto !important;
+      bottom: 12px !important;
+      right: 12px !important;
+      scale: 0.65 !important;
+      transform-origin: bottom right !important;
+      z-index: 9999 !important;
+    }
+
+    /* Page 2 (Marquee) */
+    #cuberto-design #page2 {
+      position: relative !important;
+      height: auto !important;
+      min-height: auto !important;
+      padding: 48px 0 40px 0 !important;
+      background-color: #ffffff !important;
+      overflow: hidden !important;
+    }
+
+    #cuberto-design #page2 #moving {
+      position: relative !important;
+      top: auto !important;
+      width: 100% !important;
+      height: auto !important;
+      margin: 0 0 20px 0 !important;
+    }
+
+    #cuberto-design #page2 .move {
+      gap: 36px !important;
+      position: relative !important;
+      transform: none !important;
+    }
+
+    #cuberto-design #page2 .move h1 {
+      font-size: clamp(38px, 11vw, 56px) !important;
+      line-height: 1 !important;
+      white-space: nowrap !important;
+    }
+
+    #cuberto-design #page2 .move video {
+      width: 140px !important;
+      height: 80px !important;
+      border-radius: 40px !important;
+      object-fit: cover !important;
+      scale: 1 !important;
+      flex-shrink: 0 !important;
+      display: inline-block !important;
+    }
+
+    #cuberto-design #page2 #string {
+      position: relative !important;
+      top: auto !important;
+      left: auto !important;
+      width: 100% !important;
+      height: 60px !important;
+      margin: 10px 0 !important;
+    }
+
+    #cuberto-design #page2 > img {
+      position: relative !important;
+      bottom: auto !important;
+      left: auto !important;
+      width: 52px !important;
+      height: 52px !important;
+      margin: 0 0 16px 20px !important;
+    }
+
+    #cuberto-design #page2 #p2btm {
+      position: relative !important;
+      bottom: auto !important;
+      left: auto !important;
+      width: calc(100% - 40px) !important;
+      margin: 0 20px !important;
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 8px !important;
+      color: #111111 !important;
+    }
+
+    #cuberto-design #page2 #p2btm h3 {
+      font-size: 14px !important;
+      font-weight: 600 !important;
+      margin: 0 !important;
+    }
+
+    #cuberto-design #page2 #p2btm p {
+      font-size: 15px !important;
+      width: 100% !important;
+      line-height: 1.5 !important;
+    }
+
+    /* Page 3 (Smart Development) */
+    #cuberto-design #page3 {
+      position: relative !important;
+      height: auto !important;
+      min-height: auto !important;
+      padding: 50px 20px 40px 20px !important;
+      background-color: #000000 !important;
+      overflow: hidden !important;
+    }
+
+    #cuberto-design #page3 #head-h1 {
+      position: relative !important;
+      top: auto !important;
+      left: auto !important;
+      font-size: clamp(38px, 11vw, 54px) !important;
+      line-height: 1.08 !important;
+      margin-bottom: 24px !important;
+      color: #ffffff !important;
+    }
+
+    #cuberto-design #p3-video-wrapper {
+      position: relative !important;
+      top: auto !important;
+      left: auto !important;
+      margin: 0 auto 24px auto !important;
+      width: 100% !important;
+      height: clamp(260px, 58vw, 380px) !important;
+      min-height: 260px !important;
+      transform: none !important;
+      border-radius: 28px !important;
+      overflow: hidden !important;
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.4) !important;
+    }
+
+    #cuberto-design #p3-video-wrapper .p3-video-container,
+    #cuberto-design #p3-video-wrapper video {
+      display: block !important;
+      width: 100% !important;
+      height: 100% !important;
+      object-fit: cover !important;
+      border-radius: inherit !important;
+    }
+
+    #cuberto-design #page3 #string {
+      position: relative !important;
+      top: auto !important;
+      left: auto !important;
+      width: 100% !important;
+      height: 60px !important;
+      margin: 10px 0 !important;
+    }
+
+    #cuberto-design #page3 #p2btm {
+      position: relative !important;
+      top: auto !important;
+      left: auto !important;
+      width: 100% !important;
+      margin: 0 0 20px 0 !important;
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 8px !important;
+      color: #ffffff !important;
+    }
+
+    #cuberto-design #page3 #p2btm h3 {
+      font-size: 14px !important;
+      margin: 0 !important;
+    }
+
+    #cuberto-design #page3 #p2btm p {
+      font-size: 15px !important;
+      width: 100% !important;
+      line-height: 1.5 !important;
+      color: rgba(255, 255, 255, 0.8) !important;
+    }
+
+    #cuberto-design #p3btm {
+      position: relative !important;
+      top: auto !important;
+      right: auto !important;
+      left: auto !important;
+      width: 100% !important;
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 14px !important;
+      margin: 0 !important;
+      text-align: left !important;
+      color: #ffffff !important;
+    }
+
+    #cuberto-design #p3btm1 h3 {
+      font-size: 14px !important;
+      margin: 0 !important;
+      font-weight: 600 !important;
+    }
+
+    #cuberto-design #p3btm2 {
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 10px !important;
+    }
+
+    #cuberto-design #p3btm2a,
+    #cuberto-design #p3btm2b {
+      display: flex !important;
+      flex-wrap: wrap !important;
+      gap: 10px !important;
+    }
+
+    #cuberto-design #p3btm2 h2 {
+      font-size: 13px !important;
+      padding: 6px 16px !important;
+      border-radius: 999px !important;
+      border: 1.5px solid rgba(255, 255, 255, 0.7) !important;
+      margin: 0 !important;
+    }
+
+    #cuberto-design #p3btmvideo {
+      display: none !important;
+    }
+
+    /* Page 3-Down */
+    #cuberto-design #page3-down {
+      position: relative !important;
+      bottom: auto !important;
+      top: auto !important;
+      width: 100% !important;
+      height: auto !important;
+      min-height: auto !important;
+      padding: 50px 20px 40px 20px !important;
+      background-color: rgb(226, 207, 176) !important;
+      overflow: hidden !important;
+      z-index: 10 !important;
+    }
+
+    #cuberto-design #page3-down > video {
+      position: absolute !important;
+      inset: 0 !important;
+      width: 100% !important;
+      height: 100% !important;
+      object-fit: cover !important;
+      opacity: 0.3 !important;
+    }
+
+    #cuberto-design #page3-down #head-h1 {
+      position: relative !important;
+      top: auto !important;
+      left: auto !important;
+      font-size: clamp(38px, 11vw, 54px) !important;
+      line-height: 1.08 !important;
+      color: #111111 !important;
+      margin-bottom: 20px !important;
+      z-index: 2 !important;
+    }
+
+    #cuberto-design #page3-down #string,
+    #cuberto-design #page3-down #p3downrotate {
+      display: none !important;
+    }
+
+    #cuberto-design #p3down-body {
+      position: relative !important;
+      top: auto !important;
+      left: auto !important;
+      width: 100% !important;
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 10px !important;
+      color: #111111 !important;
+      z-index: 2 !important;
+    }
+
+    #cuberto-design #p3down-body h3 {
+      font-size: 14px !important;
+      margin: 0 !important;
+      font-weight: 600 !important;
+      color: #111111 !important;
+    }
+
+    #cuberto-design #p3down-body p {
+      font-size: 15px !important;
+      width: 100% !important;
+      line-height: 1.5 !important;
+      color: #111111 !important;
+    }
+
+    /* Page 4 (Art Direction) */
+    #cuberto-design #page4 {
+      position: relative !important;
+      height: auto !important;
+      min-height: auto !important;
+      padding: 50px 20px 40px 20px !important;
+      background-color: #ffffff !important;
+      color: #000000 !important;
+      overflow: hidden !important;
+    }
+
+    #cuberto-design #page4 > h1 {
+      position: relative !important;
+      top: auto !important;
+      left: auto !important;
+      font-size: clamp(38px, 11vw, 54px) !important;
+      line-height: 1.08 !important;
+      margin-bottom: 24px !important;
+    }
+
+    #cuberto-design #p4-video-wrapper {
+      position: relative !important;
+      top: auto !important;
+      left: auto !important;
+      margin: 0 auto 24px auto !important;
+      width: 100% !important;
+      height: clamp(260px, 58vw, 380px) !important;
+      min-height: 260px !important;
+      transform: none !important;
+      border-radius: 28px !important;
+      overflow: hidden !important;
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.15) !important;
+    }
+
+    #cuberto-design #p4-video-wrapper .p4-video-container,
+    #cuberto-design #p4-video-wrapper video {
+      display: block !important;
+      width: 100% !important;
+      height: 100% !important;
+      object-fit: cover !important;
+      border-radius: inherit !important;
+    }
+
+    #cuberto-design #page4 #string {
+      position: relative !important;
+      top: auto !important;
+      left: auto !important;
+      width: 100% !important;
+      height: 60px !important;
+      margin: 10px 0 !important;
+    }
+
+    #cuberto-design #p4left {
+      position: relative !important;
+      bottom: auto !important;
+      left: auto !important;
+      width: 100% !important;
+      margin-bottom: 24px !important;
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 8px !important;
+    }
+
+    #cuberto-design #p4left h3 {
+      font-size: 14px !important;
+      margin: 0 !important;
+      font-weight: 600 !important;
+    }
+
+    #cuberto-design #p4left p {
+      font-size: 15px !important;
+      width: 100% !important;
+      line-height: 1.5 !important;
+    }
+
+    #cuberto-design #p4right {
+      position: relative !important;
+      bottom: auto !important;
+      left: auto !important;
+      width: 100% !important;
+      padding: 0 !important;
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 10px !important;
+    }
+
+    #cuberto-design #p4right .p4rtext {
+      display: flex !important;
+      flex-wrap: wrap !important;
+      gap: 8px !important;
+    }
+
+    #cuberto-design #p4right h2 {
+      font-size: 12px !important;
+      padding: 6px 14px !important;
+      border-radius: 999px !important;
+      border: 1.5px solid rgba(0, 0, 0, 0.7) !important;
+      margin: 0 !important;
+    }
+
+    #cuberto-design #page4 > img {
+      position: relative !important;
+      bottom: auto !important;
+      left: auto !important;
+      width: 44px !important;
+      height: 44px !important;
+      margin-top: 20px !important;
+    }
+
+    /* Page 5 (We Build Stable Code) */
+    #cuberto-design #page5 {
+      position: relative !important;
+      height: auto !important;
+      min-height: auto !important;
+      padding: 60px 20px 50px 20px !important;
+      background: linear-gradient(135deg, #0F172A 0%, #1E3A8A 40%, #2563EB 75%, #7C3AED 100%) !important;
+      color: #ffffff !important;
+      overflow: hidden !important;
+    }
+
+    #cuberto-design #p5p1 {
+      position: relative !important;
+      top: auto !important;
+      left: auto !important;
+      font-size: clamp(34px, 9.5vw, 48px) !important;
+      line-height: 1.1 !important;
+      margin-bottom: 24px !important;
+      width: 100% !important;
+    }
+
+    #cuberto-design #p5p2 {
+      position: relative !important;
+      bottom: auto !important;
+      right: auto !important;
+      font-size: 16px !important;
+      line-height: 1.55 !important;
+      width: 100% !important;
+      color: rgba(255, 255, 255, 0.88) !important;
+      margin-bottom: 24px !important;
+    }
+
+    #cuberto-design #page5 > img {
+      position: relative !important;
+      left: auto !important;
+      max-width: 100% !important;
+      height: auto !important;
+      display: block !important;
+      margin: 0 auto !important;
+      border-radius: 20px !important;
+    }
+
+    /* Page 6 (Projects) */
+    #cuberto-design #page6 {
+      height: auto !important;
+      min-height: auto !important;
+      padding: 50px 20px !important;
+      overflow: hidden !important;
+    }
+
+    #cuberto-design #p6head-1,
+    #cuberto-design #p6head-2 {
+      margin-left: 0 !important;
+      display: flex !important;
+      flex-wrap: wrap !important;
+      align-items: center !important;
+      gap: 10px !important;
+    }
+
+    #cuberto-design #p6head-1 h1,
+    #cuberto-design #p6head-2 h1 {
+      font-size: clamp(36px, 10vw, 54px) !important;
+      margin: 0 !important;
+    }
+
+    #cuberto-design .p6circle {
+      width: 50px !important;
+      height: 50px !important;
+    }
+
+    #cuberto-design .p6head2-video {
+      width: 140px !important;
+      height: 80px !important;
+      border-radius: 40px !important;
+      overflow: hidden !important;
+      display: inline-flex !important;
+      flex-shrink: 0 !important;
+    }
+
+    #cuberto-design .p6head2-video video {
+      width: 100% !important;
+      height: 100% !important;
+      object-fit: cover !important;
+      scale: 1 !important;
+    }
+
+    /* Page 7 */
+    #cuberto-design #page7 {
+      height: auto !important;
+      min-height: auto !important;
+      padding: 40px 0 !important;
+      overflow: hidden !important;
+    }
+
+    #cuberto-design #p7video {
+      width: calc(100% - 40px) !important;
+      height: clamp(260px, 58vw, 380px) !important;
+      margin: 0 auto 30px auto !important;
+      border-radius: 24px !important;
+      overflow: hidden !important;
+      position: relative !important;
+    }
+
+    #cuberto-design #p7video video {
+      position: absolute !important;
+      inset: 0 !important;
+      width: 100% !important;
+      height: 100% !important;
+      object-fit: cover !important;
+      scale: 1 !important;
+    }
+
+    #cuberto-design #p7move1,
+    #cuberto-design #p7move2,
+    #cuberto-design #p7move3,
+    #cuberto-design #p7move4 {
+      height: auto !important;
+      margin: 10px 0 !important;
+    }
+
+    #cuberto-design #p7move1 h1,
+    #cuberto-design #p7move2 h1,
+    #cuberto-design #p7move3 h1,
+    #cuberto-design #p7move4 h1 {
+      font-size: clamp(28px, 8vw, 40px) !important;
+    }
+
+    #cuberto-design #p7move1-circle {
+      width: 44px !important;
+      height: 44px !important;
+    }
+
+    /* Page 8 */
+    #cuberto-design #page8 {
+      height: auto !important;
+      min-height: auto !important;
+      padding: 40px 20px !important;
+      overflow: hidden !important;
+    }
+
+    #cuberto-design #page8 > video {
+      position: relative !important;
+      top: auto !important;
+      left: auto !important;
+      width: 110px !important;
+      height: 110px !important;
+      margin: 0 auto 16px auto !important;
+      display: block !important;
+      border-radius: 50% !important;
+    }
+
+    #cuberto-design #page8 > p {
+      position: relative !important;
+      top: auto !important;
+      left: auto !important;
+      font-size: clamp(26px, 7vw, 36px) !important;
+      text-align: center !important;
+      margin-bottom: 24px !important;
+    }
+
+    #cuberto-design #page8 #string {
+      display: none !important;
+    }
+
+    /* Page 9 (Flip Cards) */
     #cuberto-design #page9 {
       height: auto !important;
-      min-height: 100vh !important;
-      padding: 60px 16px !important;
+      min-height: auto !important;
+      padding: 50px 16px 40px 16px !important;
       display: flex !important;
       flex-direction: column !important;
       align-items: center !important;
-      gap: 30px !important;
+      gap: 24px !important;
+      overflow: hidden !important;
     }
 
     #cuberto-design #page9 .flip-cards {
@@ -229,14 +1001,38 @@
       border-radius: 24px !important;
     }
 
-    #cuberto-design #page9 #card-head {
-      font-size: 26px !important;
+    #cuberto-design #page9 #card-head,
+    #cuberto-design #page9 .card #card-head {
+      font-size: 28px !important;
     }
 
+    #cuberto-design #page9 .cardb-body h2,
+    #cuberto-design #page9 .card .cardb-body h2 {
+      font-size: 13px !important;
+      padding: 7px 16px !important;
+    }
+
+    #cuberto-design #page9 #cardb > p,
+    #cuberto-design #page9 .card#cardb > p {
+      font-size: 16px !important;
+    }
+
+    /* Page 10 (Metric Capsules) */
     #cuberto-design #page10 {
       height: auto !important;
-      min-height: 100vh !important;
-      padding: 50px 16px !important;
+      min-height: auto !important;
+      padding: 50px 16px 40px 16px !important;
+      overflow: hidden !important;
+    }
+
+    #cuberto-design #page10 > p {
+      position: relative !important;
+      top: auto !important;
+      left: auto !important;
+      width: 92% !important;
+      font-size: clamp(16px, 4.5vw, 20px) !important;
+      margin: 0 auto 24px auto !important;
+      text-align: center !important;
     }
 
     #cuberto-design #page10 .p10-videocontainer {
@@ -245,15 +1041,26 @@
       left: auto !important;
       transform: none !important;
       width: 100% !important;
-      max-width: 400px !important;
+      max-width: 420px !important;
       height: auto !important;
       min-height: auto !important;
-      padding: 30px 20px !important;
-      margin: 0 auto 24px auto !important;
+      padding: 28px 20px !important;
+      margin: 0 auto 20px auto !important;
       border-radius: 28px !important;
       flex-direction: column !important;
       align-items: flex-start !important;
       gap: 16px !important;
+    }
+
+    #cuberto-design #page10 .p10-videocontainer h1 {
+      font-size: clamp(38px, 10vw, 48px) !important;
+      margin-bottom: 6px !important;
+    }
+
+    #cuberto-design #page10 .p10-videocontainer p {
+      width: 100% !important;
+      font-size: 14px !important;
+      line-height: 1.5 !important;
     }
 
     #cuberto-design #page10 .p10-videocontainer video,
@@ -265,6 +1072,59 @@
       width: 100% !important;
       height: 200px !important;
       border-radius: 18px !important;
+      object-fit: cover !important;
+    }
+
+    /* Page 11, 12, 13 */
+    #cuberto-design #page11 {
+      height: auto !important;
+      min-height: auto !important;
+      padding: 50px 20px !important;
+      overflow: hidden !important;
+    }
+
+    #cuberto-design #page11 > h1,
+    #cuberto-design #p11-head-2 h1 {
+      font-size: clamp(36px, 10vw, 52px) !important;
+    }
+
+    #cuberto-design #p11head2circle {
+      width: 50px !important;
+      height: 50px !important;
+    }
+
+    #cuberto-design #p11head2circle video {
+      width: 100% !important;
+      height: 100% !important;
+      object-fit: cover !important;
+      border-radius: 50% !important;
+    }
+
+    #cuberto-design #page12 {
+      height: auto !important;
+      min-height: auto !important;
+      padding: 50px 20px !important;
+      overflow: hidden !important;
+    }
+
+    #cuberto-design #page13 {
+      height: auto !important;
+      min-height: auto !important;
+      padding: 60px 20px 40px 20px !important;
+      overflow: hidden !important;
+    }
+
+    #cuberto-design #p13maintext h1,
+    #cuberto-design #p13maintext h2 {
+      font-size: clamp(36px, 10vw, 52px) !important;
+    }
+
+    #cuberto-design #p13maintext video {
+      width: 90px !important;
+      height: 90px !important;
+      display: inline-block !important;
+      vertical-align: middle !important;
+      border-radius: 50% !important;
       object-fit: cover !important;
     }
   }

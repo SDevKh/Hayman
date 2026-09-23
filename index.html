@@ -14,6 +14,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Hayman</title>
     <link rel="icon" type="image/png" href="/favicon.png" />
+    <!-- Preconnect to video CDNs for faster DNS and TLS connection -->
+    <link rel="preconnect" href="https://res.cloudinary.com" crossorigin />
+    <link rel="dns-prefetch" href="https://res.cloudinary.com" />
+    <link rel="preconnect" href="https://cdn.cuberto.com" crossorigin />
+    <link rel="dns-prefetch" href="https://cdn.cuberto.com" />
     <link href="https://fonts.googleapis.com/css2?family=Michroma&display=swap" rel="stylesheet" />
     <!-- Landing design: the stylesheet lives in /public so its relative font/media
          URLs stay untouched by the bundler. -->

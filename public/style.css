@@ -1342,7 +1342,6 @@ body {
     width: 550px;
     height: 650px;
     transform: translate(-50%, -50%);
-    transition: transform bounce 1s;
     cursor: pointer;
 }
 
@@ -1351,28 +1350,27 @@ body {
     transform: rotateY(180deg);
 }
 
-
 .flipcard-container {
+    position: relative;
     width: 550px;
     height: 650px;
     transform-style: preserve-3d;
-    transition: transform .5s;
-    /* transition: ease-in-out; */
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
-
 
 .card {
     position: absolute;
+    top: 0;
+    left: 0;
     width: 550px;
     height: 650px;
-    /* background-color: #E0FD60; */
     color: black;
     font-size: 16px;
     text-transform: uppercase;
     padding: 20px;
     transform-style: preserve-3d;
     backface-visibility: hidden;
-    transition: transform ease-in-out 1s;
+    -webkit-backface-visibility: hidden;
     border-radius: 30px;
 }
 
@@ -1403,12 +1401,12 @@ body {
 .card #card-head,
 #card-head {
     font-family: matterlight, sans-serif;
-    font-size: 34px;
-    line-height: 1.15;
+    font-size: 44px;
+    line-height: 1.12;
     text-transform: uppercase;
-    font-weight: 450;
+    font-weight: 600;
     margin: 0;
-    letter-spacing: -0.01em;
+    letter-spacing: -0.015em;
 }
 
 .cardb-body {
@@ -1420,12 +1418,12 @@ body {
 
 .card .cardb-body h2,
 .cardb-body h2 {
-    padding: 7px 18px;
-    border: 1px solid rgba(255, 255, 255, 0.6);
-    font-size: 13px;
-    font-weight: 500;
-    letter-spacing: 0.04em;
-    border-radius: 30px;
+    padding: 9px 22px;
+    border: 1.5px solid rgba(255, 255, 255, 0.7);
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    border-radius: 9999px;
     text-transform: uppercase;
     line-height: 1;
     margin: 0;
@@ -1433,22 +1431,39 @@ body {
 }
 
 #cardf .cardb-body h2 {
-    border: 1px solid rgba(255, 255, 255, 0.7);
+    border: 1.5px solid rgba(255, 255, 255, 0.85);
     color: #FFFFFF;
 }
 
+#flipcard-2 #cardf #card-head {
+    color: #0a0a0a;
+    font-weight: 700;
+}
+
 #flipcard-2 #cardf .cardb-body h2 {
-    border: 1px solid rgba(0, 0, 0, 0.6);
-    color: #111;
+    border: 1.5px solid rgba(10, 10, 10, 0.8);
+    color: #0a0a0a;
+    background: rgba(0, 0, 0, 0.05);
+}
+
+#flipcard-3 #cardf #card-head {
+    color: #0a0a0a;
+    font-weight: 700;
+}
+
+#flipcard-3 #cardf .cardb-body h2 {
+    border: 1.5px solid rgba(10, 10, 10, 0.8);
+    color: #0a0a0a;
+    background: rgba(0, 0, 0, 0.06);
 }
 
 #cardb>p {
-    font-size: 16px;
+    font-size: 21px;
     line-height: 1.6;
-    color: rgba(255, 255, 255, 0.82);
-    text-transform: capitalize;
-    font-weight: 300;
-    margin: 0;
+    color: rgba(255, 255, 255, 0.95);
+    text-transform: none;
+    font-weight: 400;
+    margin: 8px 0 0 0;
 }
 
 #flipcard-1 {
@@ -2139,27 +2154,40 @@ body {
     /* Page 1 (Hero) */
     #page1 {
         height: auto !important;
-        min-height: 100vh;
-        padding-bottom: 80px;
-        overflow: hidden;
+        min-height: auto !important;
+        padding-bottom: 40px !important;
+        overflow: hidden !important;
     }
 
     .textp1 {
         position: relative !important;
         top: auto !important;
         left: auto !important;
-        margin-left: 20px;
-        font-size: clamp(38px, 12vw, 56px) !important;
-        line-height: 1.1;
+        margin-left: 20px !important;
+        font-size: clamp(38px, 11.5vw, 54px) !important;
+        line-height: 1.05 !important;
     }
 
     .textp1 h1 {
-        font-size: clamp(38px, 12vw, 56px) !important;
-        line-height: 1.1;
+        font-size: clamp(38px, 11.5vw, 54px) !important;
+        line-height: 1.05 !important;
     }
 
-    #T1 { top: auto !important; left: auto !important; margin-top: 30px; }
-    #T2 { top: auto !important; left: auto !important; }
+    #T1 { top: auto !important; left: auto !important; margin-top: 16px !important; }
+    #T2 {
+        top: auto !important;
+        left: auto !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        padding: 0 24px !important;
+        margin: 4px 0 !important;
+        border-radius: 999px !important;
+    }
+    #T2 > h1, #T2 > h1::before, #T2 > h1::after {
+        font-size: clamp(34px, 10vw, 48px) !important;
+        line-height: 1 !important;
+    }
     #T3 { top: auto !important; left: auto !important; }
     #T4 { top: auto !important; left: auto !important; }
 
@@ -2167,238 +2195,558 @@ body {
         position: relative !important;
         top: auto !important;
         left: auto !important;
-        width: 90% !important;
-        margin: 24px 20px 0 20px !important;
-        display: flex;
-        justify-content: space-between;
+        width: calc(100% - 40px) !important;
+        margin: 18px 20px 14px 20px !important;
+        display: flex !important;
+        justify-content: space-between !important;
     }
 
     #p1h3 h3 {
         font-size: 13px !important;
+        letter-spacing: 0.04em !important;
+        opacity: 0.8 !important;
     }
 
     #video {
         position: relative !important;
         top: auto !important;
         left: auto !important;
-        width: 92% !important;
-        height: 240px !important;
-        margin: 32px auto 20px auto !important;
-        border-radius: 20px !important;
-        overflow: hidden;
+        width: calc(100% - 40px) !important;
+        max-width: 520px !important;
+        height: clamp(280px, 62vw, 420px) !important;
+        margin: 0 auto 18px auto !important;
+        border-radius: 24px !important;
+        overflow: hidden !important;
+        box-shadow: 0 16px 36px rgba(0, 0, 0, 0.45) !important;
     }
 
     #video video {
+        display: block !important;
         width: 100% !important;
         height: 100% !important;
         object-fit: cover !important;
+        scale: 1 !important;
+        border-radius: inherit !important;
     }
 
     #page1 > p {
         position: relative !important;
         top: auto !important;
         left: auto !important;
-        width: 90% !important;
-        margin: 20px auto !important;
-        font-size: 15px !important;
-        line-height: 1.6 !important;
+        width: calc(100% - 40px) !important;
+        margin: 0 auto !important;
+        font-size: 16px !important;
+        line-height: 1.55 !important;
+        color: rgba(255, 255, 255, 0.88) !important;
     }
 
-    /* Page 2 */
+    /* Page 2 (Marquee) */
     #page2 {
-        height: 55vh !important;
-        min-height: 380px;
-        overflow: hidden;
-    }
-
-    #p2move h1 {
-        font-size: clamp(48px, 14vw, 76px) !important;
-    }
-
-    #p2video-wrapper {
-        top: 15% !important;
-        left: 10% !important;
-        width: 80% !important;
-        height: 70% !important;
-        border-radius: 30px !important;
-    }
-
-    /* Page 3 */
-    #page3 {
+        position: relative !important;
         height: auto !important;
-        min-height: 100vh;
-        padding: 40px 16px;
-        overflow: hidden;
+        min-height: auto !important;
+        padding: 48px 0 40px 0 !important;
+        background-color: #ffffff !important;
+        overflow: hidden !important;
     }
 
-    #p3-head {
+    #moving {
+        position: relative !important;
+        top: auto !important;
+        width: 100% !important;
+        height: auto !important;
+        margin: 0 0 20px 0 !important;
+    }
+
+    .move {
+        gap: 36px !important;
+        position: relative !important;
+        transform: none !important;
+    }
+
+    .move h1 {
+        font-size: clamp(38px, 11vw, 56px) !important;
+        line-height: 1 !important;
+        white-space: nowrap !important;
+    }
+
+    .move video {
+        width: 140px !important;
+        height: 80px !important;
+        border-radius: 40px !important;
+        object-fit: cover !important;
+        scale: 1 !important;
+        flex-shrink: 0 !important;
+        display: inline-block !important;
+    }
+
+    #page2 #string {
         position: relative !important;
         top: auto !important;
         left: auto !important;
-        margin-bottom: 24px;
+        width: 100% !important;
+        height: 60px !important;
+        margin: 10px 0 !important;
     }
 
-    #p3-head h1 {
-        font-size: clamp(34px, 10vw, 50px) !important;
-        line-height: 1.1;
+    #page2 > img {
+        position: relative !important;
+        bottom: auto !important;
+        left: auto !important;
+        width: 52px !important;
+        height: 52px !important;
+        margin: 0 0 16px 20px !important;
+    }
+
+    #page2 #p2btm {
+        position: relative !important;
+        bottom: auto !important;
+        left: auto !important;
+        width: calc(100% - 40px) !important;
+        margin: 0 20px !important;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 8px !important;
+        color: #111111 !important;
+    }
+
+    #page2 #p2btm h3 {
+        font-size: 14px !important;
+        font-weight: 600 !important;
+        margin: 0 !important;
+    }
+
+    #page2 #p2btm p {
+        font-size: 15px !important;
+        width: 100% !important;
+        line-height: 1.5 !important;
+    }
+
+    /* Page 3 (Smart Development) */
+    #page3 {
+        position: relative !important;
+        height: auto !important;
+        min-height: auto !important;
+        padding: 50px 20px 40px 20px !important;
+        background-color: #000000 !important;
+        overflow: hidden !important;
+    }
+
+    #head-h1 {
+        position: relative !important;
+        top: auto !important;
+        left: auto !important;
+        font-size: clamp(38px, 11vw, 54px) !important;
+        line-height: 1.08 !important;
+        margin-bottom: 24px !important;
+        color: #ffffff !important;
     }
 
     #p3-video-wrapper {
         position: relative !important;
         top: auto !important;
         left: auto !important;
-        width: 92vw !important;
-        height: 40vh !important;
-        min-height: 240px;
-        max-height: 360px;
-        border-radius: 24px !important;
-        margin: 0 auto;
-        overflow: hidden;
+        margin: 0 auto 24px auto !important;
+        width: 100% !important;
+        height: clamp(260px, 58vw, 380px) !important;
+        min-height: 260px !important;
+        transform: none !important;
+        border-radius: 28px !important;
+        overflow: hidden !important;
+        box-shadow: 0 16px 36px rgba(0, 0, 0, 0.4) !important;
     }
 
+    #p3-video-wrapper .p3-video-container,
     #p3-video-wrapper video {
+        display: block !important;
         width: 100% !important;
         height: 100% !important;
         object-fit: cover !important;
+        border-radius: inherit !important;
     }
 
-    #page3-down {
+    #page3 #string {
         position: relative !important;
         top: auto !important;
         left: auto !important;
         width: 100% !important;
-        height: auto !important;
-        padding: 30px 0;
-        margin-top: 24px;
+        height: 60px !important;
+        margin: 10px 0 !important;
     }
 
-    #page3-down h1 {
-        font-size: clamp(28px, 8vw, 40px) !important;
-    }
-
-    #page3-down p {
-        font-size: 15px !important;
-        width: 92% !important;
-        margin-top: 14px;
-        line-height: 1.5;
-    }
-
-    /* Page 4 */
-    #page4 {
-        height: auto !important;
-        min-height: 100vh;
-        padding: 40px 16px;
-        overflow: hidden;
-    }
-
-    #p4-head {
+    #page3 #p2btm {
         position: relative !important;
         top: auto !important;
         left: auto !important;
-        margin-bottom: 24px;
+        width: 100% !important;
+        margin: 0 0 20px 0 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 8px !important;
+        color: #ffffff !important;
     }
 
-    #p4-head h1 {
-        font-size: clamp(34px, 10vw, 50px) !important;
-        line-height: 1.1;
+    #page3 #p2btm h3 {
+        font-size: 14px !important;
+        margin: 0 !important;
+    }
+
+    #page3 #p2btm p {
+        font-size: 15px !important;
+        width: 100% !important;
+        line-height: 1.5 !important;
+        color: rgba(255, 255, 255, 0.8) !important;
+    }
+
+    #p3btm {
+        position: relative !important;
+        top: auto !important;
+        right: auto !important;
+        left: auto !important;
+        width: 100% !important;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 14px !important;
+        margin: 0 !important;
+        text-align: left !important;
+        color: #ffffff !important;
+    }
+
+    #p3btm1 h3 {
+        font-size: 14px !important;
+        margin: 0 !important;
+        font-weight: 600 !important;
+    }
+
+    #p3btm2 {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 10px !important;
+    }
+
+    #p3btm2a,
+    #p3btm2b {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        gap: 10px !important;
+    }
+
+    #p3btm2 h2 {
+        font-size: 13px !important;
+        padding: 6px 16px !important;
+        border-radius: 999px !important;
+        border: 1.5px solid rgba(255, 255, 255, 0.7) !important;
+        margin: 0 !important;
+    }
+
+    #p3btmvideo {
+        display: none !important;
+    }
+
+    /* Page 3-Down */
+    #page3-down {
+        position: relative !important;
+        bottom: auto !important;
+        top: auto !important;
+        width: 100% !important;
+        height: auto !important;
+        min-height: auto !important;
+        padding: 50px 20px 40px 20px !important;
+        background-color: rgb(226, 207, 176) !important;
+        overflow: hidden !important;
+        z-index: 10 !important;
+    }
+
+    #page3-down > video {
+        position: absolute !important;
+        inset: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+        opacity: 0.3 !important;
+    }
+
+    #page3-down #head-h1 {
+        position: relative !important;
+        top: auto !important;
+        left: auto !important;
+        font-size: clamp(38px, 11vw, 54px) !important;
+        line-height: 1.08 !important;
+        color: #111111 !important;
+        margin-bottom: 20px !important;
+        z-index: 2 !important;
+    }
+
+    #page3-down #string,
+    #page3-down #p3downrotate {
+        display: none !important;
+    }
+
+    #p3down-body {
+        position: relative !important;
+        top: auto !important;
+        left: auto !important;
+        width: 100% !important;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 10px !important;
+        color: #111111 !important;
+        z-index: 2 !important;
+    }
+
+    #p3down-body h3 {
+        font-size: 14px !important;
+        margin: 0 !important;
+        font-weight: 600 !important;
+        color: #111111 !important;
+    }
+
+    #p3down-body p {
+        font-size: 15px !important;
+        width: 100% !important;
+        line-height: 1.5 !important;
+        color: #111111 !important;
+    }
+
+    /* Page 4 (Art Direction) */
+    #page4 {
+        position: relative !important;
+        height: auto !important;
+        min-height: auto !important;
+        padding: 50px 20px 40px 20px !important;
+        background-color: #ffffff !important;
+        color: #000000 !important;
+        overflow: hidden !important;
+    }
+
+    #page4 > h1 {
+        position: relative !important;
+        top: auto !important;
+        left: auto !important;
+        font-size: clamp(38px, 11vw, 54px) !important;
+        line-height: 1.08 !important;
+        margin-bottom: 24px !important;
     }
 
     #p4-video-wrapper {
         position: relative !important;
         top: auto !important;
         left: auto !important;
+        margin: 0 auto 24px auto !important;
+        width: 100% !important;
+        height: clamp(260px, 58vw, 380px) !important;
+        min-height: 260px !important;
         transform: none !important;
-        width: 92vw !important;
-        height: 40vh !important;
-        min-height: 240px;
-        max-height: 360px;
-        border-radius: 24px !important;
-        margin: 0 auto;
-        overflow: hidden;
+        border-radius: 28px !important;
+        overflow: hidden !important;
+        box-shadow: 0 16px 36px rgba(0, 0, 0, 0.15) !important;
     }
 
+    #p4-video-wrapper .p4-video-container,
     #p4-video-wrapper video {
+        display: block !important;
         width: 100% !important;
         height: 100% !important;
         object-fit: cover !important;
+        border-radius: inherit !important;
     }
 
-    /* Page 5 */
-    #page5 {
-        height: auto !important;
-        min-height: 70vh;
-        padding: 50px 16px;
-        overflow: hidden;
-    }
-
-    #p5-head {
+    #page4 #string {
         position: relative !important;
         top: auto !important;
         left: auto !important;
-        margin-bottom: 24px;
+        width: 100% !important;
+        height: 60px !important;
+        margin: 10px 0 !important;
     }
 
-    #p5-head h1 {
-        font-size: clamp(32px, 9vw, 48px) !important;
-        line-height: 1.15;
-    }
-
-    #p5-p {
+    #p4left {
         position: relative !important;
-        top: auto !important;
+        bottom: auto !important;
         left: auto !important;
+        width: 100% !important;
+        margin-bottom: 24px !important;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 8px !important;
     }
 
-    #p5-p p {
+    #p4left h3 {
+        font-size: 14px !important;
+        margin: 0 !important;
+        font-weight: 600 !important;
+    }
+
+    #p4left p {
         font-size: 15px !important;
-        width: 92% !important;
-        line-height: 1.5;
+        width: 100% !important;
+        line-height: 1.5 !important;
+    }
+
+    #p4right {
+        position: relative !important;
+        bottom: auto !important;
+        left: auto !important;
+        width: 100% !important;
+        padding: 0 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 10px !important;
+    }
+
+    #p4right .p4rtext {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        gap: 8px !important;
+    }
+
+    #p4right h2 {
+        font-size: 12px !important;
+        padding: 6px 14px !important;
+        border-radius: 999px !important;
+        border: 1.5px solid rgba(0, 0, 0, 0.7) !important;
+        margin: 0 !important;
+    }
+
+    #page4 > img {
+        position: relative !important;
+        bottom: auto !important;
+        left: auto !important;
+        width: 44px !important;
+        height: 44px !important;
+        margin-top: 20px !important;
+    }
+
+    /* Page 5 (We Build Stable Code) */
+    #page5 {
+        position: relative !important;
+        height: auto !important;
+        min-height: auto !important;
+        padding: 60px 20px 50px 20px !important;
+        background: linear-gradient(135deg, #0F172A 0%, #1E3A8A 40%, #2563EB 75%, #7C3AED 100%) !important;
+        color: #ffffff !important;
+        overflow: hidden !important;
+    }
+
+    #p5p1 {
+        position: relative !important;
+        top: auto !important;
+        left: auto !important;
+        font-size: clamp(34px, 9.5vw, 48px) !important;
+        line-height: 1.1 !important;
+        margin-bottom: 24px !important;
+        width: 100% !important;
+    }
+
+    #p5p2 {
+        position: relative !important;
+        bottom: auto !important;
+        right: auto !important;
+        font-size: 16px !important;
+        line-height: 1.55 !important;
+        width: 100% !important;
+        color: rgba(255, 255, 255, 0.88) !important;
+        margin-bottom: 24px !important;
     }
 
     #page5 > img {
-        max-width: 90vw !important;
+        position: relative !important;
+        left: auto !important;
+        max-width: 100% !important;
         height: auto !important;
-        margin: 20px auto 0 auto;
-        display: block;
+        display: block !important;
+        margin: 0 auto !important;
+        border-radius: 20px !important;
     }
 
-    /* Page 6 */
+    /* Page 6 (Projects) */
     #page6 {
         height: auto !important;
-        min-height: 70vh;
-        padding: 40px 16px;
-        overflow: hidden;
+        min-height: auto !important;
+        padding: 50px 20px !important;
+        overflow: hidden !important;
+    }
+
+    #p6head-1,
+    #p6head-2 {
+        margin-left: 0 !important;
+        display: flex !important;
+        flex-wrap: wrap !important;
+        align-items: center !important;
+        gap: 10px !important;
     }
 
     #p6head-1 h1,
     #p6head-2 h1 {
-        font-size: clamp(38px, 11vw, 56px) !important;
+        font-size: clamp(36px, 10vw, 54px) !important;
+        margin: 0 !important;
     }
 
-    #p6video {
-        width: 92vw !important;
-        height: 45vh !important;
-        min-height: 240px;
-        border-radius: 20px !important;
-        margin: 24px auto 0 auto;
+    .p6circle {
+        width: 50px !important;
+        height: 50px !important;
+    }
+
+    .p6head2-video {
+        width: 140px !important;
+        height: 80px !important;
+        border-radius: 40px !important;
+        overflow: hidden !important;
+        display: inline-flex !important;
+        flex-shrink: 0 !important;
+    }
+
+    .p6head2-video video {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+        scale: 1 !important;
     }
 
     /* Page 7 */
     #page7 {
         height: auto !important;
-        min-height: 80vh;
-        padding: 40px 16px;
-        overflow: hidden;
+        min-height: auto !important;
+        padding: 40px 0 !important;
+        overflow: hidden !important;
     }
 
     #p7video {
-        width: 92vw !important;
-        height: 45vh !important;
-        border-radius: 20px !important;
+        width: calc(100% - 40px) !important;
+        height: clamp(260px, 58vw, 380px) !important;
+        margin: 0 auto 30px auto !important;
+        border-radius: 24px !important;
+        overflow: hidden !important;
+        position: relative !important;
     }
 
-    #p7move1 h1 {
-        font-size: clamp(30px, 8vw, 42px) !important;
+    #p7video video {
+        position: absolute !important;
+        inset: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+        scale: 1 !important;
+    }
+
+    #p7move1,
+    #p7move2,
+    #p7move3,
+    #p7move4 {
+        height: auto !important;
+        margin: 10px 0 !important;
+    }
+
+    #p7move1 h1,
+    #p7move2 h1,
+    #p7move3 h1,
+    #p7move4 h1 {
+        font-size: clamp(28px, 8vw, 40px) !important;
+    }
+
+    #p7move1-circle {
+        width: 44px !important;
+        height: 44px !important;
     }
 
     /* Page 8 (Technology icons) */

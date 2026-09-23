@@ -443,16 +443,138 @@ export const initCubertoDesign = (): (() => void) => {
   });
 
   /* ------------------------------------------------------------------ *
-   * Autoplay the (muted) background videos, even when the browser is strict
-   * about autoplay policy.
+   * High-Performance Lazy-load + Auto-streaming for background videos.
+   *
+   * 1. Hero fold videos are preloaded immediately so there is zero initial delay.
+   * 2. Remaining videos are preloaded ahead of time (top 200%) via GSAP
+   *    ScrollTrigger (fully synchronized with LocomotiveScroll's virtual scroller).
+   * 3. Fallback checks via LocomotiveScroll scroll events + IntersectionObserver
+   *    guarantee every video loads reliably across all devices.
+   * 4. Smart pause/resume conserves GPU/CPU decoding resources when videos
+   *    are far outside the viewport, maintaining a buttery smooth 60-120fps.
+   * 5. Inline mobile playback attributes and autoplay policy fallbacks ensure
+   *    universal playback without console errors.
    * ------------------------------------------------------------------ */
-  qa<HTMLVideoElement>("video").forEach((video) => {
+  const ensureVideoAttrs = (video: HTMLVideoElement) => {
     video.muted = true;
-    const playing = video.play();
-    if (playing && typeof playing.catch === "function") {
-      playing.catch(() => {});
+    video.defaultMuted = true;
+    video.playsInline = true;
+    if (!video.hasAttribute("playsinline")) video.setAttribute("playsinline", "");
+    if (!video.hasAttribute("webkit-playsinline")) video.setAttribute("webkit-playsinline", "");
+  };
+
+  const playVideo = (video: HTMLVideoElement) => {
+    ensureVideoAttrs(video);
+    const promise = video.play();
+    if (promise && typeof promise.catch === "function") {
+      promise.catch(() => {
+        // Autoplay may be restricted until user interaction
+        const startOnInteract = () => {
+          video.play().catch(() => {});
+          window.removeEventListener("pointerdown", startOnInteract);
+          window.removeEventListener("touchstart", startOnInteract);
+          window.removeEventListener("keydown", startOnInteract);
+        };
+        window.addEventListener("pointerdown", startOnInteract, { once: true });
+        window.addEventListener("touchstart", startOnInteract, { once: true });
+        window.addEventListener("keydown", startOnInteract, { once: true });
+      });
     }
+  };
+
+  const loadAndPlayVideo = (video: HTMLVideoElement) => {
+    ensureVideoAttrs(video);
+    const dataSrc = video.dataset.src;
+    if (dataSrc && !video.getAttribute("src")) {
+      video.src = dataSrc;
+      video.preload = "auto";
+      video.load();
+    }
+    playVideo(video);
+  };
+
+  // 1. Immediately preload above-the-fold hero videos
+  const heroVideos = qa<HTMLVideoElement>("#rotate-p1 video, #video video");
+  heroVideos.forEach(loadAndPlayVideo);
+
+  // 2. Preload remaining videos with ScrollTrigger synchronized to LocomotiveScroll
+  const lazyVideos = qa<HTMLVideoElement>("video[data-src]");
+
+  lazyVideos.forEach((video) => {
+    if (heroVideos.includes(video)) return;
+
+    // Load well before entering viewport
+    ScrollTrigger.create({
+      trigger: video,
+      scroller: "#main",
+      start: "top 200%",
+      once: true,
+      onEnter: () => {
+        loadAndPlayVideo(video);
+      },
+    });
+
+    // Smart pause/resume to preserve GPU/CPU performance during scrolling
+    ScrollTrigger.create({
+      trigger: video,
+      scroller: "#main",
+      start: "top 120%",
+      end: "bottom -120%",
+      onEnter: () => {
+        loadAndPlayVideo(video);
+      },
+      onEnterBack: () => {
+        playVideo(video);
+      },
+      onLeave: () => {
+        // Keep marquee videos in motion, pause others
+        if (!video.closest(".move")) {
+          video.pause();
+        }
+      },
+      onLeaveBack: () => {
+        if (!video.closest(".move")) {
+          video.pause();
+        }
+      },
+    });
   });
+
+  // 3. Fallback check during LocomotiveScroll scroll events
+  const checkVisibleVideos = () => {
+    const viewHeight = window.innerHeight;
+    lazyVideos.forEach((video) => {
+      if (video.getAttribute("src")) return;
+      const rect = video.getBoundingClientRect();
+      if (rect.top <= viewHeight * 2.2 && rect.bottom >= -viewHeight) {
+        loadAndPlayVideo(video);
+      }
+    });
+  };
+
+  if (locoScroll) {
+    locoScroll.on("scroll", checkVisibleVideos);
+  }
+
+  // 4. Native IntersectionObserver backup
+  if ("IntersectionObserver" in window) {
+    const videoObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          const video = entry.target as HTMLVideoElement;
+          loadAndPlayVideo(video);
+          videoObserver.unobserve(video);
+        });
+      },
+      { rootMargin: "800px 0px" },
+    );
+    lazyVideos.forEach((video) => videoObserver.observe(video));
+    disposers.push(() => videoObserver.disconnect());
+  }
+
+  // Videos that already have direct src
+  qa<HTMLVideoElement>("video[src]:not([data-src])").forEach(playVideo);
 
   /* ------------------------------------------------------------------ *
    * Teardown (route change / HMR / unmount)
