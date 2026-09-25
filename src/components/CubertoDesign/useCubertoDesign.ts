@@ -26,10 +26,31 @@ const qa = <T extends Element = HTMLElement>(selector: string): T[] =>
  */
 type TweenEase = string | ((progress: number) => number);
 
+/**
+ * Detects mobile/tablet devices or small viewport widths where virtual lerp
+ * smooth scrolling causes touch friction, dropped frames, and input lag.
+ */
+const isMobileDevice = (): boolean => {
+  if (typeof window === "undefined") return false;
+  return (
+    window.innerWidth <= 768 ||
+    /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+      navigator.userAgent,
+    ) ||
+    (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1) ||
+    Boolean(
+      window.matchMedia &&
+        window.matchMedia("(pointer: coarse) and (max-width: 1024px)").matches,
+    )
+  );
+};
+
 export const initCubertoDesign = (): (() => void) => {
   gsap.registerPlugin(ScrollTrigger);
+  ScrollTrigger.config({ ignoreMobileResize: true });
 
   const disposers: Array<() => void> = [];
+  const isMobile = isMobileDevice();
 
   const listen = (
     target: EventTarget | null | undefined,
@@ -46,22 +67,25 @@ export const initCubertoDesign = (): (() => void) => {
     extra: Record<string, unknown> = {},
   ) => ({
     trigger,
-    scroller: "#main",
+    ...(isMobile ? {} : { scroller: "#main" }),
     ...extra,
   });
 
   /* ------------------------------------------------------------------ *
-   * Smooth scrolling — Locomotive Scroll hijacks `#main` and ScrollTrigger
-   * is pointed at the same proxy (exactly like the original script).
+   * Smooth scrolling — On desktop, Locomotive Scroll hijacks `#main` and
+   * ScrollTrigger is pointed at the scrollerProxy.
+   * On mobile, smooth scrolling is completely disabled because virtual lerp
+   * touch hijacking causes severe lag, stutter, and frame drops. Mobile
+   * uses fast, fluid, hardware-accelerated native window scrolling.
    * ------------------------------------------------------------------ */
   const mainEl = q<HTMLElement>("#main");
   let locoScroll: InstanceType<typeof LocomotiveScroll> | null = null;
 
-  if (mainEl) {
+  if (!isMobile && mainEl) {
     locoScroll = new LocomotiveScroll({
       el: mainEl,
       smooth: true,
-      smoothMobile: true,
+      smoothMobile: false,
       multiplier: 1,
       lerp: 0.08,
     });
@@ -110,6 +134,19 @@ export const initCubertoDesign = (): (() => void) => {
       clearTimeout(t2);
       clearTimeout(t3);
     });
+  } else {
+    // Ensure clean state on mobile without residual locomotive classes
+    document.documentElement.classList.remove(
+      "has-scroll-init",
+      "has-scroll-smooth",
+      "has-scroll-scrolling",
+      "has-scroll-dragging",
+    );
+    const syncScroll = () => {
+      ScrollTrigger.refresh();
+    };
+    window.addEventListener("resize", syncScroll);
+    disposers.push(() => window.removeEventListener("resize", syncScroll));
   }
 
   ScrollTrigger.refresh();
@@ -432,7 +469,10 @@ export const initCubertoDesign = (): (() => void) => {
         if (locoScroll) {
           locoScroll.scrollTo(scrollToSelector);
         } else {
-          document.querySelector(scrollToSelector)?.scrollIntoView({ behavior: "smooth" });
+          const target = document.querySelector(scrollToSelector);
+          if (target) {
+            target.scrollIntoView({ behavior: "auto" });
+          }
         }
       } else if (navPath) {
         e.preventDefault();
@@ -497,7 +537,7 @@ export const initCubertoDesign = (): (() => void) => {
   const heroVideos = qa<HTMLVideoElement>("#rotate-p1 video, #video video");
   heroVideos.forEach(loadAndPlayVideo);
 
-  // 2. Preload remaining videos with ScrollTrigger synchronized to LocomotiveScroll
+  // 2. Preload remaining videos with ScrollTrigger synchronized to LocomotiveScroll (or window on mobile)
   const lazyVideos = qa<HTMLVideoElement>("video[data-src]");
 
   lazyVideos.forEach((video) => {
@@ -506,7 +546,7 @@ export const initCubertoDesign = (): (() => void) => {
     // Load well before entering viewport
     ScrollTrigger.create({
       trigger: video,
-      scroller: "#main",
+      ...(isMobile ? {} : { scroller: "#main" }),
       start: "top 200%",
       once: true,
       onEnter: () => {
@@ -517,7 +557,7 @@ export const initCubertoDesign = (): (() => void) => {
     // Smart pause/resume to preserve GPU/CPU performance during scrolling
     ScrollTrigger.create({
       trigger: video,
-      scroller: "#main",
+      ...(isMobile ? {} : { scroller: "#main" }),
       start: "top 120%",
       end: "bottom -120%",
       onEnter: () => {
@@ -540,7 +580,7 @@ export const initCubertoDesign = (): (() => void) => {
     });
   });
 
-  // 3. Fallback check during LocomotiveScroll scroll events
+  // 3. Fallback check during scroll events
   const checkVisibleVideos = () => {
     const viewHeight = window.innerHeight;
     lazyVideos.forEach((video) => {
@@ -554,6 +594,8 @@ export const initCubertoDesign = (): (() => void) => {
 
   if (locoScroll) {
     locoScroll.on("scroll", checkVisibleVideos);
+  } else {
+    listen(window, "scroll", checkVisibleVideos);
   }
 
   // 4. Native IntersectionObserver backup
