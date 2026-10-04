@@ -742,7 +742,7 @@ export const initCubertoDesign = (): (() => void) => {
     const dataSrc = video.dataset.src;
     if (dataSrc && !video.getAttribute("src")) {
       video.src = dataSrc;
-      video.preload = "auto";
+      video.preload = "metadata";
       video.load();
     }
     playVideo(video);
@@ -762,7 +762,7 @@ export const initCubertoDesign = (): (() => void) => {
     ScrollTrigger.create({
       trigger: video,
       ...(isMobile ? {} : { scroller: "#main" }),
-      start: "top 200%",
+      start: "top 120%",
       once: true,
       onEnter: () => {
         loadAndPlayVideo(video);
@@ -782,15 +782,10 @@ export const initCubertoDesign = (): (() => void) => {
         playVideo(video);
       },
       onLeave: () => {
-        // Keep marquee videos in motion, pause others
-        if (!video.closest(".move")) {
-          video.pause();
-        }
+        video.pause();
       },
       onLeaveBack: () => {
-        if (!video.closest(".move")) {
-          video.pause();
-        }
+        video.pause();
       },
     });
   });
@@ -801,7 +796,7 @@ export const initCubertoDesign = (): (() => void) => {
     lazyVideos.forEach((video) => {
       if (video.getAttribute("src")) return;
       const rect = video.getBoundingClientRect();
-      if (rect.top <= viewHeight * 2.2 && rect.bottom >= -viewHeight) {
+      if (rect.top <= viewHeight * 1.5 && rect.bottom >= -viewHeight * 0.5) {
         loadAndPlayVideo(video);
       }
     });
@@ -824,7 +819,7 @@ export const initCubertoDesign = (): (() => void) => {
           videoObserver.unobserve(video);
         });
       },
-      { rootMargin: "800px 0px" },
+      { rootMargin: "400px 0px" },
     );
     lazyVideos.forEach((video) => videoObserver.observe(video));
     disposers.push(() => videoObserver.disconnect());
