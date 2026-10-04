@@ -11,6 +11,22 @@ body {
     height: 100%;
 }
 
+@media (max-width: 768px) {
+
+    html,
+    body {
+        height: auto;
+        overflow-x: hidden;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    #main {
+        overflow: visible !important;
+        height: auto !important;
+    }
+}
+
 @font-face {
     font-family: gallerym;
     src: url(./gallery-modern-regular.woff2);
@@ -72,55 +88,84 @@ body {
 }
 
 #loader-anim {
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100vw;
     height: 100vh;
-    background-color: black;
-    position: absolute;
-    top: 0%;
-    z-index: 9999;
+    background-color: #000000;
+    z-index: 999999;
+    overflow: hidden;
+    pointer-events: all;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 clamp(20px, 8vw, 100px);
 }
 
 .text-load {
     position: relative;
     overflow: hidden;
-    transition: all linear;
+    line-height: 1.05;
 }
 
 .text-load h1 {
-    font-size: 11vw;
-    font-family: matterregular;
-    color: #3B82F6;
+    font-size: clamp(38px, 9.5vw, 110px);
+    font-family: matterregular, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-weight: 700;
+    color: #FFFFFF;
     text-transform: uppercase;
+    line-height: 1.05;
+    margin: 0;
+    letter-spacing: -0.02em;
 }
 
 #t1 {
     position: relative;
-    top: 10%;
-    left: 20%;
+    top: auto;
+    left: auto;
 }
 
 #t2 {
-    top: 8%;
-    left: 10%;
+    position: relative;
+    top: auto;
+    left: auto;
+}
+
+#t2 h1 {
+    font-family: gallerym, Georgia, "Times New Roman", serif;
+    color: #60A5FA;
+    font-style: italic;
+    font-weight: 400;
 }
 
 #t3 {
-    top: 5%;
-    left: 55%;
+    position: relative;
+    top: auto;
+    left: auto;
 }
 
 #t4 {
-    top: 2%;
-    left: 2%;
+    position: relative;
+    top: auto;
+    left: auto;
 }
 
 #t5 {
-    top: -10%;
-    left: 75%;
+    position: absolute;
+    top: auto;
+    left: auto;
+    bottom: clamp(24px, 5vh, 48px);
+    right: clamp(24px, 6vw, 64px);
+    overflow: hidden;
 }
 
 #t5 h1 {
-    color: white;
+    font-size: clamp(24px, 5vw, 56px);
+    font-family: matterregular, sans-serif;
+    color: rgba(255, 255, 255, 0.9);
+    letter-spacing: 0.02em;
+    font-weight: 500;
 }
 
 
@@ -128,9 +173,8 @@ body {
     width: 100%;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-start;
     padding: 30px 40px;
-    padding-right: 80px;
 }
 
 #nav1 {
@@ -168,6 +212,14 @@ body {
     line-height: 1;
     font-family: matterregular;
     text-transform: uppercase;
+}
+
+#hero-title-group {
+    display: contents;
+}
+
+.hero-mobile-arrow {
+    display: none;
 }
 
 #T1 {
@@ -376,31 +428,14 @@ body {
 
 .move {
     position: absolute;
-    /* overflow: auto; */
-    width: 100%;
+    top: 50%;
+    left: 0;
+    width: max-content;
     height: 100%;
     display: flex;
     align-items: center;
     gap: 170px;
-    transform: translate(-50%, -50%);
-    transition: linear;
-
-    animation-name: move;
-    animation-duration: 6s;
-    animation-timing-function: linear;
-    animation-iteration-count: infinite;
-    animation-fill-mode: forwards;
-    /* animation-direction: normal; */
-}
-
-@keyframes move {
-    from {
-        transform: translateX(-10%);
-    }
-
-    to {
-        transform: translate(-100%);
-    }
+    will-change: transform;
 }
 
 ::-webkit-scrollbar {
@@ -1221,7 +1256,7 @@ body {
 
 #page8 {
     width: 100vw;
-    height: 100vh;
+    height: 57vh;
     position: relative;
     overflow: hidden;
     color: #F1F1F1;
@@ -1256,25 +1291,24 @@ body {
 
 #p8move {
     position: relative;
-    top: 40%;
+    top: 62%;
     width: 100%;
     height: 15%;
     /* background-color: #E0FD60; */
+    overflow: hidden;
 }
 
 .p8moveanim {
     position: absolute;
-    width: 100%;
+    width: max-content;
     height: 100%;
     display: flex;
     align-items: center;
+    flex-wrap: nowrap;
     padding: 0px 20px;
     gap: 100px;
-
-    animation-name: p8move1;
-    animation-duration: 13s;
-    animation-iteration-count: infinite;
-    animation-timing-function: linear;
+    will-change: transform;
+    animation: none;
 }
 
 @keyframes p8move1 {
@@ -1283,41 +1317,41 @@ body {
     }
 
     to {
-        transform: translateX(-100%);
+        transform: translateX(-33.333%);
     }
 }
 
 .p8moveanim img {
     scale: 1.2;
+    flex: 0 0 auto;
 }
 
 #p8move2 {
     position: relative;
-    top: 40%;
+    top: 70%;
     width: 100%;
     height: 15%;
     /* background-color: #E0FD60; */
+    overflow: hidden;
 }
 
 
 .p8moveanim2 {
     position: absolute;
-    width: 100%;
+    width: max-content;
     height: 100%;
     display: flex;
     align-items: center;
+    flex-wrap: nowrap;
     padding: 0px 20px;
     gap: 100px;
-
-    animation-name: p8move2;
-    animation-duration: 13s;
-    animation-iteration-count: infinite;
-    animation-timing-function: linear;
+    will-change: transform;
+    animation: none;
 }
 
 @keyframes p8move2 {
     from {
-        transform: translateX(-100%);
+        transform: translateX(-33.333%);
     }
 
     to {
@@ -1327,22 +1361,38 @@ body {
 
 .p8moveanim2 img {
     scale: 1.2;
+    flex: 0 0 auto;
 }
 
 #page9 {
-    width: 100vw;
-    height: 180vh;
+    width: 100%;
+    min-height: 100vh;
+    height: auto;
     position: relative;
-    overflow: hidden;
     background-color: black;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(320px, 520px));
+    justify-content: center;
+    align-items: start;
+    column-gap: 50px;
+    row-gap: 80px;
+    padding: 100px 32px 140px 32px;
+    box-sizing: border-box;
 }
 
 .flip-cards {
-    position: absolute;
-    width: 550px;
-    height: 650px;
-    transform: translate(-50%, -50%);
+    position: relative;
+    width: 100%;
+    max-width: 520px;
+    height: 640px;
     cursor: pointer;
+    perspective: 1200px;
+    transform: none;
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.flip-cards:hover {
+    transform: translateY(-8px);
 }
 
 .flip-cards:hover .flipcard-container,
@@ -1352,26 +1402,32 @@ body {
 
 .flipcard-container {
     position: relative;
-    width: 550px;
-    height: 650px;
+    width: 100%;
+    height: 100%;
     transform-style: preserve-3d;
-    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 30px;
 }
 
 .card {
     position: absolute;
     top: 0;
     left: 0;
-    width: 550px;
-    height: 650px;
+    width: 100%;
+    height: 100%;
     color: black;
     font-size: 16px;
     text-transform: uppercase;
-    padding: 20px;
+    padding: 44px 40px;
     transform-style: preserve-3d;
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
     border-radius: 30px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    overflow: hidden;
 }
 
 #cardf {
@@ -1381,28 +1437,30 @@ body {
     color: #FFFFFF;
     display: flex;
     flex-direction: column;
-    gap: 20px;
-    padding: 50px 50px;
-    box-shadow: 0 20px 40px rgba(59, 130, 246, 0.3);
+    gap: 18px;
+    padding: 44px 40px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
 }
 
 #cardb {
-    background: #232325;
+    background: #1c1c1e;
     transform: rotateY(180deg);
     transform-style: preserve-3d;
     font-family: matterlight;
     color: white;
     display: flex;
     flex-direction: column;
-    gap: 20px;
-    padding: 50px 50px;
+    gap: 18px;
+    padding: 44px 40px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
 }
 
 .card #card-head,
 #card-head {
     font-family: matterlight, sans-serif;
-    font-size: 44px;
-    line-height: 1.12;
+    font-size: 40px;
+    line-height: 1.1;
     text-transform: uppercase;
     font-weight: 600;
     margin: 0;
@@ -1413,14 +1471,14 @@ body {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
 }
 
 .card .cardb-body h2,
 .cardb-body h2 {
-    padding: 9px 22px;
+    padding: 8px 20px;
     border: 1.5px solid rgba(255, 255, 255, 0.7);
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 600;
     letter-spacing: 0.05em;
     border-radius: 9999px;
@@ -1458,18 +1516,15 @@ body {
 }
 
 #cardb>p {
-    font-size: 21px;
+    font-size: 19px;
     line-height: 1.6;
-    color: rgba(255, 255, 255, 0.95);
+    color: rgba(255, 255, 255, 0.92);
     text-transform: none;
     font-weight: 400;
-    margin: 8px 0 0 0;
+    margin: 10px 0 0 0;
 }
 
 #flipcard-1 {
-    top: 30%;
-    left: 32%;
-    background-size: cover;
     object-fit: cover;
 }
 
@@ -1480,8 +1535,7 @@ body {
 }
 
 #flipcard-2 {
-    top: 30%;
-    left: 69%;
+    margin-top: 80px;
     object-fit: cover;
 }
 
@@ -1491,11 +1545,7 @@ body {
     background-size: cover;
 }
 
-
-
 #flipcard-3 {
-    top: 73%;
-    left: 32%;
     object-fit: cover;
 }
 
@@ -1505,27 +1555,21 @@ body {
     background-size: cover;
 }
 
-
-
 #flipcard-4 {
-    top: 73%;
-    left: 69%;
+    margin-top: 80px;
     object-fit: cover;
 }
 
 #flipcard-4 #cardf {
     color: white;
-}
-
-#flipcard-4 .flipcard-container #cardf .cardb-body h2 {
-    border: 1px solid white;
-}
-
-
-#flipcard-4 #cardf {
     background-image: url(./flipimg4.jpg);
     background-position: center;
     background-size: cover;
+}
+
+#flipcard-4 .flipcard-container #cardf .cardb-body h2 {
+    border: 1.5px solid rgba(255, 255, 255, 0.85);
+    color: #ffffff;
 }
 
 
@@ -1539,7 +1583,7 @@ body {
 
 #page10>p {
     position: relative;
-    top: 7%;
+    top: 3%;
     left: 30%;
     font-family: matterregular;
     font-size: 3vw;
@@ -1691,23 +1735,42 @@ body {
     scale: 50%;
 }
 
-#page11 #string {
+#p11-bottom {
     position: relative;
-    top: 8%;
-    left: 3%;
+    top: 9%;
+    margin-top: 110px;
+    padding: 0 5vw;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    box-sizing: border-box;
+    width: 100%;
 }
 
-#page11>svg {
-    position: absolute;
-    top: 0%;
-    z-index: 999;
-    scale: .1;
+#p11-star {
+    position: relative;
+    top: 0;
+    left: 10%;
+    width: 35%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    text-transform: uppercase;
+    font-family: matterregular;
+}
+
+#p11-star h3 {
+    font-size: 1.1vw;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    margin-top: 12px;
 }
 
 #p11-p {
     position: relative;
-    top: 5%;
-    left: 45%;
+    top: 20%;
+    left: 40%;
+    width: 52%;
     font-family: matterregular;
     display: flex;
     flex-direction: column;
@@ -1716,21 +1779,9 @@ body {
 }
 
 #p11-p p {
-    width: 50%;
+    width: 100%;
     font-size: 2.2vw;
     text-transform: capitalize;
-}
-
-#p11-star {
-    position: relative;
-    top: -30%;
-    left: 5%;
-    width: 30%;
-    display: flex;
-    justify-content: space-between;
-    /* align-items: center; */
-    text-transform: uppercase;
-    font-family: matterregular;
 }
 
 #p11-star img {
@@ -2081,7 +2132,8 @@ body {
    RESPONSIVE DESIGN (TABLETS & MOBILE DEVICES)
    ===================================================================== */
 
-@media (pointer: coarse), (max-width: 1024px) {
+@media (pointer: coarse),
+(max-width: 1024px) {
     #mousemove {
         display: none !important;
     }
@@ -2102,14 +2154,37 @@ body {
         padding: 8px !important;
     }
 
-    .flip-cards {
-        width: 440px;
-        height: 540px;
+    #page9 {
+        grid-template-columns: repeat(2, minmax(280px, 440px));
+        column-gap: 28px;
+        row-gap: 50px;
+        padding: 80px 20px 120px 20px;
     }
 
-    .flipcard-container, .card {
-        width: 440px;
-        height: 540px;
+    .flip-cards {
+        width: 100%;
+        max-width: 440px;
+        height: 560px;
+    }
+
+    #flipcard-2,
+    #flipcard-4 {
+        margin-top: 50px;
+    }
+
+    .flipcard-container,
+    .card {
+        width: 100%;
+        height: 100%;
+    }
+
+    .card {
+        padding: 36px 30px;
+    }
+
+    .card #card-head,
+    #card-head {
+        font-size: 34px;
     }
 
     .p10-videocontainer {
@@ -2118,6 +2193,7 @@ body {
 }
 
 @media (max-width: 768px) {
+
     /* Touch / Cursor */
     #mousemove {
         display: none !important;
@@ -2131,24 +2207,29 @@ body {
     }
 
     #menui {
-        font-size: 24px !important;
+        position: fixed !important;
         top: 16px !important;
         right: 16px !important;
-        padding: 8px !important;
+        font-size: 22px !important;
+        padding: 8px 10px !important;
+        z-index: 99999 !important;
+        color: white !important;
+        background: transparent !important;
+        border-radius: 50% !important;
     }
 
     /* Navigation */
     #nav {
-        padding: 20px 20px !important;
-        padding-right: 60px !important;
+        padding: 18px 20px !important;
     }
 
     #nav1 h1 {
-        font-size: 24px !important;
+        font-size: 22px !important;
+        color: #ffffff !important;
     }
 
-    #nav2 h1 {
-        font-size: 16px !important;
+    #nav2 {
+        display: none !important;
     }
 
     /* Page 1 (Hero) */
@@ -2159,37 +2240,98 @@ body {
         overflow: hidden !important;
     }
 
+    #hero-title-group {
+        position: relative !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        margin-left: 20px !important;
+        margin-top: 14px !important;
+        margin-bottom: 20px !important;
+        width: fit-content !important;
+        max-width: calc(100% - 30px) !important;
+    }
+
+    .hero-mobile-arrow {
+        display: block !important;
+        position: absolute !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+        pointer-events: none !important;
+        overflow: visible !important;
+        z-index: 10 !important;
+    }
+
     .textp1 {
         position: relative !important;
         top: auto !important;
         left: auto !important;
-        margin-left: 20px !important;
-        font-size: clamp(38px, 11.5vw, 54px) !important;
+        margin: 0 !important;
         line-height: 1.05 !important;
     }
 
     .textp1 h1 {
-        font-size: clamp(38px, 11.5vw, 54px) !important;
+        font-family: matterregular, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+        font-weight: 700 !important;
+        font-size: clamp(38px, 11vw, 54px) !important;
         line-height: 1.05 !important;
+        color: #ffffff !important;
+        text-transform: uppercase !important;
+        letter-spacing: -0.015em !important;
+        margin: 0 !important;
     }
 
-    #T1 { top: auto !important; left: auto !important; margin-top: 16px !important; }
+    #T1 {
+        top: auto !important;
+        left: auto !important;
+        margin: 0 !important;
+    }
+
     #T2 {
         top: auto !important;
         left: auto !important;
         display: inline-flex !important;
         align-items: center !important;
         justify-content: center !important;
-        padding: 0 24px !important;
-        margin: 4px 0 !important;
-        border-radius: 999px !important;
+        padding: 3px 22px 5px 22px !important;
+        margin: 4px 0 6px 0 !important;
+        border: 1.5px solid #5882E7 !important;
+        border-radius: 9999px !important;
+        background: rgba(88, 130, 231, 0.05) !important;
+        box-shadow: 0 0 16px rgba(88, 130, 231, 0.25) !important;
+        width: fit-content !important;
+        z-index: 2 !important;
+        perspective: none !important;
     }
-    #T2 > h1, #T2 > h1::before, #T2 > h1::after {
-        font-size: clamp(34px, 10vw, 48px) !important;
-        line-height: 1 !important;
+
+    #T2>h1 {
+        font-family: gallerym, Georgia, "Times New Roman", serif !important;
+        font-size: clamp(30px, 9vw, 44px) !important;
+        line-height: 1.1 !important;
+        color: #769FFD !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.04em !important;
+        margin: 0 !important;
     }
-    #T3 { top: auto !important; left: auto !important; }
-    #T4 { top: auto !important; left: auto !important; }
+
+    #T2>h1::before,
+    #T2>h1::after {
+        display: none !important;
+    }
+
+    #T3 {
+        top: auto !important;
+        left: auto !important;
+        margin: 0 !important;
+    }
+
+    #T4 {
+        top: auto !important;
+        left: auto !important;
+        margin: 0 !important;
+    }
 
     #p1h3 {
         position: relative !important;
@@ -2229,7 +2371,7 @@ body {
         border-radius: inherit !important;
     }
 
-    #page1 > p {
+    #page1>p {
         position: relative !important;
         top: auto !important;
         left: auto !important;
@@ -2248,36 +2390,71 @@ body {
         padding: 48px 0 40px 0 !important;
         background-color: #ffffff !important;
         overflow: hidden !important;
+        width: 100% !important;
     }
 
     #moving {
         position: relative !important;
         top: auto !important;
         width: 100% !important;
-        height: auto !important;
+        height: clamp(130px, 32vw, 170px) !important;
         margin: 0 0 20px 0 !important;
+        overflow: hidden !important;
+    }
+
+    @keyframes marqueeMobile {
+        0% {
+            transform: translateY(-50%) translateX(0);
+        }
+
+        100% {
+            transform: translateY(-50%) translateX(-50%);
+        }
     }
 
     .move {
+        position: absolute !important;
+        top: 50% !important;
+        left: 0 !important;
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: nowrap !important;
+        align-items: center !important;
+        width: max-content !important;
+        height: 100% !important;
+        white-space: nowrap !important;
         gap: 36px !important;
-        position: relative !important;
-        transform: none !important;
+        will-change: transform !important;
+        animation: marqueeMobile 14s linear infinite !important;
     }
 
     .move h1 {
-        font-size: clamp(38px, 11vw, 56px) !important;
-        line-height: 1 !important;
+        font-size: clamp(34px, 10vw, 50px) !important;
+        line-height: 0.95 !important;
         white-space: nowrap !important;
+        text-transform: uppercase !important;
+        font-family: matterlight, sans-serif !important;
+        text-align: center !important;
+        font-weight: 500 !important;
+        flex-shrink: 0 !important;
+        display: inline-block !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    .move>h1>span {
+        font-family: gallerym, serif !important;
     }
 
     .move video {
-        width: 140px !important;
-        height: 80px !important;
-        border-radius: 40px !important;
+        width: 130px !important;
+        height: 74px !important;
+        border-radius: 37px !important;
         object-fit: cover !important;
         scale: 1 !important;
         flex-shrink: 0 !important;
         display: inline-block !important;
+        margin: 0 !important;
     }
 
     #page2 #string {
@@ -2289,7 +2466,7 @@ body {
         margin: 10px 0 !important;
     }
 
-    #page2 > img {
+    #page2>img {
         position: relative !important;
         bottom: auto !important;
         left: auto !important;
@@ -2457,7 +2634,7 @@ body {
         z-index: 10 !important;
     }
 
-    #page3-down > video {
+    #page3-down>video {
         position: absolute !important;
         inset: 0 !important;
         width: 100% !important;
@@ -2519,7 +2696,7 @@ body {
         overflow: hidden !important;
     }
 
-    #page4 > h1 {
+    #page4>h1 {
         position: relative !important;
         top: auto !important;
         left: auto !important;
@@ -2608,7 +2785,7 @@ body {
         margin: 0 !important;
     }
 
-    #page4 > img {
+    #page4>img {
         position: relative !important;
         bottom: auto !important;
         left: auto !important;
@@ -2649,7 +2826,7 @@ body {
         margin-bottom: 24px !important;
     }
 
-    #page5 > img {
+    #page5>img {
         position: relative !important;
         left: auto !important;
         max-width: 100% !important;
@@ -2752,16 +2929,66 @@ body {
     /* Page 8 (Technology icons) */
     #page8 {
         height: auto !important;
-        min-height: 280px;
-        padding: 40px 0;
-        overflow: hidden;
+        min-height: 430px !important;
+        padding: 40px 0 56px 0 !important;
+        overflow: hidden !important;
     }
 
-    .p8moveanim1 img,
+    #page8>video {
+        position: relative !important;
+        top: auto !important;
+        left: auto !important;
+        width: 110px !important;
+        height: 110px !important;
+        margin: 0 auto 16px auto !important;
+        display: block !important;
+        border-radius: 50% !important;
+        scale: 1 !important;
+    }
+
+    #page8>p {
+        position: relative !important;
+        top: auto !important;
+        left: auto !important;
+        width: calc(100% - 40px) !important;
+        margin: 0 auto 26px auto !important;
+        font-size: clamp(26px, 7vw, 36px) !important;
+        line-height: 1.05 !important;
+        text-align: center !important;
+    }
+
+    #p8move,
+    #p8move2 {
+        position: relative !important;
+        top: auto !important;
+        width: 100vw !important;
+        height: 58px !important;
+        margin: 8px 0 0 0 !important;
+        overflow: hidden !important;
+    }
+
+    .p8moveanim,
+    .p8moveanim2 {
+        position: absolute !important;
+        inset: 0 auto auto 0 !important;
+        width: max-content !important;
+        height: 100% !important;
+        display: flex !important;
+        align-items: center !important;
+        flex-wrap: nowrap !important;
+        gap: 22px !important;
+        padding: 0 18px !important;
+        animation: none !important;
+    }
+
+    .p8moveanim img,
     .p8moveanim2 img {
-        width: 40px !important;
-        height: 40px !important;
-        margin: 0 14px !important;
+        width: auto !important;
+        height: 42px !important;
+        margin: 0 !important;
+        scale: 1 !important;
+        flex: 0 0 auto !important;
+        object-fit: contain !important;
     }
 
     /* Page 9 (Flip Cards: 1 column vertical stack on mobile) */
@@ -2788,9 +3015,13 @@ body {
         margin: 0 auto !important;
     }
 
-    #flipcard-1, #flipcard-2, #flipcard-3, #flipcard-4 {
+    #flipcard-1,
+    #flipcard-2,
+    #flipcard-3,
+    #flipcard-4 {
         top: auto !important;
         left: auto !important;
+        margin-top: 0 !important;
         position: relative !important;
     }
 
@@ -2818,7 +3049,7 @@ body {
         padding: 6px 14px !important;
     }
 
-    #cardb > p {
+    #cardb>p {
         font-size: 14px !important;
         line-height: 1.5 !important;
     }
@@ -2831,7 +3062,7 @@ body {
         overflow: hidden;
     }
 
-    #page10 > p {
+    #page10>p {
         position: relative !important;
         top: auto !important;
         left: auto !important;
@@ -2889,7 +3120,7 @@ body {
         overflow: hidden;
     }
 
-    #page11 > h1 {
+    #page11>h1 {
         position: relative !important;
         top: auto !important;
         left: auto !important;
@@ -2905,6 +3136,16 @@ body {
 
     #p11-head-2 h1 {
         font-size: clamp(38px, 11vw, 56px) !important;
+    }
+
+    #p11-bottom {
+        position: relative !important;
+        top: auto !important;
+        margin-top: 32px !important;
+        padding: 0 !important;
+        display: flex !important;
+        flex-direction: column-reverse !important;
+        gap: 24px !important;
     }
 
     #p11-p {
@@ -2926,7 +3167,8 @@ body {
         position: relative !important;
         top: auto !important;
         left: auto !important;
-        margin-top: 24px;
+        width: 100% !important;
+        margin-top: 0 !important;
     }
 
     /* Page 12 */
@@ -2944,18 +3186,18 @@ body {
     }
 
     #p12-head1 h1,
-    #p12-head1 > span {
+    #p12-head1>span {
         font-size: clamp(38px, 11vw, 54px) !important;
     }
 
-    #page12 > h2 {
+    #page12>h2 {
         position: relative !important;
         top: auto !important;
         left: auto !important;
         font-size: 24px !important;
     }
 
-    #page12 > h4 {
+    #page12>h4 {
         position: relative !important;
         top: auto !important;
         left: auto !important;
@@ -2974,11 +3216,11 @@ body {
         padding: 0 10px !important;
     }
 
-    .socialmedia > h1 {
+    .socialmedia>h1 {
         font-size: 15px !important;
     }
 
-    .socialmedia > i {
+    .socialmedia>i {
         font-size: 16px !important;
     }
 
@@ -3029,7 +3271,7 @@ body {
         font-size: clamp(38px, 11vw, 54px) !important;
     }
 
-    #page13 > button {
+    #page13>button {
         position: relative !important;
         top: auto !important;
         left: auto !important;
@@ -3039,7 +3281,7 @@ body {
         margin: 16px auto;
     }
 
-    #page13 > h3 {
+    #page13>h3 {
         position: relative !important;
         bottom: auto !important;
         left: auto !important;
@@ -3048,7 +3290,7 @@ body {
         margin-top: 10px;
     }
 
-    #page13 > h4 {
+    #page13>h4 {
         position: relative !important;
         bottom: auto !important;
         left: auto !important;
@@ -3066,7 +3308,7 @@ body {
     left: 0;
     width: 100vw;
     height: 100vh;
-    z-index: 99998;
+    z-index: 999999;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -3304,27 +3546,100 @@ body {
 
 /* Mobile & tablet adjustments for menu overlay */
 @media (max-width: 900px) {
-    .cuberto-menu-container {
-        padding: 20px 24px;
+    .cuberto-menu-overlay {
+        align-items: flex-start;
     }
+
+    .cuberto-menu-container {
+        padding: 20px 20px 32px 20px;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        height: 100vh;
+        max-height: 100vh;
+    }
+
+    .cuberto-menu-header {
+        padding-bottom: 16px;
+        margin-bottom: 0;
+        position: sticky;
+        top: 0;
+        background: rgba(5, 5, 8, 0.98);
+        z-index: 10;
+    }
+
+    .cuberto-menu-brand {
+        font-size: 22px;
+    }
+
+    .cuberto-menu-close-btn {
+        padding: 8px 16px;
+        font-size: 11px;
+    }
+
     .cuberto-menu-body {
         flex-direction: column;
-        gap: 28px;
-        padding: 20px 0;
+        gap: 0;
+        padding: 16px 0 0 0;
     }
+
+    .cuberto-menu-nav {
+        flex: none;
+    }
+
+    .cuberto-menu-list {
+        gap: 4px;
+    }
+
+    .cuberto-menu-link {
+        font-size: clamp(22px, 6vw, 32px);
+        gap: 12px;
+        padding: 8px 0;
+    }
+
+    .cuberto-menu-link .link-idx {
+        font-size: 11px;
+        min-width: 20px;
+    }
+
+    .cuberto-menu-link .link-badge {
+        font-size: 9px;
+        padding: 3px 7px;
+    }
+
     .cuberto-menu-sidebar {
+        flex: none;
         border-left: none;
         border-top: 1px solid rgba(255, 255, 255, 0.08);
         padding-left: 0;
-        padding-top: 24px;
+        padding-top: 20px;
+        margin-top: 20px;
         gap: 20px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
     }
-    .cuberto-menu-link {
-        font-size: clamp(20px, 5.5vw, 28px);
-        gap: 10px;
+
+    .cuberto-menu-info-block:last-child {
+        grid-column: 1 / -1;
     }
-    .cuberto-menu-link .link-badge {
-        font-size: 9px;
-        padding: 2px 6px;
+
+    .cuberto-menu-section-title {
+        font-size: 10px;
+        margin-bottom: 10px;
+    }
+
+    .menu-contact-val {
+        font-size: 15px;
+    }
+
+    .menu-info-text {
+        font-size: 13px;
+    }
+
+    .menu-social-links {
+        gap: 12px;
+    }
+
+    .menu-social-links a {
+        font-size: 13px;
     }
 }

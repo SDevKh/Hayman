@@ -6,7 +6,7 @@ const LoadingSpinner = () => (
   </div>
 );
 
-const AnalysisReport = ({ analysis }) => (
+const AnalysisReport = ({ analysis }: { analysis: any }) => (
   <div className="bg-white p-8 rounded-xl shadow-lg animate-fade-in w-full">
     <h2 className="text-3xl font-bold text-gray-800 mb-2">
       Analysis for <span className="text-blue-600">{analysis.businessName}</span>
@@ -56,9 +56,8 @@ const AnalysisReport = ({ analysis }) => (
 );
 
 
-// --- Main App Component ---
-
-export default function App() {
+// --- Main Component ---
+export default function Swot() {
   // State to hold the form data
   const [formData, setFormData] = useState({
     businessName: '',
@@ -69,12 +68,12 @@ export default function App() {
   });
 
   // State for the analysis result, loading status, and errors
-  const [analysis, setAnalysis] = useState(null);
+  const [analysis, setAnalysis] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
 
   // Handles changes in form inputs
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prevData => ({
       ...prevData,
@@ -83,7 +82,7 @@ export default function App() {
   };
 
   // Handles the form submission
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault(); // Prevent default form submission
     setIsLoading(true);
     setError(null);

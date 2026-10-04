@@ -1,14 +1,3 @@
-/**
- * Imperative behaviour for the Cuberto-style landing design.
- *
- * This is a 1:1 port of the `script.js` that shipped with the design
- * (Locomotive Scroll + GSAP ScrollTrigger + pointer interactions).
- *
- * The design was authored against a static DOM, so the timelines are kept
- * identical to the original. The only difference is that every global listener
- * is registered through a helper that also returns a disposer, so the page can
- * be unmounted safely (React route change / HMR).
- */
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import LocomotiveScroll from "locomotive-scroll";
@@ -19,17 +8,8 @@ const q = <T extends Element = HTMLElement>(selector: string): T | null =>
 const qa = <T extends Element = HTMLElement>(selector: string): T[] =>
   Array.from(document.querySelectorAll<T>(selector));
 
-/**
- * The ease value GSAP accepts in a tween config (`EaseString | EaseFunction`).
- * Declared locally because `Parameters<typeof gsap.to>` picks up GSAP's
- * `duration` overload instead of the vars object.
- */
 type TweenEase = string | ((progress: number) => number);
 
-/**
- * Detects mobile/tablet devices or small viewport widths where virtual lerp
- * smooth scrolling causes touch friction, dropped frames, and input lag.
- */
 const isMobileDevice = (): boolean => {
   if (typeof window === "undefined") return false;
   return (
@@ -40,7 +20,7 @@ const isMobileDevice = (): boolean => {
     (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1) ||
     Boolean(
       window.matchMedia &&
-        window.matchMedia("(pointer: coarse) and (max-width: 1024px)").matches,
+      window.matchMedia("(pointer: coarse) and (max-width: 1024px)").matches,
     )
   );
 };
@@ -71,13 +51,6 @@ export const initCubertoDesign = (): (() => void) => {
     ...extra,
   });
 
-  /* ------------------------------------------------------------------ *
-   * Smooth scrolling — On desktop, Locomotive Scroll hijacks `#main` and
-   * ScrollTrigger is pointed at the scrollerProxy.
-   * On mobile, smooth scrolling is completely disabled because virtual lerp
-   * touch hijacking causes severe lag, stutter, and frame drops. Mobile
-   * uses fast, fluid, hardware-accelerated native window scrolling.
-   * ------------------------------------------------------------------ */
   const mainEl = q<HTMLElement>("#main");
   let locoScroll: InstanceType<typeof LocomotiveScroll> | null = null;
 
@@ -93,8 +66,10 @@ export const initCubertoDesign = (): (() => void) => {
 
     ScrollTrigger.scrollerProxy("#main", {
       scrollTop(value?: number) {
-        if (typeof value === "number") {
-          locoScroll!.scrollTo(value, 0, 0);
+        if (typeof value === "number" && locoScroll) {
+          try {
+            locoScroll.scrollTo(value, 0, 0);
+          } catch (_) { }
         }
         return (
           locoScroll?.scroll?.instance?.scroll?.y ??
@@ -151,40 +126,132 @@ export const initCubertoDesign = (): (() => void) => {
 
   ScrollTrigger.refresh();
 
-  /* ------------------------------------------------------------------ *
-   * Intro loader
-   * ------------------------------------------------------------------ */
-  const counterEl = q<HTMLElement>("#counter");
-  const setCounter = (from: number, to: number) => {
-    for (let i = from; i < to; i++) {
-      if (counterEl) counterEl.textContent = String(i);
+  const getScrollY = () => {
+    if (locoScroll && !isMobile) {
+      return (
+        locoScroll.scroll?.instance?.scroll?.y ??
+        window.scrollY ??
+        0
+      );
     }
+    return window.scrollY || window.pageYOffset || 0;
   };
 
-  const tlLoad = gsap.timeline();
+  /* ------------------------------------------------------------------ *
+   * Intro Loader & Hero Reveal Animation ("We Create Digital Solutions")
+   * ------------------------------------------------------------------ */
+  const loaderEl = q<HTMLElement>("#loader-anim");
+  const counterEl = q<HTMLElement>("#counter");
 
-  tlLoad.from(".text-load h1", {
-    opacity: 0.5,
-    y: 200,
-    duration: 1,
-    delay: 1,
-  });
-  tlLoad.to("#t5", { onStart: () => setCounter(0, 30) });
-  tlLoad.to("#t1", { left: "5%" });
-  tlLoad.to("#t2", { left: "30%" });
-  tlLoad.to("#t5", { onStart: () => setCounter(30, 60) });
-  tlLoad.to("#t1", { top: "30%" });
-  tlLoad.to("#t5", { onStart: () => setCounter(60, 101) });
-  tlLoad.to(".text-load h1", { y: -200, duration: 1 });
-  tlLoad.to("#loader-anim", { opacity: 0, top: "-100%" });
-  tlLoad.from(".textp1 h1", { y: 200 });
-  tlLoad.from("#rotate-p1", { opacity: 0 });
-  tlLoad.from("#p1h3", { opacity: 0 });
-  tlLoad.from("#mousemove", { scale: 0 });
-  tlLoad.call(() => {
+  if (loaderEl) {
+    // Initial states: loader starts visible and covering screen
+    gsap.set(loaderEl, { display: "flex", opacity: 1, yPercent: 0 });
+
+    // Initial state for hero elements so they are cleanly hidden under the loader
+    gsap.set("#T1 h1, #T3 h1, #T4 h1", { yPercent: 120, opacity: 0 });
+    gsap.set("#T2", { y: 35, opacity: 0, scale: 0.94 });
+    gsap.set("#p1h3", { opacity: 0 });
+    gsap.set("#video", { opacity: 0, scale: 0.92 });
+
+    const tlLoad = gsap.timeline({
+      defaults: { ease: "power3.out" },
+      onComplete: () => {
+        if (loaderEl) {
+          loaderEl.style.display = "none";
+          loaderEl.style.pointerEvents = "none";
+        }
+        locoScroll?.update();
+        ScrollTrigger.refresh();
+      },
+    });
+
+    // 1. Reveal loader words "we create digital solutions_"
+    tlLoad.from(".text-load h1", {
+      yPercent: 120,
+      opacity: 0,
+      duration: 0.65,
+      stagger: 0.08,
+      ease: "power3.out",
+    }, 0.05);
+
+    // 2. Smoothly count 0% -> 100%
+    const counterObj = { val: 0 };
+    tlLoad.to(counterObj, {
+      val: 100,
+      duration: 1.4,
+      ease: "power2.inOut",
+      onUpdate: () => {
+        if (counterEl) counterEl.textContent = Math.round(counterObj.val).toString();
+      },
+    }, 0.1);
+
+    // 3. Playful subtle movement on #t1 ("we") and #t2 ("create")
+    tlLoad.to("#t1", { xPercent: -5, duration: 0.8, ease: "sine.inOut" }, 0.55);
+    tlLoad.to("#t2", { xPercent: 5, duration: 0.8, ease: "sine.inOut" }, 0.55);
+
+    // 4. Loader text slides up and exits
+    tlLoad.to(".text-load h1", {
+      yPercent: -120,
+      opacity: 0,
+      duration: 0.45,
+      stagger: 0.04,
+      ease: "power2.in",
+    }, 1.5);
+
+    // 5. Black curtain lifts up smoothly
+    tlLoad.to(loaderEl, {
+      yPercent: -100,
+      duration: 0.75,
+      ease: "power4.inOut",
+    }, 1.8);
+
+    // 6. Hero elements reveal with signature Cuberto typography slide-up & pill bounce
+    tlLoad.to("#T1 h1, #T3 h1, #T4 h1", {
+      yPercent: 0,
+      opacity: 1,
+      duration: 0.85,
+      stagger: 0.08,
+      ease: "power3.out",
+    }, 2.05);
+
+    tlLoad.to("#T2", {
+      y: 0,
+      opacity: 1,
+      scale: 1,
+      duration: 0.85,
+      ease: "back.out(1.2)",
+    }, 2.15);
+
+    tlLoad.to("#p1h3", {
+      opacity: 1,
+      duration: 0.6,
+      ease: "power2.out",
+    }, 2.25);
+
+    tlLoad.to("#video", {
+      opacity: 1,
+      scale: 1,
+      duration: 0.8,
+      ease: "power3.out",
+    }, 2.25);
+
+    tlLoad.fromTo("#mousemove", { scale: 0 }, { scale: 1, duration: 0.4 }, 2.35);
+
+    (window as any).__replayIntro = () => {
+      if (loaderEl) {
+        gsap.set(loaderEl, { display: "flex", opacity: 1, yPercent: 0, pointerEvents: "all" });
+      }
+      tlLoad.restart();
+    };
+  } else {
+    // Fallback if loader element is missing
+    gsap.set("#T1 h1, #T3 h1, #T4 h1", { yPercent: 0, opacity: 1 });
+    gsap.set("#T2", { y: 0, opacity: 1, scale: 1 });
+    gsap.set("#p1h3", { opacity: 1 });
+    gsap.set("#video", { opacity: 1, scale: 1 });
     locoScroll?.update();
     ScrollTrigger.refresh();
-  });
+  }
 
   /* ------------------------------------------------------------------ *
    * Page 1
@@ -217,12 +284,72 @@ export const initCubertoDesign = (): (() => void) => {
   });
 
   /* ------------------------------------------------------------------ *
-   * Page 2 — marquee
+   * Page 2 — marquee with Cuberto-style dynamic scroll velocity
    * ------------------------------------------------------------------ */
-  gsap.to(".move", {
-    left: "45%",
-    scrollTrigger: scrollerTrigger(".move", { start: "top 80%", scrub: 1 }),
-  });
+  const moveEl = q<HTMLElement>("#page2 .move");
+  if (moveEl) {
+    let xPos = 0;
+    const baseSpeed = isMobile ? -1.8 : -1.9; // constant forward gliding
+    let scrollVelocity = 0;
+    let lastScrollY = 0;
+    let animId: number;
+
+    const getUnitWidth = () => {
+      // .move contains 6 pairs of h1 + video. Half = 3 pairs (seamless loop unit)
+      return moveEl.scrollWidth > 0 ? moveEl.scrollWidth / 2 : 1200;
+    };
+
+    lastScrollY = getScrollY();
+
+    const onScroll = (args?: any) => {
+      const currentY =
+        args?.scroll?.y ??
+        (locoScroll?.scroll?.instance?.scroll?.y ?? (window.scrollY || window.pageYOffset || 0));
+      const delta = currentY - lastScrollY;
+      lastScrollY = currentY;
+
+      // Scroll Down (delta > 0) -> accelerate leftward (negative)
+      // Scroll Up (delta < 0) -> scrub rightward (positive)
+      const clampedDelta = Math.max(-100, Math.min(100, delta));
+      scrollVelocity += -clampedDelta * (isMobile ? 0.05 : 0.06);
+      // Clamp max velocity to prevent uncontrolled spinning
+      scrollVelocity = Math.max(-40, Math.min(40, scrollVelocity));
+    };
+
+    if (locoScroll && !isMobile) {
+      locoScroll.on("scroll", onScroll);
+    } else {
+      window.addEventListener("scroll", onScroll, { passive: true });
+      disposers.push(() => window.removeEventListener("scroll", onScroll));
+    }
+
+    const updateMarquee = () => {
+      // Smooth kinetic decay of scroll velocity back to 0
+      scrollVelocity *= 0.92;
+      if (Math.abs(scrollVelocity) < 0.02) scrollVelocity = 0;
+
+      xPos += baseSpeed + scrollVelocity;
+
+      const unitWidth = getUnitWidth();
+      if (unitWidth > 50) {
+        while (xPos <= -unitWidth) {
+          xPos += unitWidth;
+        }
+        while (xPos > 0) {
+          xPos -= unitWidth;
+        }
+      }
+
+      moveEl.style.transform = `translate3d(${xPos}px, -50%, 0)`;
+      animId = requestAnimationFrame(updateMarquee);
+    };
+
+    animId = requestAnimationFrame(updateMarquee);
+
+    disposers.push(() => {
+      cancelAnimationFrame(animId);
+    });
+  }
 
   /**
    * The "string" SVG that bounces towards the pointer. `ease` is handed the
@@ -339,6 +466,92 @@ export const initCubertoDesign = (): (() => void) => {
     scrollTrigger: scrollerTrigger(".p7move4anim", { start: "top 60%", scrub: 1 }),
   });
 
+  /* ------------------------------------------------------------------ *
+   * Page 8 — Dual opposing tech stack marquees (Cuberto kinetic ticker)
+   * Line 1 (.p8moveanim): moves continuously towards LEFT
+   * Line 2 (.p8moveanim2): moves continuously towards RIGHT
+   * Both scrub & accelerate reactively with scroll velocity!
+   * ------------------------------------------------------------------ */
+  const p8Anim1 = q<HTMLElement>("#p8move .p8moveanim");
+  const p8Anim2 = q<HTMLElement>("#p8move2 .p8moveanim2");
+
+  if (p8Anim1 && p8Anim2) {
+    p8Anim1.style.animation = "none";
+    p8Anim2.style.animation = "none";
+
+    let x1 = 0;
+    let x2 = 0;
+    let initialized = false;
+
+    // Line 1 glides leftward (negative), Line 2 glides rightward (positive)
+    const baseSpeed1 = isMobile ? -1.0 : -1.4;
+    const baseSpeed2 = isMobile ? 1.0 : 1.4;
+
+    let p8Velocity = 0;
+    let p8LastScrollY = getScrollY();
+    let p8AnimId: number;
+
+    const getUnit1 = () => (p8Anim1.scrollWidth > 0 ? p8Anim1.scrollWidth / 2 : 1200);
+    const getUnit2 = () => (p8Anim2.scrollWidth > 0 ? p8Anim2.scrollWidth / 2 : 1200);
+
+    const onP8Scroll = (args?: any) => {
+      const currentY =
+        args?.scroll?.y ??
+        (locoScroll?.scroll?.instance?.scroll?.y ?? (window.scrollY || window.pageYOffset || 0));
+      const delta = currentY - p8LastScrollY;
+      p8LastScrollY = currentY;
+
+      // Scrolling Down (delta > 0) -> accelerates Line 1 leftward, Line 2 rightward
+      // Scrolling Up (delta < 0) -> scrubs Line 1 rightward, Line 2 leftward
+      const clampedDelta = Math.max(-100, Math.min(100, delta));
+      p8Velocity += clampedDelta * (isMobile ? 0.03 : 0.03);
+      p8Velocity = Math.max(-60, Math.min(60, p8Velocity));
+    };
+
+    if (locoScroll && !isMobile) {
+      locoScroll.on("scroll", onP8Scroll);
+    } else {
+      window.addEventListener("scroll", onP8Scroll, { passive: true });
+      disposers.push(() => window.removeEventListener("scroll", onP8Scroll));
+    }
+
+    const updateP8Marquee = () => {
+      // Smooth kinetic decay back to 0
+      p8Velocity *= 0.92;
+      if (Math.abs(p8Velocity) < 0.02) p8Velocity = 0;
+
+      const unit1 = getUnit1();
+      const unit2 = getUnit2();
+
+      if (!initialized && unit2 > 50) {
+        // Offset Line 2 to -unit2 / 2 so badges fill both left and right from the start
+        x2 = -unit2 / 2;
+        initialized = true;
+      }
+
+      // Line 1: moves LEFT
+      x1 += baseSpeed1 - p8Velocity;
+      if (unit1 > 50) {
+        while (x1 <= -unit1) x1 += unit1;
+        while (x1 > 0) x1 -= unit1;
+      }
+      p8Anim1.style.transform = `translate3d(${x1}px, 0, 0)`;
+
+      // Line 2: moves RIGHT
+      x2 += baseSpeed2 + p8Velocity;
+      if (unit2 > 50) {
+        while (x2 >= 0) x2 -= unit2;
+        while (x2 < -unit2) x2 += unit2;
+      }
+      p8Anim2.style.transform = `translate3d(${x2}px, 0, 0)`;
+
+      p8AnimId = requestAnimationFrame(updateP8Marquee);
+    };
+
+    p8AnimId = requestAnimationFrame(updateP8Marquee);
+    disposers.push(() => cancelAnimationFrame(p8AnimId));
+  }
+
   ["1", "2", "3"].forEach((index) => {
     gsap.from(`#p10-videocontainer-${index}`, {
       width: "0%",
@@ -423,8 +636,8 @@ export const initCubertoDesign = (): (() => void) => {
     menuOverlay.setAttribute("aria-hidden", "false");
     document.body.style.overflow = "hidden";
     if (menuiEl) {
-      menuiEl.classList.remove("ri-menu-line");
-      menuiEl.classList.add("ri-close-line");
+      menuiEl.style.opacity = "0";
+      menuiEl.style.pointerEvents = "none";
     }
   };
 
@@ -434,6 +647,8 @@ export const initCubertoDesign = (): (() => void) => {
     menuOverlay.setAttribute("aria-hidden", "true");
     document.body.style.overflow = "";
     if (menuiEl) {
+      menuiEl.style.opacity = "1";
+      menuiEl.style.pointerEvents = "auto";
       menuiEl.classList.remove("ri-close-line");
       menuiEl.classList.add("ri-menu-line");
     }
@@ -510,7 +725,7 @@ export const initCubertoDesign = (): (() => void) => {
       promise.catch(() => {
         // Autoplay may be restricted until user interaction
         const startOnInteract = () => {
-          video.play().catch(() => {});
+          video.play().catch(() => { });
           window.removeEventListener("pointerdown", startOnInteract);
           window.removeEventListener("touchstart", startOnInteract);
           window.removeEventListener("keydown", startOnInteract);
@@ -534,7 +749,7 @@ export const initCubertoDesign = (): (() => void) => {
   };
 
   // 1. Immediately preload above-the-fold hero videos
-  const heroVideos = qa<HTMLVideoElement>("#rotate-p1 video, #video video");
+  const heroVideos = qa<HTMLVideoElement>("#video video");
   heroVideos.forEach(loadAndPlayVideo);
 
   // 2. Preload remaining videos with ScrollTrigger synchronized to LocomotiveScroll (or window on mobile)

@@ -112,7 +112,99 @@
     font-weight: revert;
   }
 
-  /* Page 9 Flip Cards typography & contrast fixes */
+  #cuberto-design #hero-title-group {
+    display: contents;
+  }
+
+  #cuberto-design .hero-mobile-arrow {
+    display: none;
+  }
+
+  /* Page 5 (We Build Stable Code)
+     The green-page texture is a full-bleed background image sitting behind the
+     copy. Using `inset: 0` + `object-fit: cover` keeps it a proper backdrop on
+     every viewport (the old mobile rule offset it with a hard-coded negative
+     margin, which pushed a floating box on top of the heading). `multiply`
+     keeps the white areas neutral so it enriches instead of washing out the
+     blue gradient. */
+  #cuberto-design #page5>img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    object-fit: cover;
+    object-position: center;
+    opacity: 0.35;
+    mix-blend-mode: multiply;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Page 9 Flip Cards container & layout */
+  #cuberto-design #page9 {
+    width: 100% !important;
+    min-height: 100vh !important;
+    height: auto !important;
+    position: relative !important;
+    background-color: black !important;
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(320px, 520px)) !important;
+    justify-content: center !important;
+    align-items: start !important;
+    column-gap: 50px !important;
+    row-gap: 80px !important;
+    padding: 100px 32px 140px 32px !important;
+    box-sizing: border-box !important;
+    overflow: visible !important;
+  }
+
+  #cuberto-design #page9 .flip-cards {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    transform: none !important;
+    width: 100% !important;
+    max-width: 520px !important;
+    height: 640px !important;
+    cursor: pointer !important;
+    perspective: 1200px !important;
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  }
+
+  #cuberto-design #page9 .flip-cards:hover {
+    transform: translateY(-8px) !important;
+  }
+
+  #cuberto-design #page9 #flipcard-2,
+  #cuberto-design #page9 #flipcard-4 {
+    margin-top: 80px !important;
+  }
+
+  @media (max-width: 1100px) {
+    #cuberto-design #page9 {
+      grid-template-columns: repeat(2, minmax(280px, 440px)) !important;
+      column-gap: 28px !important;
+      row-gap: 50px !important;
+      padding: 80px 20px 120px 20px !important;
+    }
+    #cuberto-design #page9 .flip-cards {
+      max-width: 440px !important;
+      height: 560px !important;
+    }
+    #cuberto-design #page9 #flipcard-2,
+    #cuberto-design #page9 #flipcard-4 {
+      margin-top: 50px !important;
+    }
+    #cuberto-design #page9 .card {
+      padding: 36px 30px !important;
+    }
+    #cuberto-design #page9 #card-head,
+    #cuberto-design #page9 .card #card-head {
+      font-size: 34px !important;
+    }
+  }
+
   #cuberto-design #page9 .flipcard-container {
     position: relative;
     width: 100%;
@@ -348,24 +440,53 @@
       overflow: hidden !important;
     }
 
+    #cuberto-design #page1 #hero-title-group {
+      position: relative !important;
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: flex-start !important;
+      margin-left: 20px !important;
+      margin-top: 14px !important;
+      margin-bottom: 20px !important;
+      width: fit-content !important;
+      max-width: calc(100% - 30px) !important;
+    }
+
+    #cuberto-design #page1 .hero-mobile-arrow {
+      display: block !important;
+      position: absolute !important;
+      top: 0 !important;
+      left: 0 !important;
+      width: 100% !important;
+      height: 100% !important;
+      pointer-events: none !important;
+      overflow: visible !important;
+      z-index: 10 !important;
+    }
+
     #cuberto-design #page1 .textp1 {
       position: relative !important;
       top: auto !important;
       left: auto !important;
-      margin-left: 20px !important;
-      font-size: clamp(38px, 11.5vw, 54px) !important;
+      margin: 0 !important;
       line-height: 1.05 !important;
     }
 
     #cuberto-design #page1 .textp1 h1 {
-      font-size: clamp(38px, 11.5vw, 54px) !important;
+      font-family: matterregular, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+      font-weight: 700 !important;
+      font-size: clamp(38px, 11vw, 54px) !important;
       line-height: 1.05 !important;
+      color: #ffffff !important;
+      text-transform: uppercase !important;
+      letter-spacing: -0.015em !important;
+      margin: 0 !important;
     }
 
     #cuberto-design #page1 #T1 {
       top: auto !important;
       left: auto !important;
-      margin-top: 16px !important;
+      margin: 0 !important;
     }
 
     #cuberto-design #page1 #T2 {
@@ -374,22 +495,37 @@
       display: inline-flex !important;
       align-items: center !important;
       justify-content: center !important;
-      padding: 0 24px !important;
-      margin: 4px 0 !important;
-      border-radius: 999px !important;
+      padding: 3px 22px 5px 22px !important;
+      margin: 4px 0 6px 0 !important;
+      border: 1.5px solid #5882E7 !important;
+      border-radius: 9999px !important;
+      background: rgba(88, 130, 231, 0.05) !important;
+      box-shadow: 0 0 16px rgba(88, 130, 231, 0.25) !important;
+      width: fit-content !important;
+      z-index: 2 !important;
+      perspective: none !important;
     }
 
-    #cuberto-design #page1 #T2>h1,
+    #cuberto-design #page1 #T2>h1 {
+      font-family: gallerym, Georgia, "Times New Roman", serif !important;
+      font-size: clamp(30px, 9vw, 44px) !important;
+      line-height: 1.1 !important;
+      color: #769FFD !important;
+      text-transform: uppercase !important;
+      letter-spacing: 0.04em !important;
+      margin: 0 !important;
+    }
+
     #cuberto-design #page1 #T2>h1::before,
     #cuberto-design #page1 #T2>h1::after {
-      font-size: clamp(34px, 10vw, 48px) !important;
-      line-height: 1 !important;
+      display: none !important;
     }
 
     #cuberto-design #page1 #T3,
     #cuberto-design #page1 #T4 {
       top: auto !important;
       left: auto !important;
+      margin: 0 !important;
     }
 
     #cuberto-design #page1 #p1h3 {
@@ -460,36 +596,60 @@
       padding: 48px 0 40px 0 !important;
       background-color: #ffffff !important;
       overflow: hidden !important;
+      width: 100% !important;
     }
 
     #cuberto-design #page2 #moving {
       position: relative !important;
       top: auto !important;
       width: 100% !important;
-      height: auto !important;
+      height: clamp(130px, 32vw, 170px) !important;
       margin: 0 0 20px 0 !important;
+      overflow: hidden !important;
     }
 
     #cuberto-design #page2 .move {
+      position: absolute !important;
+      top: 50% !important;
+      left: 0 !important;
+      display: flex !important;
+      flex-direction: row !important;
+      flex-wrap: nowrap !important;
+      align-items: center !important;
+      width: max-content !important;
+      height: 100% !important;
+      white-space: nowrap !important;
       gap: 36px !important;
-      position: relative !important;
-      transform: none !important;
+      will-change: transform;
     }
 
     #cuberto-design #page2 .move h1 {
-      font-size: clamp(38px, 11vw, 56px) !important;
-      line-height: 1 !important;
+      font-size: clamp(34px, 10vw, 50px) !important;
+      line-height: 0.95 !important;
       white-space: nowrap !important;
+      text-transform: uppercase !important;
+      font-family: matterlight, sans-serif !important;
+      text-align: center !important;
+      font-weight: 500 !important;
+      flex-shrink: 0 !important;
+      display: inline-block !important;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+
+    #cuberto-design #page2 .move>h1>span {
+      font-family: gallerym, serif !important;
     }
 
     #cuberto-design #page2 .move video {
-      width: 140px !important;
-      height: 80px !important;
-      border-radius: 40px !important;
+      width: 130px !important;
+      height: 74px !important;
+      border-radius: 37px !important;
       object-fit: cover !important;
       scale: 1 !important;
       flex-shrink: 0 !important;
       display: inline-block !important;
+      margin: 0 !important;
     }
 
     #cuberto-design #page2 #string {
@@ -839,37 +999,49 @@
       background: linear-gradient(135deg, #0F172A 0%, #1E3A8A 40%, #2563EB 75%, #7C3AED 100%) !important;
       color: #ffffff !important;
       overflow: hidden !important;
+      display: flex !important;
+      flex-direction: column !important;
+      justify-content: center !important;
     }
 
     #cuberto-design #p5p1 {
       position: relative !important;
       top: auto !important;
       left: auto !important;
+      z-index: 2 !important;
+      font-family: matterlight, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
       font-size: clamp(34px, 9.5vw, 48px) !important;
       line-height: 1.1 !important;
-      margin-bottom: 24px !important;
+      margin: 0 0 24px 0 !important;
       width: 100% !important;
     }
 
     #cuberto-design #p5p2 {
       position: relative !important;
-      bottom: auto !important;
-      right: auto !important;
+      top: auto !important;
+      left: auto !important;
+      z-index: 2 !important;
+      font-family: matterregular, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
       font-size: 16px !important;
       line-height: 1.55 !important;
       width: 100% !important;
       color: rgba(255, 255, 255, 0.88) !important;
-      margin-bottom: 24px !important;
+      margin: 0 !important;
     }
 
+    /* Keep the texture as a full-bleed backdrop on mobile too (the base rule
+       defines the look; this just guarantees the stacked layout above it). */
     #cuberto-design #page5>img {
-      position: absolute;
-      left: auto !important;
-      max-width: 100% !important;
-      height: auto !important;
-      display: block !important;
-      margin: -382px auto !important;
-      border-radius: 20px !important;
+      position: absolute !important;
+      inset: 0 !important;
+      left: 0 !important;
+      top: 0 !important;
+      width: 100% !important;
+      height: 100% !important;
+      max-width: none !important;
+      margin: 0 !important;
+      border-radius: 0 !important;
+      z-index: 0 !important;
     }
 
     /* Page 6 (Projects) */
@@ -965,8 +1137,8 @@
     /* Page 8 */
     #cuberto-design #page8 {
       height: auto !important;
-      min-height: auto !important;
-      padding: 40px 20px !important;
+      min-height: 430px !important;
+      padding: 40px 0 56px 0 !important;
       overflow: hidden !important;
     }
 
@@ -979,20 +1151,57 @@
       margin: 0 auto 16px auto !important;
       display: block !important;
       border-radius: 50% !important;
+      scale: 1 !important;
     }
 
     #cuberto-design #page8>p {
       position: relative !important;
       top: auto !important;
-      left: 0;
+      left: auto !important;
       font-size: clamp(26px, 7vw, 36px) !important;
+      line-height: 1.05 !important;
       text-align: center !important;
-      margin-bottom: 24px !important;
-      width: 100%;
+      margin: 0 auto 26px auto !important;
+      width: calc(100% - 40px) !important;
     }
 
     #cuberto-design #page8 #string {
       display: none !important;
+    }
+
+    #cuberto-design #p8move,
+    #cuberto-design #p8move2 {
+      position: relative !important;
+      top: auto !important;
+      width: 100vw !important;
+      height: 58px !important;
+      margin: 8px 0 0 0 !important;
+      overflow: hidden !important;
+    }
+
+    #cuberto-design .p8moveanim,
+    #cuberto-design .p8moveanim2 {
+      position: absolute !important;
+      inset: 0 auto auto 0 !important;
+      width: max-content !important;
+      height: 100% !important;
+      display: flex !important;
+      align-items: center !important;
+      flex-wrap: nowrap !important;
+      gap: 22px !important;
+      padding: 0 18px !important;
+      will-change: transform !important;
+      animation: none !important;
+    }
+
+    #cuberto-design .p8moveanim img,
+    #cuberto-design .p8moveanim2 img {
+      width: auto !important;
+      height: 42px !important;
+      margin: 0 !important;
+      scale: 1 !important;
+      flex: 0 0 auto !important;
+      object-fit: contain !important;
     }
 
     /* Page 9 (Flip Cards) */
@@ -1016,6 +1225,13 @@
       max-width: 360px !important;
       height: 480px !important;
       margin: 0 auto !important;
+    }
+
+    #cuberto-design #page9 #flipcard-1,
+    #cuberto-design #page9 #flipcard-2,
+    #cuberto-design #page9 #flipcard-3,
+    #cuberto-design #page9 #flipcard-4 {
+      margin-top: 0 !important;
     }
 
     #cuberto-design #page9 .card {
@@ -1124,6 +1340,47 @@
       border-radius: 50% !important;
     }
 
+    #cuberto-design #p11-bottom {
+      position: relative !important;
+      top: auto !important;
+      margin-top: 32px !important;
+      padding: 0 !important;
+      display: flex !important;
+      flex-direction: column-reverse !important;
+      gap: 24px !important;
+      width: 100% !important;
+    }
+
+    #cuberto-design #p11-star {
+      position: relative !important;
+      top: auto !important;
+      left: auto !important;
+      width: 100% !important;
+    }
+
+    #cuberto-design #p11-star img {
+      width: 60px !important;
+      height: 60px !important;
+    }
+
+    #cuberto-design #p11-star h3 {
+      font-size: 13px !important;
+    }
+
+    #cuberto-design #p11-p {
+      position: relative !important;
+      top: auto !important;
+      left: auto !important;
+      width: 100% !important;
+      gap: 16px !important;
+    }
+
+    #cuberto-design #p11-p p {
+      width: 100% !important;
+      font-size: 15px !important;
+      line-height: 1.55 !important;
+    }
+
     #cuberto-design #page12 {
       height: auto !important;
       min-height: auto !important;
@@ -1165,53 +1422,315 @@
   }
 }
 
-/* Menu overlay styles inside cuberto-design */
+/* =====================================================================
+   FULLSCREEN NAVIGATION MENU OVERLAY (Cuberto Style)
+   ===================================================================== */
 .cuberto-menu-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: 99998;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-  transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.35s;
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  z-index: 99998 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.4s !important;
 }
 
 .cuberto-menu-overlay.is-open {
-  opacity: 1;
-  visibility: visible;
-  pointer-events: auto;
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
 }
 
 .cuberto-menu-backdrop {
-  position: absolute;
-  inset: 0;
-  background: rgba(5, 5, 8, 0.95);
-  backdrop-filter: blur(28px);
-  -webkit-backdrop-filter: blur(28px);
+  position: absolute !important;
+  inset: 0 !important;
+  background: rgba(8, 8, 10, 0.96) !important;
+  backdrop-filter: blur(32px) !important;
+  -webkit-backdrop-filter: blur(32px) !important;
 }
 
 .cuberto-menu-container {
-  position: relative;
-  z-index: 2;
-  width: 100%;
-  max-width: 1280px;
-  height: 100%;
-  max-height: 100vh;
-  padding: 32px 48px;
-  display: flex;
-  flex-direction: column;
-  overflow-y: auto;
-  color: #ffffff;
-  transform: translateY(-16px);
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative !important;
+  z-index: 2 !important;
+  width: 100% !important;
+  max-width: 1240px !important;
+  height: 100% !important;
+  max-height: 100vh !important;
+  padding: 40px 48px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  overflow-y: auto !important;
+  -webkit-overflow-scrolling: touch !important;
+  color: #ffffff !important;
+  transform: translateY(-20px) !important;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  box-sizing: border-box !important;
 }
 
 .cuberto-menu-overlay.is-open .cuberto-menu-container {
-  transform: translateY(0);
+  transform: translateY(0) !important;
+}
+
+/* Header */
+.cuberto-menu-header {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  width: 100% !important;
+  padding-bottom: 24px !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+  margin-bottom: 32px !important;
+  flex-shrink: 0 !important;
+}
+
+.cuberto-menu-brand {
+  font-family: 'Michroma', sans-serif !important;
+  font-size: 22px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.05em !important;
+  color: #ffffff !important;
+  text-transform: uppercase !important;
+}
+
+.cuberto-menu-brand span {
+  color: #5B8BF7 !important;
+}
+
+.cuberto-menu-close-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  background: rgba(255, 255, 255, 0.06) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  border-radius: 999px !important;
+  padding: 10px 22px !important;
+  color: #ffffff !important;
+  cursor: pointer !important;
+  transition: all 0.25s ease !important;
+  font-family: 'matterlight', -apple-system, sans-serif !important;
+  outline: none !important;
+}
+
+.cuberto-menu-close-btn:hover {
+  background: #ffffff !important;
+  color: #000000 !important;
+  border-color: #ffffff !important;
+  transform: scale(1.04) !important;
+}
+
+.cuberto-menu-close-btn .close-label {
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.12em !important;
+}
+
+.cuberto-menu-close-btn i {
+  font-size: 16px !important;
+}
+
+/* Body (2 columns on desktop) */
+.cuberto-menu-body {
+  display: grid !important;
+  grid-template-columns: 1.4fr 1fr !important;
+  gap: 64px !important;
+  width: 100% !important;
+  align-items: start !important;
+  flex: 1 !important;
+}
+
+.cuberto-menu-section-title {
+  display: block !important;
+  font-family: 'matterlight', -apple-system, sans-serif !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.18em !important;
+  color: rgba(255, 255, 255, 0.35) !important;
+  margin-bottom: 20px !important;
+}
+
+/* Navigation List */
+.cuberto-menu-nav {
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+.cuberto-menu-list {
+  list-style: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 6px !important;
+}
+
+.cuberto-menu-item {
+  margin: 0 !important;
+  padding: 0 !important;
+  list-style: none !important;
+}
+
+.cuberto-menu-link {
+  display: inline-flex !important;
+  align-items: baseline !important;
+  gap: 16px !important;
+  text-decoration: none !important;
+  color: #ffffff !important;
+  padding: 6px 0 !important;
+  transition: all 0.25s ease !important;
+}
+
+.cuberto-menu-link .link-idx {
+  font-family: 'matterlight', -apple-system, sans-serif !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  color: rgba(255, 255, 255, 0.3) !important;
+  min-width: 22px !important;
+  letter-spacing: 0.05em !important;
+  transition: color 0.25s ease !important;
+}
+
+.cuberto-menu-link .link-title {
+  font-family: 'matterlight', -apple-system, sans-serif !important;
+  font-size: clamp(22px, 3vw, 38px) !important;
+  font-weight: 500 !important;
+  line-height: 1.15 !important;
+  letter-spacing: -0.02em !important;
+  color: #ffffff !important;
+  transition: transform 0.25s ease, color 0.25s ease !important;
+}
+
+.cuberto-menu-link:hover .link-title {
+  transform: translateX(12px) !important;
+  color: #5B8BF7 !important;
+}
+
+.cuberto-menu-link:hover .link-idx {
+  color: #5B8BF7 !important;
+}
+
+.link-badge {
+  font-family: 'matterlight', -apple-system, sans-serif !important;
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.08em !important;
+  padding: 3px 9px !important;
+  border-radius: 999px !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  margin-left: 8px !important;
+  align-self: center !important;
+}
+
+.link-badge.badge-blue {
+  background: rgba(91, 139, 247, 0.18) !important;
+  color: #5B8BF7 !important;
+  border-color: rgba(91, 139, 247, 0.4) !important;
+}
+
+/* Sidebar Info */
+.cuberto-menu-sidebar {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 32px !important;
+  padding-top: 10px !important;
+  border-left: 1px solid rgba(255, 255, 255, 0.08) !important;
+  padding-left: 48px !important;
+}
+
+.cuberto-menu-info-block {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 8px !important;
+}
+
+.menu-contact-val {
+  font-family: 'matterlight', -apple-system, sans-serif !important;
+  font-size: 16px !important;
+  color: #ffffff !important;
+  text-decoration: none !important;
+  transition: color 0.2s ease !important;
+}
+
+.menu-contact-val:hover {
+  color: #5B8BF7 !important;
+}
+
+.menu-info-text {
+  font-family: 'matterlight', -apple-system, sans-serif !important;
+  font-size: 15px !important;
+  color: rgba(255, 255, 255, 0.65) !important;
+  margin: 0 !important;
+  line-height: 1.5 !important;
+}
+
+.menu-social-links {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 12px 18px !important;
+  margin-top: 4px !important;
+}
+
+.menu-social-links a {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 5px !important;
+  font-family: 'matterlight', -apple-system, sans-serif !important;
+  font-size: 14px !important;
+  color: rgba(255, 255, 255, 0.8) !important;
+  text-decoration: none !important;
+  transition: color 0.2s ease !important;
+}
+
+.menu-social-links a:hover {
+  color: #5B8BF7 !important;
+}
+
+.menu-social-links a i {
+  font-size: 12px !important;
+}
+
+/* Mobile Responsiveness for Menu */
+@media (max-width: 768px) {
+  .cuberto-menu-container {
+    padding: 24px 20px 48px 20px !important;
+  }
+
+  .cuberto-menu-header {
+    padding-bottom: 18px !important;
+    margin-bottom: 24px !important;
+  }
+
+  .cuberto-menu-brand {
+    font-size: 18px !important;
+  }
+
+  .cuberto-menu-body {
+    grid-template-columns: 1fr !important;
+    gap: 32px !important;
+  }
+
+  .cuberto-menu-sidebar {
+    border-left: none !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+    padding-left: 0 !important;
+    padding-top: 24px !important;
+    gap: 24px !important;
+  }
+
+  .cuberto-menu-link .link-title {
+    font-size: clamp(20px, 5.8vw, 28px) !important;
+  }
+
+  .cuberto-menu-list {
+    gap: 8px !important;
+  }
 }
