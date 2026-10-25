@@ -287,17 +287,24 @@ export const initCubertoDesign = (): (() => void) => {
    * Page 2 — marquee with Cuberto-style dynamic scroll velocity
    * ------------------------------------------------------------------ */
   const moveEl = q<HTMLElement>("#page2 .move");
+  const page2El = q<HTMLElement>("#page2");
   if (moveEl) {
     let xPos = 0;
     const baseSpeed = isMobile ? -1.8 : -1.9; // constant forward gliding
     let scrollVelocity = 0;
     let lastScrollY = 0;
-    let animId: number;
+    let animId: number | null = null;
+    let isPage2Visible = false;
 
-    const getUnitWidth = () => {
-      // .move contains 6 pairs of h1 + video. Half = 3 pairs (seamless loop unit)
-      return moveEl.scrollWidth > 0 ? moveEl.scrollWidth / 2 : 1200;
+    // Cache unit width to prevent synchronous layout reflows during RAF
+    let cachedUnitWidth = moveEl.scrollWidth > 0 ? moveEl.scrollWidth / 2 : 1200;
+    const updateUnitWidth = () => {
+      if (moveEl.scrollWidth > 0) {
+        cachedUnitWidth = moveEl.scrollWidth / 2;
+      }
     };
+    window.addEventListener("resize", updateUnitWidth);
+    disposers.push(() => window.removeEventListener("resize", updateUnitWidth));
 
     lastScrollY = getScrollY();
 
@@ -324,19 +331,23 @@ export const initCubertoDesign = (): (() => void) => {
     }
 
     const updateMarquee = () => {
+      if (!isPage2Visible) {
+        animId = null;
+        return;
+      }
+
       // Smooth kinetic decay of scroll velocity back to 0
       scrollVelocity *= 0.92;
       if (Math.abs(scrollVelocity) < 0.02) scrollVelocity = 0;
 
       xPos += baseSpeed + scrollVelocity;
 
-      const unitWidth = getUnitWidth();
-      if (unitWidth > 50) {
-        while (xPos <= -unitWidth) {
-          xPos += unitWidth;
+      if (cachedUnitWidth > 50) {
+        while (xPos <= -cachedUnitWidth) {
+          xPos += cachedUnitWidth;
         }
         while (xPos > 0) {
-          xPos -= unitWidth;
+          xPos -= cachedUnitWidth;
         }
       }
 
@@ -344,10 +355,43 @@ export const initCubertoDesign = (): (() => void) => {
       animId = requestAnimationFrame(updateMarquee);
     };
 
-    animId = requestAnimationFrame(updateMarquee);
+    const startMarquee = () => {
+      if (!animId) {
+        animId = requestAnimationFrame(updateMarquee);
+      }
+    };
+
+    // Only run RAF loop and decode pill videos when page 2 is actually visible
+    if (page2El && "IntersectionObserver" in window) {
+      const page2Observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            isPage2Visible = entry.isIntersecting;
+            const p2Videos = qa<HTMLVideoElement>("#page2 video");
+            if (isPage2Visible) {
+              updateUnitWidth();
+              startMarquee();
+              p2Videos.forEach((v) => playVideo(v));
+            } else {
+              if (animId) {
+                cancelAnimationFrame(animId);
+                animId = null;
+              }
+              p2Videos.forEach((v) => v.pause());
+            }
+          });
+        },
+        { rootMargin: "150px 0px" },
+      );
+      page2Observer.observe(page2El);
+      disposers.push(() => page2Observer.disconnect());
+    } else {
+      isPage2Visible = true;
+      startMarquee();
+    }
 
     disposers.push(() => {
-      cancelAnimationFrame(animId);
+      if (animId) cancelAnimationFrame(animId);
     });
   }
 
@@ -748,81 +792,38 @@ export const initCubertoDesign = (): (() => void) => {
     playVideo(video);
   };
 
-  // 1. Immediately preload above-the-fold hero videos
+  // 1. Immediately preload and play hero video
   const heroVideos = qa<HTMLVideoElement>("#video video");
   heroVideos.forEach(loadAndPlayVideo);
 
-  // 2. Preload remaining videos with ScrollTrigger synchronized to LocomotiveScroll (or window on mobile)
-  const lazyVideos = qa<HTMLVideoElement>("video[data-src]");
-
-  lazyVideos.forEach((video) => {
-    if (heroVideos.includes(video)) return;
-
-    // Load well before entering viewport
-    ScrollTrigger.create({
-      trigger: video,
-      ...(isMobile ? {} : { scroller: "#main" }),
-      start: "top 120%",
-      once: true,
-      onEnter: () => {
-        loadAndPlayVideo(video);
-      },
-    });
-
-    // Smart pause/resume to preserve GPU/CPU performance during scrolling
-    ScrollTrigger.create({
-      trigger: video,
-      ...(isMobile ? {} : { scroller: "#main" }),
-      start: "top 120%",
-      end: "bottom -120%",
-      onEnter: () => {
-        loadAndPlayVideo(video);
-      },
-      onEnterBack: () => {
-        playVideo(video);
-      },
-      onLeave: () => {
-        video.pause();
-      },
-      onLeaveBack: () => {
-        video.pause();
-      },
-    });
-  });
-
-  // 3. Fallback check during scroll events
-  const checkVisibleVideos = () => {
-    const viewHeight = window.innerHeight;
-    lazyVideos.forEach((video) => {
-      if (video.getAttribute("src")) return;
-      const rect = video.getBoundingClientRect();
-      if (rect.top <= viewHeight * 1.5 && rect.bottom >= -viewHeight * 0.5) {
-        loadAndPlayVideo(video);
-      }
-    });
-  };
-
-  if (locoScroll) {
-    locoScroll.on("scroll", checkVisibleVideos);
-  } else {
-    listen(window, "scroll", checkVisibleVideos);
-  }
-
-  // 4. Native IntersectionObserver backup
+  // 2. High-performance asynchronous IntersectionObserver for all videos
+  // (Mirrors Cuberto's architecture: zero layout thrashing, pauses off-screen videos to free GPU)
+  const allVideos = qa<HTMLVideoElement>("video");
   if ("IntersectionObserver" in window) {
     const videoObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
           const video = entry.target as HTMLVideoElement;
-          loadAndPlayVideo(video);
-          videoObserver.unobserve(video);
+          // Skip page2 marquee videos here as they are managed by page2Observer
+          if (video.closest("#page2")) return;
+
+          if (entry.isIntersecting) {
+            loadAndPlayVideo(video);
+          } else {
+            video.pause();
+          }
         });
       },
-      { rootMargin: "400px 0px" },
+      { rootMargin: "300px 0px" },
     );
-    lazyVideos.forEach((video) => videoObserver.observe(video));
+
+    allVideos.forEach((video) => {
+      ensureVideoAttrs(video);
+      videoObserver.observe(video);
+    });
     disposers.push(() => videoObserver.disconnect());
+  } else {
+    allVideos.forEach(loadAndPlayVideo);
   }
 
   // Videos that already have direct src
